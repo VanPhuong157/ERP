@@ -1,0 +1,598 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\VNEB\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\models\\taskitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\models\\taskitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\models\\taskregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\models\\taskregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\repository\\users\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\users\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\repository\\tasks\\taskrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\tasks\\taskrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\controllers\\taskcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\controllers\\taskcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\repository\\tasks\\itaskrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\tasks\\itaskrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\repository\\users\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\users\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\dto\\taskdto\\approvalactiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\dto\\taskdto\\approvalactiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\dto\\taskdto\\taskapprovaldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\dto\\taskdto\\taskapprovaldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\vneb.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\vneb.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\repository\\departments\\departmentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\departments\\departmentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\repository\\departments\\idepartmentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\departments\\idepartmentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\controllers\\departmentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\controllers\\departmentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\models\\department.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\models\\department.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\models\\vnebcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\models\\vnebcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\dto\\userdto\\newuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\dto\\userdto\\newuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\models\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\models\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\dto\\taskdto\\taskitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\dto\\taskdto\\taskitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\dto\\taskdto\\savetaskregistrationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\dto\\taskdto\\savetaskregistrationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\dto\\taskdto\\tasksectiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\dto\\taskdto\\tasksectiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\models\\tasksection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\models\\tasksection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\models\\specification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\models\\specification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\repository\\specifications\\specificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\specifications\\specificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\dto\\specificationdto\\specificationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\dto\\specificationdto\\specificationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\responses\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\responses\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\responses\\tokenresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\responses\\tokenresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\dto\\userdto\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\dto\\userdto\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\models\\equipmenttransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\models\\equipmenttransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\models\\operatingequipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\models\\operatingequipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\models\\inventorystock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\models\\inventorystock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\vneb\\vneb\\models\\electricityusage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\models\\electricityusage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Repository\\Users\\UserRepository.cs",
+              "RelativeDocumentMoniker": "VNEB\\Repository\\Users\\UserRepository.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Repository\\Users\\UserRepository.cs",
+              "RelativeToolTip": "VNEB\\Repository\\Users\\UserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-17T06:59:54.521Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "VNEB\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\VNEB\\VNEB\\Properties\\launchSettings.json",
+              "RelativeToolTip": "VNEB\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAcwBcAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-02T02:23:36.217Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TaskRepository.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Repository\\Tasks\\TaskRepository.cs",
+              "RelativeDocumentMoniker": "VNEB\\Repository\\Tasks\\TaskRepository.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Repository\\Tasks\\TaskRepository.cs",
+              "RelativeToolTip": "VNEB\\Repository\\Tasks\\TaskRepository.cs",
+              "ViewState": "AgIAAPsAAAAAAAAAAAAUwCkBAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-10T04:06:23.125Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TaskController.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Controllers\\TaskController.cs",
+              "RelativeDocumentMoniker": "VNEB\\Controllers\\TaskController.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Controllers\\TaskController.cs",
+              "RelativeToolTip": "VNEB\\Controllers\\TaskController.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAAwC4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-10T04:09:55.449Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Program.cs",
+              "RelativeDocumentMoniker": "VNEB\\Program.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Program.cs",
+              "RelativeToolTip": "VNEB\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAFgAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T07:09:48.416Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ApprovalActionDTO.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\DTO\\TaskDTO\\ApprovalActionDTO.cs",
+              "RelativeDocumentMoniker": "VNEB\\DTO\\TaskDTO\\ApprovalActionDTO.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\DTO\\TaskDTO\\ApprovalActionDTO.cs",
+              "RelativeToolTip": "VNEB\\DTO\\TaskDTO\\ApprovalActionDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T03:52:47.861Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "IUserRepository.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Repository\\Users\\IUserRepository.cs",
+              "RelativeDocumentMoniker": "VNEB\\Repository\\Users\\IUserRepository.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Repository\\Users\\IUserRepository.cs",
+              "RelativeToolTip": "VNEB\\Repository\\Users\\IUserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-17T07:04:22.255Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TaskRegistration.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Models\\TaskRegistration.cs",
+              "RelativeDocumentMoniker": "VNEB\\Models\\TaskRegistration.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Models\\TaskRegistration.cs",
+              "RelativeToolTip": "VNEB\\Models\\TaskRegistration.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAAABEAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-10T04:03:19.456Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TaskItem.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Models\\TaskItem.cs",
+              "RelativeDocumentMoniker": "VNEB\\Models\\TaskItem.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Models\\TaskItem.cs",
+              "RelativeToolTip": "VNEB\\Models\\TaskItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-10T05:24:22.318Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ITaskRepository.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Repository\\Tasks\\ITaskRepository.cs",
+              "RelativeDocumentMoniker": "VNEB\\Repository\\Tasks\\ITaskRepository.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Repository\\Tasks\\ITaskRepository.cs",
+              "RelativeToolTip": "VNEB\\Repository\\Tasks\\ITaskRepository.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAIwA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-10T04:06:01.361Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "VNEB\\Controllers\\UsersController.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "VNEB\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAswD0AAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-13T02:12:05.888Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "TaskApprovalDto.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\DTO\\TaskDTO\\TaskApprovalDto.cs",
+              "RelativeDocumentMoniker": "VNEB\\DTO\\TaskDTO\\TaskApprovalDto.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\DTO\\TaskDTO\\TaskApprovalDto.cs",
+              "RelativeToolTip": "VNEB\\DTO\\TaskDTO\\TaskApprovalDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T03:44:01.94Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "IDepartmentRepository.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Repository\\Departments\\IDepartmentRepository.cs",
+              "RelativeDocumentMoniker": "VNEB\\Repository\\Departments\\IDepartmentRepository.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Repository\\Departments\\IDepartmentRepository.cs",
+              "RelativeToolTip": "VNEB\\Repository\\Departments\\IDepartmentRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-13T02:02:55.059Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "DepartmentRepository.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Repository\\Departments\\DepartmentRepository.cs",
+              "RelativeDocumentMoniker": "VNEB\\Repository\\Departments\\DepartmentRepository.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Repository\\Departments\\DepartmentRepository.cs",
+              "RelativeToolTip": "VNEB\\Repository\\Departments\\DepartmentRepository.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAAwBUAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-13T02:03:12.377Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "VNEB",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\VNEB.csproj",
+              "RelativeDocumentMoniker": "VNEB\\VNEB.csproj",
+              "ToolTip": "D:\\VNEB\\VNEB\\VNEB.csproj",
+              "RelativeToolTip": "VNEB\\VNEB.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-03-13T03:08:18.109Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "DepartmentsController.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Controllers\\DepartmentsController.cs",
+              "RelativeDocumentMoniker": "VNEB\\Controllers\\DepartmentsController.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Controllers\\DepartmentsController.cs",
+              "RelativeToolTip": "VNEB\\Controllers\\DepartmentsController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwBcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-13T02:03:47.977Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "NewUserDTO.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\DTO\\UserDTO\\NewUserDTO.cs",
+              "RelativeDocumentMoniker": "VNEB\\DTO\\UserDTO\\NewUserDTO.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\DTO\\UserDTO\\NewUserDTO.cs",
+              "RelativeToolTip": "VNEB\\DTO\\UserDTO\\NewUserDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-27T02:43:42.319Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "VnebContext.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Models\\VnebContext.cs",
+              "RelativeDocumentMoniker": "VNEB\\Models\\VnebContext.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Models\\VnebContext.cs",
+              "RelativeToolTip": "VNEB\\Models\\VnebContext.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAcwD8AAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T02:38:48.723Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Customer.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Models\\Customer.cs",
+              "RelativeDocumentMoniker": "VNEB\\Models\\Customer.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Models\\Customer.cs",
+              "RelativeToolTip": "VNEB\\Models\\Customer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAB0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T03:28:47.325Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Department.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Models\\Department.cs",
+              "RelativeDocumentMoniker": "VNEB\\Models\\Department.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Models\\Department.cs",
+              "RelativeToolTip": "VNEB\\Models\\Department.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-13T01:42:20.075Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Models\\User.cs",
+              "RelativeDocumentMoniker": "VNEB\\Models\\User.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Models\\User.cs",
+              "RelativeToolTip": "VNEB\\Models\\User.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAywBoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-10T03:04:26.749Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "SaveTaskRegistrationDTO.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\DTO\\TaskDTO\\SaveTaskRegistrationDTO.cs",
+              "RelativeDocumentMoniker": "VNEB\\DTO\\TaskDTO\\SaveTaskRegistrationDTO.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\DTO\\TaskDTO\\SaveTaskRegistrationDTO.cs",
+              "RelativeToolTip": "VNEB\\DTO\\TaskDTO\\SaveTaskRegistrationDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T02:36:48.561Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "TaskSectionDTO.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\DTO\\TaskDTO\\TaskSectionDTO.cs",
+              "RelativeDocumentMoniker": "VNEB\\DTO\\TaskDTO\\TaskSectionDTO.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\DTO\\TaskDTO\\TaskSectionDTO.cs",
+              "RelativeToolTip": "VNEB\\DTO\\TaskDTO\\TaskSectionDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T02:56:51.413Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "TaskItemDTO.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\DTO\\TaskDTO\\TaskItemDTO.cs",
+              "RelativeDocumentMoniker": "VNEB\\DTO\\TaskDTO\\TaskItemDTO.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\DTO\\TaskDTO\\TaskItemDTO.cs",
+              "RelativeToolTip": "VNEB\\DTO\\TaskDTO\\TaskItemDTO.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAA7wAkAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T02:56:48.439Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "TaskSection.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Models\\TaskSection.cs",
+              "RelativeDocumentMoniker": "VNEB\\Models\\TaskSection.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Models\\TaskSection.cs",
+              "RelativeToolTip": "VNEB\\Models\\TaskSection.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAowBcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T02:35:52.541Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "SpecificationDTO.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\DTO\\SpecificationDTO\\SpecificationDTO.cs",
+              "RelativeDocumentMoniker": "VNEB\\DTO\\SpecificationDTO\\SpecificationDTO.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\DTO\\SpecificationDTO\\SpecificationDTO.cs",
+              "RelativeToolTip": "VNEB\\DTO\\SpecificationDTO\\SpecificationDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-02T04:34:38.804Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Specification.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Models\\Specification.cs",
+              "RelativeDocumentMoniker": "VNEB\\Models\\Specification.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Models\\Specification.cs",
+              "RelativeToolTip": "VNEB\\Models\\Specification.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAmwAYAAABkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T03:28:14.967Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "SpecificationRepository.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Repository\\Specifications\\SpecificationRepository.cs",
+              "RelativeDocumentMoniker": "VNEB\\Repository\\Specifications\\SpecificationRepository.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Repository\\Specifications\\SpecificationRepository.cs",
+              "RelativeToolTip": "VNEB\\Repository\\Specifications\\SpecificationRepository.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwBMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-02T04:35:50.762Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Response.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Responses\\Response.cs",
+              "RelativeDocumentMoniker": "VNEB\\Responses\\Response.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Responses\\Response.cs",
+              "RelativeToolTip": "VNEB\\Responses\\Response.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-27T02:39:19.304Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "TokenResponse.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Responses\\TokenResponse.cs",
+              "RelativeDocumentMoniker": "VNEB\\Responses\\TokenResponse.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Responses\\TokenResponse.cs",
+              "RelativeToolTip": "VNEB\\Responses\\TokenResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-27T02:39:53.714Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "LoginDTO.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\DTO\\UserDTO\\LoginDTO.cs",
+              "RelativeDocumentMoniker": "VNEB\\DTO\\UserDTO\\LoginDTO.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\DTO\\UserDTO\\LoginDTO.cs",
+              "RelativeToolTip": "VNEB\\DTO\\UserDTO\\LoginDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-27T02:43:06.769Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\appsettings.json",
+              "RelativeDocumentMoniker": "VNEB\\appsettings.json",
+              "ToolTip": "D:\\VNEB\\VNEB\\appsettings.json",
+              "RelativeToolTip": "VNEB\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-02-25T06:57:58.705Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "ElectricityUsage.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Models\\ElectricityUsage.cs",
+              "RelativeDocumentMoniker": "VNEB\\Models\\ElectricityUsage.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Models\\ElectricityUsage.cs",
+              "RelativeToolTip": "VNEB\\Models\\ElectricityUsage.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAuwCQAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T03:28:54.229Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "EquipmentTransaction.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Models\\EquipmentTransaction.cs",
+              "RelativeDocumentMoniker": "VNEB\\Models\\EquipmentTransaction.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Models\\EquipmentTransaction.cs",
+              "RelativeToolTip": "VNEB\\Models\\EquipmentTransaction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T03:28:38.268Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "InventoryStock.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Models\\InventoryStock.cs",
+              "RelativeDocumentMoniker": "VNEB\\Models\\InventoryStock.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Models\\InventoryStock.cs",
+              "RelativeToolTip": "VNEB\\Models\\InventoryStock.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T03:28:30.87Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "OperatingEquipment.cs",
+              "DocumentMoniker": "D:\\VNEB\\VNEB\\Models\\OperatingEquipment.cs",
+              "RelativeDocumentMoniker": "VNEB\\Models\\OperatingEquipment.cs",
+              "ToolTip": "D:\\VNEB\\VNEB\\Models\\OperatingEquipment.cs",
+              "RelativeToolTip": "VNEB\\Models\\OperatingEquipment.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T03:28:22.686Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
