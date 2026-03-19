@@ -1,7 +1,6 @@
 import axios, { InternalAxiosRequestConfig, AxiosError } from 'axios';
 
-const baseUrl = 'http://localhost:5244';
-//const baseUrl = 'http://192.168.1.22:5244';
+const baseUrl = 'http://103.176.179.125:5244';
 
 const rootApi = axios.create({
   baseURL: `${baseUrl}/api`,
