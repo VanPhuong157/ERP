@@ -1,0 +1,332 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  Target, Zap, ShieldAlert, Building2, PersonStandingIcon, Briefcase, 
+  Loader2, LayoutDashboard, Calendar, Search, User, Users
+} from "lucide-react";
+import { useAppContext } from "../../app/page";
+import { dashboardApi } from "./dashboardApi";
+
+interface DashboardProps {
+  targetDeptId?: string;
+  title?: string;
+}
+
+export default function PersonalEmployeeDashboard({ targetDeptId, title }: DashboardProps) {
+  const { user } = useAppContext();
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<any>(null);
+  
+  // --- STATE LƯU DANH SÁCH NHÂN VIÊN TRONG PHÒNG ---
+  const [employees, setEmployees] = useState<{id: string, fullName: string}[]>([]);
+
+  // --- STATE CHO BỘ LỌC ---
+  const [filter, setFilter] = useState({
+    userId: "",
+    fromDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0],
+    toDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).toISOString().split('T')[0],
+  });
+
+useEffect(() => {
+  const fetchEmployees = async () => {
+    if (targetDeptId) {
+      try {
+        const res = await dashboardApi.getUsersByDept(targetDeptId);
+        if (res && res.code === 200) {
+          setEmployees(res.data);
+          // KHÔNG setFilter ở đây để giữ userId trống -> Lấy dữ liệu cả phòng
+        }
+      } catch (error) {
+        console.error("Lỗi khi lấy danh sách nhân viên:", error);
+      }
+    }
+  };
+  fetchEmployees();
+}, [targetDeptId]);
+
+
+const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      const idToQuery = targetDeptId ? filter.userId : user?.id;
+
+      const res = await dashboardApi.getPersonalStats(
+        idToQuery || "", 
+        filter.fromDate, 
+        filter.toDate, 
+        targetDeptId 
+      );
+
+      if (res && res.data.code === 200) {
+        setData(res.data.data); 
+      } else {
+        setData(null);
+      }
+
+    } catch (error) {
+      console.error("Lỗi fetch:", error);
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+useEffect(() => {
+    if (user?.id || targetDeptId) {
+      fetchDashboardData();
+    }
+  }, [targetDeptId, filter, user?.id]);
+
+  const calculatePercent = (value: number, total: number) => {
+    if (!total || total === 0) return "0.0";
+    return ((value / total) * 100).toFixed(1);
+  };
+
+  const kpiChartData = [
+    { name: "Hoàn thành 100%", value: data?.sectionKPI?.completedOnTime || 0, color: "#10b981" },
+    { name: "Trung bình (31-50%)", value: data?.sectionKPI?.completedAverage || 0, color: "#f59e0b" },
+    { name: "Cảnh báo (≤30%)", value: data?.sectionKPI?.completedWarning || 0, color: "#ef4444" },
+  ];
+
+  const totalKPI = data?.sectionKPI?.totalRegistered || 0;
+
+  return (
+    <div className="space-y-6">
+      {/* --- BỘ LỌC DỮ LIỆU --- */}
+      <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-wrap items-end gap-4">
+        
+        {/* Lọc theo Nhân viên (Chỉ hiện khi xem cấp Phòng) */}
+        <div className="flex flex-col gap-1.5">
+          <label className="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1">
+            <User size={12}/> {targetDeptId ? "Lọc theo nhân viên" : "Nhân viên"}
+          </label>
+          {targetDeptId ? (
+            <select 
+              className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none w-52 bg-white font-medium"
+              value={filter.userId}
+              onChange={(e) => setFilter({...filter, userId: e.target.value})}
+            >
+              <option value="">-- Tất cả nhân viên --</option>
+              {employees.map((emp) => (
+                <option key={emp.id} value={emp.id}>{emp.fullName}</option>
+              ))}
+            </select>
+          ) : (
+            <div className="border border-slate-100 bg-slate-50 rounded-lg px-3 py-2 text-sm w-52 text-slate-600 font-bold flex items-center gap-2">
+               <div className="w-2 h-2 rounded-full bg-green-500"></div> {user?.name}
+            </div>
+          )}
+        </div>
+        
+        <div className="flex flex-col gap-1.5">
+          <label className="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1">
+            <Calendar size={12}/> Từ ngày
+          </label>
+          <input 
+            type="date" 
+            className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+            value={filter.fromDate}
+            onChange={(e) => setFilter({...filter, fromDate: e.target.value})}
+          />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label className="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1">
+            <Calendar size={12}/> Đến ngày
+          </label>
+          <input 
+            type="date" 
+            className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+            value={filter.toDate}
+            onChange={(e) => setFilter({...filter, toDate: e.target.value})}
+          />
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="flex h-[40vh] items-center justify-center flex-col gap-3">
+          <Loader2 className="h-10 w-10 animate-spin text-blue-600" />
+          <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">Đang tải dữ liệu...</p>
+        </div>
+      ) : !data || totalKPI === 0 ? (
+        <div className="p-20 text-center bg-white rounded-2xl border-2 border-dashed border-slate-200">
+          <LayoutDashboard className="mx-auto text-slate-300 mb-4" size={48} />
+          <p className="text-slate-500 font-bold uppercase text-xs">Không tìm thấy dữ liệu đánh giá cho mục này</p>
+        </div>
+      ) : (
+        <>
+          {/* TỔNG HỢP NHANH */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Tổng việc đăng ký</p>
+              <p className="text-3xl font-black text-slate-800 mt-1">{totalKPI}</p>
+            </div>
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm border-l-4 border-l-emerald-500">
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Hoàn thành 100%</p>
+              <p className="text-3xl font-black text-emerald-600 mt-1">{data?.sectionKPI?.completedOnTime || 0}</p>
+            </div>
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm border-l-4 border-l-orange-500">
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Mức trung bình</p>
+              <p className="text-3xl font-black text-orange-500 mt-1">{data?.sectionKPI?.completedAverage || 0}</p>
+            </div>
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm border-l-4 border-l-red-500">
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Cảnh báo (≤30%)</p>
+              <p className="text-3xl font-black text-red-500 mt-1">{data?.sectionKPI?.completedWarning || 0}</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* I. BẢNG KPI */}
+            <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+              <div className="bg-slate-800 p-4 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Target className="text-emerald-400" size={20} />
+                  <h3 className="text-white font-bold text-sm uppercase">I. Chỉ số hoàn thành KPI</h3>
+                </div>
+                <span className="text-slate-400 text-[10px] font-bold">{title}</span>
+              </div>
+              <table className="w-full text-left border-collapse text-sm">
+                <thead>
+                  <tr className="bg-slate-50 text-[11px] uppercase text-slate-500 font-bold border-b">
+                    <th className="p-4">Hạng mục đánh giá</th>
+                    <th className="p-4 text-center">Số lượng</th>
+                    <th className="p-4 text-center">Tỉ trọng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b">
+                    <td className="p-4 font-medium text-slate-600">Tổng số việc đã đăng ký</td>
+                    <td className="p-4 text-center font-bold">{totalKPI}</td>
+                    <td className="p-4 text-center">100%</td>
+                  </tr>
+                  <tr className="border-b bg-emerald-50/30 font-bold text-emerald-800">
+                    <td className="p-4">Hoàn thành đúng hạn (≥100%)</td>
+                    <td className="p-4 text-center">{data?.sectionKPI?.completedOnTime || 0}</td>
+                    <td className="p-4 text-center">{calculatePercent(data?.sectionKPI?.completedOnTime, totalKPI)}%</td>
+                  </tr>
+                  <tr className="border-b bg-orange-50/30 font-bold text-orange-700">
+                    <td className="p-4">Hoàn thành mức trung bình (31-50%)</td>
+                    <td className="p-4 text-center">{data?.sectionKPI?.completedAverage || 0}</td>
+                    <td className="p-4 text-center">{calculatePercent(data?.sectionKPI?.completedAverage, totalKPI)}%</td>
+                  </tr>
+                  <tr className="bg-red-50/30 font-bold text-red-700">
+                    <td className="p-4">Mức cảnh báo (≤30%)</td>
+                    <td className="p-4 text-center">{data?.sectionKPI?.completedWarning || 0}</td>
+                    <td className="p-4 text-center">{calculatePercent(data?.sectionKPI?.completedWarning, totalKPI)}%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* BIỂU ĐỒ KPI */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center">
+              <h3 className="font-bold text-slate-700 mb-4 uppercase text-[10px] tracking-widest">Phân bổ kết quả thực hiện</h3>
+              <div className="h-[220px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie 
+                      data={kpiChartData.filter(i => i.value > 0)} 
+                      innerRadius={60} 
+                      outerRadius={85} 
+                      paddingAngle={5} 
+                      dataKey="value"
+                      stroke="none"
+                    >
+                      {kpiChartData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)}
+                    </Pie>
+                    <Tooltip 
+                       contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="mt-4 space-y-2.5 w-full">
+                {kpiChartData.map(item => (
+                  <div key={item.name} className="flex justify-between items-center text-[10px] font-bold uppercase">
+                    <span className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-sm" style={{backgroundColor: item.color}}></span>
+                      <span className="text-slate-500">{item.name}</span>
+                    </span>
+                    <span className="text-slate-800">{item.value} việc ({calculatePercent(item.value, totalKPI)}%)</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* II. ĐỘ PHỨC TẠP CÔNG VIỆC */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 border-l-4 border-blue-600 pl-4">
+                <Zap className="text-blue-600" size={20} />
+                <h2 className="font-bold text-slate-700 uppercase text-sm">II. Độ phức tạp công việc</h2>
+              </div>
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden text-sm">
+                <table className="w-full text-left">
+                  <thead>
+                    <tr className="border-b bg-slate-50 font-bold text-[10px] uppercase text-slate-500">
+                      <th className="p-4">Độ khó</th>
+                      <th className="p-4 text-center">Số lượng</th>
+                      <th className="p-4 text-center">Tỉ lệ đạt</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b hover:bg-slate-50 transition-colors">
+                      <td className="p-4 italic text-slate-600">Phức tạp Cao</td>
+                      <td className="p-4 text-center font-bold">{data?.sectionComplexity?.counts?.high || 0}</td>
+                      <td className="p-4 text-center font-black text-blue-600">{data?.sectionComplexity?.completionRates?.highRate || 0}%</td>
+                    </tr>
+                    <tr className="border-b hover:bg-slate-50 transition-colors">
+                      <td className="p-4 italic text-slate-600">Trung bình</td>
+                      <td className="p-4 text-center font-bold">{data?.sectionComplexity?.counts?.medium || 0}</td>
+                      <td className="p-4 text-center font-black text-blue-600">{data?.sectionComplexity?.completionRates?.mediumRate || 0}%</td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 transition-colors">
+                      <td className="p-4 italic text-slate-600">Thấp</td>
+                      <td className="p-4 text-center font-bold">{data?.sectionComplexity?.counts?.low || 0}</td>
+                      <td className="p-4 text-center font-black text-blue-600">{data?.sectionComplexity?.completionRates?.lowRate || 0}%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* III. MỨC ĐỘ ƯU TIÊN */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 border-l-4 border-orange-500 pl-4">
+                <ShieldAlert className="text-orange-600" size={20} />
+                <h2 className="font-bold text-slate-700 uppercase text-sm">III. Mức độ ưu tiên</h2>
+              </div>
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden text-sm">
+                <table className="w-full text-left">
+                  <thead>
+                    <tr className="border-b bg-slate-50 font-bold text-[10px] uppercase text-slate-500">
+                      <th className="p-4">Độ ưu tiên</th>
+                      <th className="p-4 text-center">Tỉ lệ hoàn thành</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b hover:bg-slate-50 transition-colors">
+                      <td className="p-4 italic text-slate-600">Ưu tiên Cao (Gấp)</td>
+                      <td className="p-4 text-center font-black text-orange-600">{data?.sectionPriority?.highPriorityRate || 0}%</td>
+                    </tr>
+                    <tr className="border-b hover:bg-slate-50 transition-colors">
+                      <td className="p-4 italic text-slate-600">Ưu tiên Trung bình</td>
+                      <td className="p-4 text-center font-black text-orange-600">{data?.sectionPriority?.mediumPriorityRate || 0}%</td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 transition-colors">
+                      <td className="p-4 italic text-slate-600">Ưu tiên Thấp</td>
+                      <td className="p-4 text-center font-black text-orange-600">{data?.sectionPriority?.lowPriorityRate || 0}%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
