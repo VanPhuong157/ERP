@@ -12,8 +12,8 @@ using VNEB.Models;
 namespace VNEB.Migrations
 {
     [DbContext(typeof(VnebContext))]
-    [Migration("20260318092258_updateTableTaskItem")]
-    partial class updateTableTaskItem
+    [Migration("20260319084356_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
