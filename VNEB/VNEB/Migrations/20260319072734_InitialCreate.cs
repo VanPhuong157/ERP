@@ -286,6 +286,7 @@ namespace VNEB.Migrations
                     PersonalResult = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PersonalPriority = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PersonalComplexity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ManagerTarget = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ManagerResult = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ManagerPriority = table.Column<string>(type: "nvarchar(max)", nullable: false),

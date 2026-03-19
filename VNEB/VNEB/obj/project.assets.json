@@ -4495,11 +4495,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\VNEB\\VNEB\\VNEB.csproj",
+      "projectUniqueName": "D:\\ERP\\VNEB\\VNEB\\VNEB.csproj",
       "projectName": "VNEB",
-      "projectPath": "D:\\VNEB\\VNEB\\VNEB.csproj",
+      "projectPath": "D:\\ERP\\VNEB\\VNEB\\VNEB.csproj",
       "packagesPath": "C:\\Users\\Huyen Huyen\\.nuget\\packages\\",
-      "outputPath": "D:\\VNEB\\VNEB\\obj\\",
+      "outputPath": "D:\\ERP\\VNEB\\VNEB\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
