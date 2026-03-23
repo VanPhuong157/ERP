@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useAppContext } from "../../app/page"; 
 import { authenApi } from "../authen/authenApi"; 
-import toast, { Toaster } from "react-hot-toast"; // Thay đổi ở đây
-import { KeyRound } from "lucide-react";
+import Swal from "sweetalert2";
+import { KeyRound, Lock, ShieldCheck, Eye, EyeOff, CheckCircle2, XCircle } from "lucide-react";
 
 function ChangePasswordPage() {
   const { user, setUser } = useAppContext();
@@ -11,17 +11,18 @@ function ChangePasswordPage() {
 
   const handleSubmit = async () => {
     if (!form.oldPassword || !form.newPassword) {
-      toast.error("Vui lòng nhập đầy đủ các trường!");
+      Swal.fire({ icon: 'warning', title: 'Thiếu thông tin', text: 'Vui lòng nhập đầy đủ các trường!', confirmButtonColor: '#2563eb' });
       return;
     }
 
     if (form.newPassword !== form.confirmPassword) {
-      toast.error("Xác nhận mật khẩu mới không chính xác!");
+      Swal.fire({ icon: 'error', title: 'Mật khẩu không khớp', text: 'Xác nhận mật khẩu mới không chính xác!', confirmButtonColor: '#2563eb' });
       return;
     }
 
     setLoading(true);
     try {
+      // Sửa lỗi truyền đối số ở đây (bọc vào 1 object)
       const res = await authenApi.changePassword({
         userId: user?.id || "",
         oldPassword: form.oldPassword,
@@ -29,18 +30,19 @@ function ChangePasswordPage() {
       });
 
       if (res.data.code === 200) {
-        toast.success("Mật khẩu đã được cập nhật thành công!");
-        
-        // Đợi 2 giây để người dùng kịp nhìn thông báo trước khi logout
-        setTimeout(() => {
-          localStorage.clear();
-          setUser(null);
-        }, 2000);
+        await Swal.fire({
+          icon: 'success',
+          title: 'Thành công!',
+          text: 'Mật khẩu đã được cập nhật. Vui lòng đăng nhập lại.',
+          confirmButtonColor: '#2563eb'
+        });
+        localStorage.clear();
+        setUser(null);
       } else {
-        toast.error(res.data.message || "Thất bại: Lỗi không xác định");
+        Swal.fire({ icon: 'error', title: 'Thất bại', text: res.data.message || "Lỗi không xác định" });
       }
     } catch (error: any) {
-      toast.error("Lỗi: Mật khẩu cũ không đúng hoặc server mất kết nối!");
+      Swal.fire({ icon: 'error', title: 'Lỗi', text: 'Mật khẩu cũ không đúng hoặc server mất kết nối!' });
     } finally {
       setLoading(false);
     }
@@ -48,10 +50,8 @@ function ChangePasswordPage() {
 
   return (
     <div className="flex items-center justify-center min-h-[70vh]">
-      {/* Component này để hiển thị thông báo, bạn có thể để ở đây hoặc ở file App.tsx/layout.tsx */}
-      <Toaster position="top-center" reverseOrder={false} />
-      
       <div className="max-w-md w-full bg-white p-10 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100 relative overflow-hidden">
+        {/* Trang trí phía sau */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16 z-0"></div>
         
         <div className="relative z-10">
