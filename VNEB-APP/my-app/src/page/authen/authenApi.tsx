@@ -9,5 +9,5 @@ export const authenApi = {
   register: (data: any) => rootApi.post('/Users/register', data),
 
   changePassword: (data: { userId: string, oldPassword: string, newPassword: string }) => 
-    rootApi.post('/Users/change-password', data),
+    rootApi.post('/Users/auth/change-password', data),
 };

@@ -70,7 +70,7 @@ namespace VNEB.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("change-password")]
+        [HttpPost("auth/change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO model)
         {
             var result = await _userRepo.ChangePassword(model);
