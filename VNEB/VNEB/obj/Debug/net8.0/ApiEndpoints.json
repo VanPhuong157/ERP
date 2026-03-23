@@ -211,6 +211,22 @@
   },
   {
     "ContainingType": "VNEB.Controllers.UsersController",
+    "Method": "ChangePassword",
+    "RelativePath": "api/Users/change-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "VNEB.DTO.UserDTO.ChangePasswordDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VNEB.Controllers.UsersController",
     "Method": "GetUsersByDepartment",
     "RelativePath": "api/Users/department/{departmentId}",
     "HttpMethod": "GET",

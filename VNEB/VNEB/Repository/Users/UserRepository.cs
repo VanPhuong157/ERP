@@ -152,5 +152,24 @@ namespace VNEB.Repository.Users
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public async Task<Response> ChangePassword(ChangePasswordDTO model)
+        {
+            var user = await _context.Users.FindAsync(model.UserId);
+            if (user == null)
+                return new Response { Code = 404, Message = "Người dùng không tồn tại." };
+
+            // 1. Kiểm tra mật khẩu cũ
+            if (!VerifyPassword(model.OldPassword, user.PasswordHash))
+            {
+                return new Response { Code = 400, Message = "Mật khẩu cũ không chính xác." };
+            }
+
+            // 2. Cập nhật mật khẩu mới
+            user.PasswordHash = HashPassword(model.NewPassword);
+            await _context.SaveChangesAsync();
+
+            return new Response { Code = 200, Message = "Đổi mật khẩu thành công." };
+        }
     }
 }

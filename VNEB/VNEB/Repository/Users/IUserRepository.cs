@@ -10,5 +10,6 @@ namespace VNEB.Repository.Users
         Task<Response> GetById(string id);
         Task<Response> DeleteUser(string userId);
         Task<Response> GetUsersByDepartment(string departmentId);
+        Task<Response> ChangePassword(ChangePasswordDTO model);
     }
 }
