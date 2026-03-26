@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VNEB.DTO.UserDTO;
+using VNEB.Models;
 using VNEB.Repository.Users;
 using VNEB.Responses;
 
@@ -57,6 +59,51 @@ namespace VNEB.Controllers
                 return Ok(result);
 
             return BadRequest(result);
+        }
+
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _userRepo.GetAllUsers();
+            return Ok(result);
+        }
+
+        [HttpPut("update-info")]
+        public async Task<IActionResult> UpdateInfo([FromBody] User model)
+        {
+            var result = await _userRepo.UpdateUserInfo(model);
+            if (result.Code == 200) return Ok(result);
+            return BadRequest(result);
+        }
+
+        [HttpPost("upload-contract")]
+        public async Task<IActionResult> UploadFile(IFormFile file, [FromQuery] string userId, [FromQuery] string type)
+        {
+            var filePath = await _userRepo.UploadContractFile(file, userId, type);
+
+            if (filePath != null)
+            {
+                return Ok(new Response { Code = 200, Data = filePath, Message = "Upload file thành công." });
+            }
+            return BadRequest(new Response { Code = 400, Message = "Upload file thất bại." });
+        }
+
+        [HttpGet("download-contract")]
+        public async Task<IActionResult> DownloadContract(string filePath)
+        {
+            try
+            {
+                var fileData = await _userRepo.DownloadContractFile(filePath);
+                return File(fileData.Bytes, fileData.ContentType, fileData.FileName);
+            }
+            catch (FileNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Lỗi hệ thống: " + ex.Message });
+            }
         }
 
         [HttpGet("department/{departmentId}")]

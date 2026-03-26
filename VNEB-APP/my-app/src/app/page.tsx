@@ -34,6 +34,7 @@ import ElectricityPurchasePage from "../page/electric/ElectricityPurchase";
 import TaskManagementPage from "../page/task/TaskManagementPage";
 import RegisterUserPage from "../page/authen/RegisterUserPage";
 import ChangePasswordPage from "../page/authen/changePass";
+import EmployeeManagerPage from "../page/authen/EmployeeManager";
 
 interface User {
   id: string;
@@ -192,6 +193,7 @@ export default function App() {
           children: [
             { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
             { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            { id: "employee-manager", label: "Quản lý nhân sự", icon: Users },
           ],
         },
         {
@@ -346,6 +348,8 @@ export default function App() {
         return <ChangePasswordPage />;
       case "task-registration":
         return <TaskManagementPage targetDept={activeDept} />;
+        case "employee-manager":
+  return <EmployeeManagerPage />
       default:
         return <TaskManagementPage targetDept={activeDept} />;
     }

@@ -389,6 +389,118 @@
         }
       }
     },
+    "/api/Users/all": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Users/update-info": {
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Users/upload-contract": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Users/download-contract": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "filePath",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Users/department/{departmentId}": {
       "get": {
         "tags": [
@@ -411,7 +523,7 @@
         }
       }
     },
-    "/api/Users/change-password": {
+    "/api/Users/auth/change-password": {
       "post": {
         "tags": [
           "Users"
@@ -472,6 +584,35 @@
           },
           "newPassword": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Department": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "parentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "parent": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
             "nullable": true
           }
         },
@@ -695,6 +836,192 @@
               "$ref": "#/components/schemas/TaskItemDTO"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "passwordHash": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          },
+          "company": {
+            "type": "string",
+            "nullable": true
+          },
+          "gender": {
+            "type": "string",
+            "nullable": true
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "idCardNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "idCardIssuedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "idCardIssuedPlace": {
+            "type": "string",
+            "nullable": true
+          },
+          "permanentAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "ethnic": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "educationLevel": {
+            "type": "string",
+            "nullable": true
+          },
+          "school": {
+            "type": "string",
+            "nullable": true
+          },
+          "major": {
+            "type": "string",
+            "nullable": true
+          },
+          "position": {
+            "type": "string",
+            "nullable": true
+          },
+          "departmentName": {
+            "type": "string",
+            "nullable": true
+          },
+          "joinDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "probationStartDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "probationEndDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "contractType": {
+            "type": "string",
+            "nullable": true
+          },
+          "officialContractFile1": {
+            "type": "string",
+            "nullable": true
+          },
+          "officialContractFile2": {
+            "type": "string",
+            "nullable": true
+          },
+          "officialContractFile3": {
+            "type": "string",
+            "nullable": true
+          },
+          "officialContractDate1": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "officialContractDate2": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "officialContractDate3": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "taxCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "insuranceCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "insuranceSalaryStart": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "insuranceSalaryCurrent": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "probationSalary": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "officialSalary": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "bankAccountNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankName": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "departmentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
           }
         },
         "additionalProperties": false

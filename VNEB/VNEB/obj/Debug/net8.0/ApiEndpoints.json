@@ -211,8 +211,18 @@
   },
   {
     "ContainingType": "VNEB.Controllers.UsersController",
+    "Method": "GetAll",
+    "RelativePath": "api/Users/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VNEB.Controllers.UsersController",
     "Method": "ChangePassword",
-    "RelativePath": "api/Users/change-password",
+    "RelativePath": "api/Users/auth/change-password",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -237,6 +247,22 @@
         "Name": "departmentId",
         "Type": "System.String",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VNEB.Controllers.UsersController",
+    "Method": "DownloadContract",
+    "RelativePath": "api/Users/download-contract",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filePath",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -269,6 +295,48 @@
         "Name": "newUserDto",
         "Type": "VNEB.DTO.UserDTO.NewUserDTO",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VNEB.Controllers.UsersController",
+    "Method": "UpdateInfo",
+    "RelativePath": "api/Users/update-info",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "VNEB.Models.User",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VNEB.Controllers.UsersController",
+    "Method": "UploadFile",
+    "RelativePath": "api/Users/upload-contract",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "type",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

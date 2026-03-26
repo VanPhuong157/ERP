@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,11 +15,13 @@ namespace VNEB.Repository.Users
     {
         private readonly VnebContext _context;
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public UserRepository(VnebContext context, IConfiguration configuration)
+        public UserRepository(VnebContext context, IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _configuration = configuration;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<Response> Login(LoginDTO login)
@@ -122,8 +125,136 @@ namespace VNEB.Repository.Users
             return new Response { Code = 200, Message = "Deleted successfully" };
         }
 
-        // --- Helper Methods ---
+        public async Task<Response> GetAllUsers()
+        {
+            // Lấy toàn bộ thông tin bao gồm cả phòng ban
+            var users = await _context.Users.Include(u => u.Department).ToListAsync();
+            return new Response { Code = 200, Data = users };
+        }
 
+        public async Task<Response> UpdateUserInfo(User model)
+        {
+            try
+            {
+                var user = await _context.Users.FindAsync(model.Id);
+                if (user == null) return new Response { Code = 404, Message = "Không tìm thấy nhân viên." };
+
+                user.FullName = model.FullName;
+                user.Gender = model.Gender;
+                user.Birthday = model.Birthday;
+                user.IdCardNumber = model.IdCardNumber;
+                user.IdCardIssuedDate = model.IdCardIssuedDate;
+                user.IdCardIssuedPlace = model.IdCardIssuedPlace;
+                user.PermanentAddress = model.PermanentAddress;
+                user.Ethnic = model.Ethnic;
+                user.PhoneNumber = model.PhoneNumber;
+
+                user.Position = model.Position;
+                user.EducationLevel = model.EducationLevel;
+                user.School = model.School;
+                user.Major = model.Major;
+                user.DepartmentId = model.DepartmentId;
+                user.JoinDate = model.JoinDate;
+                user.ProbationStartDate = model.ProbationStartDate;
+                user.ProbationEndDate = model.ProbationEndDate;
+
+                user.ProbationSalary = model.ProbationSalary;
+                user.OfficialSalary = model.OfficialSalary;
+                user.InsuranceSalaryStart = model.InsuranceSalaryStart;
+                user.InsuranceSalaryCurrent = model.InsuranceSalaryCurrent;
+                user.TaxCode = model.TaxCode;
+                user.InsuranceCode = model.InsuranceCode;
+                user.BankAccountNumber = model.BankAccountNumber;
+                user.BankName = model.BankName;
+
+                if (!string.IsNullOrEmpty(model.OfficialContractFile1)) user.OfficialContractFile1 = model.OfficialContractFile1;
+                if (!string.IsNullOrEmpty(model.OfficialContractFile2)) user.OfficialContractFile2 = model.OfficialContractFile2;
+                if (!string.IsNullOrEmpty(model.OfficialContractFile3)) user.OfficialContractFile3 = model.OfficialContractFile3;
+
+                await _context.SaveChangesAsync();
+                return new Response { Code = 200, Message = "Cập nhật thông tin nhân sự thành công." };
+            }
+            catch (Exception ex)
+            {
+                return new Response { Code = 500, Message = $"Lỗi cập nhật: {ex.Message}" };
+            }
+        }
+
+        public async Task<string> UploadContractFile(IFormFile file, string userId, string type)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null) throw new Exception("User không tồn tại");
+
+            string folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", "contracts");
+            if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+
+            string oldRelativePath = type switch
+            {
+                "1" => user.OfficialContractFile1,
+                "2" => user.OfficialContractFile2,
+                "3" => user.OfficialContractFile3,
+                _ => null
+            };
+
+            if (!string.IsNullOrEmpty(oldRelativePath))
+            {
+                var fullOldPath = Path.Combine(_webHostEnvironment.WebRootPath, oldRelativePath.TrimStart('/'));
+
+                if (System.IO.File.Exists(fullOldPath))
+                {
+                    try
+                    {
+                        System.IO.File.Delete(fullOldPath);
+                    }
+                    catch (Exception) {  }
+                }
+            }
+
+            string fileName = $"{userId}_{type}_{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            string relativePath = Path.Combine("uploads", "contracts", fileName).Replace("\\", "/");
+            string fullPath = Path.Combine(_webHostEnvironment.WebRootPath, relativePath);
+
+            using (var stream = new FileStream(fullPath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            if (type == "1") user.OfficialContractFile1 = relativePath;
+            else if (type == "2") user.OfficialContractFile2 = relativePath;
+            else if (type == "3") user.OfficialContractFile3 = relativePath;
+
+            await _context.SaveChangesAsync();
+            return relativePath;
+        }
+
+        // --- Helper Methods ---
+        public async Task<(byte[] Bytes, string ContentType, string FileName)> DownloadContractFile(string filePath)
+        {
+            var cleanPath = filePath.Replace("\\", "/").TrimStart('/');
+            var absolutePath = Path.Combine(_webHostEnvironment.WebRootPath, cleanPath);
+
+            if (!System.IO.File.Exists(absolutePath))
+            {
+                throw new FileNotFoundException("Không tìm thấy file trên server.");
+            }
+
+            var bytes = await System.IO.File.ReadAllBytesAsync(absolutePath);
+
+            var extension = Path.GetExtension(cleanPath).ToLower();
+            var fileName = Path.GetFileName(cleanPath);
+
+            string contentType = extension switch
+            {
+                ".docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                ".doc" => "application/msword",
+                ".xlsx" => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                ".xls" => "application/vnd.ms-excel",
+                ".pdf" => "application/pdf",
+                _ => "application/octet-stream"
+            };
+
+            return (bytes, contentType, fileName);
+        }
         private string HashPassword(string password)
         {
             // Sử dụng SHA256 đơn giản (không salt)
