@@ -22,6 +22,7 @@ import {
   Receipt,
   Paperclip,
   Download,
+  Filter,
 } from "lucide-react";
 import { authenApi } from "../authen/authenApi";
 import Swal from "sweetalert2";
@@ -60,6 +61,11 @@ const EmployeeManagerPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<any>(null);
   const [searchText, setSearchText] = useState("");
+  
+  // States cho chức năng lọc (Filter)
+  const [filterDept, setFilterDept] = useState("");
+  const [filterCompany, setFilterCompany] = useState("");
+  
   const [activeTab, setActiveTab] = useState("personal");
 
   const fetchUsers = async () => {
@@ -77,6 +83,14 @@ const EmployeeManagerPage = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  // Tự động trích xuất danh sách Phòng ban và Công ty duy nhất từ dữ liệu trả về
+  const departments = Array.from(
+    new Set(users.map((u) => u.departmentName || u.department?.name).filter(Boolean))
+  );
+  const companies = Array.from(
+    new Set(users.map((u) => u.company).filter(Boolean))
+  );
 
   const handleEdit = async (id: string) => {
     try {
@@ -105,31 +119,21 @@ const EmployeeManagerPage = () => {
 
     try {
       const response = await authenApi.downloadContract(filePath);
-
       const blob = new Blob([response.data], {
         type: response.headers["content-type"] || "application/octet-stream",
       });
-
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-
       const finalFileName = fileName || filePath.split("/").pop() || "document";
-
       link.setAttribute("download", finalFileName);
       document.body.appendChild(link);
       link.click();
-
-      // Dọn dẹp
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error("Download error:", err);
-      Swal.fire(
-        "Lỗi",
-        "Không thể tải file. Hãy kiểm tra responseType trong API call.",
-        "error",
-      );
+      Swal.fire("Lỗi", "Không thể tải file", "error");
     }
   };
 
@@ -146,17 +150,13 @@ const EmployeeManagerPage = () => {
         allowOutsideClick: false,
         didOpen: () => Swal.showLoading(),
       });
-
       const res = await authenApi.uploadContract(file, editingUser.id, type);
-
       if (res.data.code === 200) {
         const newPath = res.data.data;
-
         setEditingUser((prev: any) => ({
           ...prev,
           [`officialContractFile${type}`]: newPath,
         }));
-
         Swal.fire("Thành công", `Đã cập nhật file hợp đồng ${type}`, "success");
       }
     } catch (err) {
@@ -177,16 +177,24 @@ const EmployeeManagerPage = () => {
     }
   };
 
-  const filteredUsers = users.filter(
-    (u: any) =>
+  // Logic lọc dữ liệu tổng hợp
+  const filteredUsers = users.filter((u: any) => {
+    const matchesSearch =
       u.fullName?.toLowerCase().includes(searchText.toLowerCase()) ||
-      u.username?.toLowerCase().includes(searchText.toLowerCase()),
-  );
+      u.username?.toLowerCase().includes(searchText.toLowerCase());
+    
+    const uDept = u.departmentName || u.department?.name || "";
+    const matchesDept = filterDept === "" || uDept === filterDept;
+    
+    const matchesCompany = filterCompany === "" || u.company === filterCompany;
+
+    return matchesSearch && matchesDept && matchesCompany;
+  });
 
   return (
     <div className="p-4 animate-in fade-in duration-500">
-      {/* Header Section */}
-      <div className="flex justify-between items-center mb-8 bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+      {/* Header & Filter Section */}
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 bg-white p-6 rounded-3xl shadow-sm border border-slate-100 gap-4">
         <div>
           <h2 className="text-2xl font-black text-slate-800 flex items-center gap-3 uppercase italic">
             <div className="p-2 bg-blue-600 text-white rounded-xl">
@@ -198,74 +206,128 @@ const EmployeeManagerPage = () => {
             Quản lý tập trung dữ liệu VNEB - VHS
           </p>
         </div>
-        <div className="relative group">
-          <Search
-            className="absolute left-4 top-3 text-slate-400 group-focus-within:text-blue-600 transition-colors"
-            size={20}
-          />
-          <input
-            type="text"
-            placeholder="Tìm theo tên hoặc tài khoản..."
-            className="pl-12 pr-6 py-3 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-blue-500 w-80 text-sm font-medium transition-all shadow-inner bg-slate-50"
-            onChange={(e) => setSearchText(e.target.value)}
-          />
+
+        <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+          {/* Bộ lọc Công ty */}
+          <div className="relative">
+            <select
+              className="pl-4 pr-10 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl text-[11px] font-black uppercase text-slate-600 outline-none focus:border-blue-500 appearance-none cursor-pointer min-w-[160px] transition-all"
+              value={filterCompany}
+              onChange={(e) => setFilterCompany(e.target.value)}
+            >
+              <option value="">Tất cả công ty</option>
+              {companies.map((c: any) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+            <Building2 size={14} className="absolute right-4 top-4 text-slate-400 pointer-events-none" />
+          </div>
+
+          {/* Bộ lọc Phòng ban */}
+          <div className="relative">
+            <select
+              className="pl-4 pr-10 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl text-[11px] font-black uppercase text-slate-600 outline-none focus:border-blue-500 appearance-none cursor-pointer min-w-[160px] transition-all"
+              value={filterDept}
+              onChange={(e) => setFilterDept(e.target.value)}
+            >
+              <option value="">Tất cả phòng ban</option>
+              {departments.map((d: any) => (
+                <option key={d} value={d}>{d}</option>
+              ))}
+            </select>
+            <Filter size={14} className="absolute right-4 top-4 text-slate-400 pointer-events-none" />
+          </div>
+
+          {/* Ô tìm kiếm */}
+          <div className="relative group flex-1 lg:flex-none">
+            <Search
+              className="absolute left-4 top-3 text-slate-400 group-focus-within:text-blue-600 transition-colors"
+              size={20}
+            />
+            <input
+              type="text"
+              placeholder="Tìm theo tên hoặc tài khoản..."
+              className="pl-12 pr-6 py-3 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-blue-500 w-full lg:w-72 text-sm font-medium transition-all shadow-inner bg-slate-50"
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+          </div>
         </div>
       </div>
 
       {/* Main Table */}
       <div className="bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
-        <table className="w-full text-left">
-          <thead className="bg-slate-800 text-white font-bold uppercase text-[10px] tracking-[0.2em]">
-            <tr>
-              <th className="px-8 py-5">Nhân viên</th>
-              <th className="px-8 py-5">Tài khoản (Email)</th>
-              <th className="px-8 py-5">Phòng ban</th>
-              <th className="px-8 py-5">Chức vụ</th>
-              <th className="px-8 py-5 text-center">Thao tác</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {filteredUsers.map((user) => (
-              <tr
-                key={user.id}
-                className="hover:bg-blue-50/50 transition-all group cursor-default"
-              >
-                <td className="px-8 py-5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center font-black group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">
-                      {user.fullName?.charAt(0)}
-                    </div>
-                    <div>
-                      <div className="font-black text-slate-700 uppercase italic text-sm">
-                        {user.fullName}
-                      </div>
-                      <div className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">
-                        ID: {user.id.substring(0, 8)}...
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-8 py-5 font-bold text-slate-500 text-sm">
-                  {user.username}
-                </td>
-                <td className="px-8 py-5 font-bold text-blue-600 text-xs uppercase italic">
-                  {user.departmentName || user.department?.name || "Chưa gán"}
-                </td>
-                <td className="px-8 py-5 text-slate-500 font-medium italic">
-                  {user.position || "Nhân viên"}
-                </td>
-                <td className="px-8 py-5 text-center">
-                  <button
-                    onClick={() => handleEdit(user.id)}
-                    className="bg-slate-100 text-slate-600 p-2.5 rounded-xl hover:bg-blue-600 hover:text-white transition-all shadow-sm active:scale-95"
-                  >
-                    <Edit size={18} />
-                  </button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead className="bg-slate-800 text-white font-bold uppercase text-[10px] tracking-[0.2em]">
+              <tr>
+                <th className="px-6 py-5">Nhân viên</th>
+                <th className="px-6 py-5">Tài khoản</th>
+                <th className="px-6 py-5">Số điện thoại</th>
+                <th className="px-6 py-5">Công ty</th>
+                <th className="px-6 py-5">Phòng ban</th>
+                <th className="px-6 py-5">Chức vụ</th>
+                <th className="px-6 py-5 text-center">Thao tác</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {filteredUsers.map((user) => (
+                <tr
+                  key={user.id}
+                  className="hover:bg-blue-50/50 transition-all group cursor-default"
+                >
+                  <td className="px-6 py-5">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center font-black group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">
+                        {user.fullName?.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="font-black text-slate-700 uppercase italic text-sm">
+                          {user.fullName}
+                        </div>
+                        <div className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">
+                          ID: {user.id.substring(0, 8)}...
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-5 font-bold text-slate-500 text-sm">
+                    {user.username}
+                  </td>
+                  <td className="px-6 py-5 font-bold text-slate-600 text-sm">
+                    <div className="flex items-center gap-2">
+                      <Phone size={12} className="text-slate-400" />
+                      {user.phoneNumber || "---"}
+                    </div>
+                  </td>
+                  <td className="px-6 py-5">
+                    <span className="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black uppercase tracking-wider">
+                      {user.company || "N/A"}
+                    </span>
+                  </td>
+                  <td className="px-6 py-5 font-bold text-blue-600 text-xs uppercase italic">
+                    {user.departmentName || user.department?.name || "Chưa gán"}
+                  </td>
+                  <td className="px-6 py-5 text-slate-500 font-medium italic">
+                    {user.position || "Nhân viên"}
+                  </td>
+                  <td className="px-6 py-5 text-center">
+                    <button
+                      onClick={() => handleEdit(user.id)}
+                      className="bg-slate-100 text-slate-600 p-2.5 rounded-xl hover:bg-blue-600 hover:text-white transition-all shadow-sm active:scale-95"
+                    >
+                      <Edit size={18} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {filteredUsers.length === 0 && (
+          <div className="py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-xs">
+            Không tìm thấy kết quả phù hợp
+          </div>
+        )}
       </div>
 
       {/* Modal */}
@@ -319,7 +381,11 @@ const EmployeeManagerPage = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-8 py-5 flex items-center gap-3 text-xs font-black uppercase tracking-widest transition-all border-b-4 whitespace-nowrap ${activeTab === tab.id ? "border-blue-600 text-blue-600" : "border-transparent text-slate-400 hover:text-slate-600"}`}
+                  className={`px-8 py-5 flex items-center gap-3 text-xs font-black uppercase tracking-widest transition-all border-b-4 whitespace-nowrap ${
+                    activeTab === tab.id
+                      ? "border-blue-600 text-blue-600"
+                      : "border-transparent text-slate-400 hover:text-slate-600"
+                  }`}
                 >
                   <tab.icon size={16} /> {tab.label}
                 </button>

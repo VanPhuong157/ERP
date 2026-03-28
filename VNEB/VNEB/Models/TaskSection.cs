@@ -12,7 +12,7 @@ namespace VNEB.Models
         [ForeignKey("RegistrationId")]
         public virtual TaskRegistration? TaskRegistration { get; set; }
 
-        public string Category { get; set; } = "A"; // A, B, C
+        public string Category { get; set; } = string.Empty;
         public string SectionName { get; set; } = string.Empty;
 
         public int PersonalWeight { get; set; } = 0;

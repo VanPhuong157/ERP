@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
 
-const baseUrl = 'http://103.176.179.125:5244';
-//const baseUrl = 'http://localhost:5244';
+//const baseUrl = 'http://103.176.179.125:5244';
+const baseUrl = 'http://localhost:5244';
 
 
 const rootApi = axios.create({

@@ -2,6 +2,7 @@
 using VNEB.DTO.TaskDTO;
 using VNEB.Models;
 using VNEB.Responses;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VNEB.Repository.Tasks
 {
@@ -209,39 +210,39 @@ namespace VNEB.Repository.Tasks
         {
             try
             {
-                var query = _context.TaskItems
-                    .Include(ti => ti.TaskSection)
-                        .ThenInclude(ts => ts.TaskRegistration)
-                            .ThenInclude(tr => tr.User)
-                    .AsQueryable();
+                var query = _context.TaskItems.AsQueryable();
 
-                // LOGIC LỌC: Ưu tiên lọc theo UserId nếu có giá trị thực sự
+                // 1. Xác định danh sách nhân viên cần lấy báo cáo
+                List<User> targetUsers = new List<User>();
                 if (!string.IsNullOrWhiteSpace(userId))
                 {
                     query = query.Where(ti => ti.TaskSection.TaskRegistration.UserId == userId);
                 }
                 else if (deptId.HasValue)
                 {
-                    // Nếu userId trống, lấy toàn bộ nhân viên trong phòng ban (bao gồm phòng con)
                     var childDepts = await GetChildDepartmentIds(deptId.Value);
+                    targetUsers = await _context.Users
+                        .Where(u => childDepts.Contains(u.DepartmentId))
+                        .ToListAsync();
+
                     query = query.Where(ti => childDepts.Contains(ti.TaskSection.TaskRegistration.User.DepartmentId));
                 }
 
-                var allItems = await query.ToListAsync();
+                var allItems = await query
+                    .Include(ti => ti.TaskSection)
+                        .ThenInclude(ts => ts.TaskRegistration)
+                    .ToListAsync();
 
-                // Lọc theo ngày và nội dung
                 var filteredItems = allItems.Where(t => {
-                    if (string.IsNullOrEmpty(t.StartDate)) return false;
-                    if (DateTime.TryParse(t.StartDate, out DateTime dt))
-                    {
-                        return dt.Date >= fromDate.Date && dt.Date <= toDate.Date
-                               && !string.IsNullOrWhiteSpace(t.TaskDescription);
-                    }
-                    return false;
-                }).ToList();
+                    if (string.IsNullOrWhiteSpace(t.TaskDescription)) return false;
+                    bool hasStart = DateTime.TryParse(t.StartDate, out DateTime taskStart);
+                    bool hasEnd = DateTime.TryParse(t.EndDate, out DateTime taskEnd);
+                    if (!hasStart) return false;
 
-                if (!filteredItems.Any())
-                    return new Response { Code = 200, Data = CreateEmptyStats() };
+                    bool startInMonth = taskStart.Date >= fromDate.Date && taskStart.Date <= toDate.Date;
+                    bool endNotOver = hasEnd && taskEnd.Date <= toDate.Date;
+                    return startInMonth && endNotOver;
+                }).ToList();
 
                 // HELPERS
                 int SafeParse(string? val) => int.TryParse(val?.Replace("%", "").Trim(), out int res) ? res : 0;
@@ -249,21 +250,52 @@ namespace VNEB.Repository.Tasks
                 bool IsMedium(string? val) => val == "Medium" || val == "Normal" || val == "T.Bình" || val == "Trung bình";
                 bool IsLow(string? val) => val == "Low" || val == "Thấp";
 
-                var total = filteredItems.Count;
+                var employeeList = Enumerable.Empty<dynamic>().ToList();
 
+                if (string.IsNullOrWhiteSpace(userId) && targetUsers.Any())
+                {
+                    employeeList = targetUsers.Select(u => {
+                        var userTasks = filteredItems.Where(ti => ti.TaskSection.TaskRegistration.UserId == u.Id).ToList();
+                        int totalCount = userTasks.Count;
+                        int completedCount = userTasks.Count(t => SafeParse(t.ManagerResult) == 100);
+
+                        return (dynamic)new
+                        {
+                            u.Id,
+                            u.FullName,
+                            Total = totalCount,
+                            Completed = completedCount
+                        };
+                    }).ToList();
+                }
+
+                if (!filteredItems.Any())
+                {
+                    var emptyStats = CreateEmptyStats();
+                    return new Response
+                    {
+                        Code = 200,
+                        Data = new
+                        {
+                            SectionKPI = ((dynamic)emptyStats).SectionKPI,
+                            SectionComplexity = ((dynamic)emptyStats).SectionComplexity,
+                            SectionPriority = ((dynamic)emptyStats).SectionPriority,
+                            EmployeeList = employeeList
+                        }
+                    };
+                }
+
+                var total = filteredItems.Count;
                 var result = new
                 {
                     SectionKPI = new
                     {
                         TotalRegistered = total,
-                        // Mức 1: Hoàn thành đúng hạn (100%)
                         CompletedOnTime = filteredItems.Count(t => SafeParse(t.ManagerResult) == 100),
-                        // Mức 2: Hoàn thành mức trung bình (31% - 50%)
                         CompletedAverage = filteredItems.Count(t => {
                             int score = SafeParse(t.ManagerResult);
-                            return score >= 31 && score <= 50;
+                            return score >= 31 && score < 100;
                         }),
-                        // Mức 3: Mức cảnh báo (<= 30%)
                         CompletedWarning = filteredItems.Count(t => SafeParse(t.ManagerResult) <= 30),
                         CompletedAbove50 = filteredItems.Count(t => SafeParse(t.ManagerResult) >= 50)
                     },
@@ -287,13 +319,15 @@ namespace VNEB.Repository.Tasks
                         HighPriorityRate = CalculatePriority(filteredItems, "High"),
                         MediumPriorityRate = CalculatePriority(filteredItems, "Medium"),
                         LowPriorityRate = CalculatePriority(filteredItems, "Low")
-                    }
+                    },
+                    EmployeeList = employeeList
                 };
 
                 return new Response { Code = 200, Data = result };
             }
             catch (Exception ex) { return new Response { Code = 500, Message = ex.Message }; }
         }
+
 
         private object CreateEmptyStats() => new
         {
