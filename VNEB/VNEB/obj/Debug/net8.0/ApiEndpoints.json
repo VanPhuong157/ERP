@@ -10,6 +10,100 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VNEB.Controllers.LeaveRequestsController",
+    "Method": "Delete",
+    "RelativePath": "api/LeaveRequests/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VNEB.Controllers.LeaveRequestsController",
+    "Method": "Approve",
+    "RelativePath": "api/LeaveRequests/approve",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "requestId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "approverRole",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VNEB.Controllers.LeaveRequestsController",
+    "Method": "Create",
+    "RelativePath": "api/LeaveRequests/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "VNEB.Models.LeaveRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VNEB.Controllers.LeaveRequestsController",
+    "Method": "GetForApprover",
+    "RelativePath": "api/LeaveRequests/get-approvals",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VNEB.Controllers.LeaveRequestsController",
+    "Method": "GetByUser",
+    "RelativePath": "api/LeaveRequests/my-requests",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VNEB.Controllers.LeaveRequestsController",
+    "Method": "GetStatistical",
+    "RelativePath": "api/LeaveRequests/statistical",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "company",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "deptId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SpecificationsController",
     "Method": "Get",
     "RelativePath": "api/Specifications",

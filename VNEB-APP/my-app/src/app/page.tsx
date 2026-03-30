@@ -20,6 +20,7 @@ import {
   UserPlus,
   Award,
   KeyRound,
+  FileX,
 } from "lucide-react";
 
 // Import các trang
@@ -35,6 +36,7 @@ import TaskManagementPage from "../page/task/TaskManagementPage";
 import RegisterUserPage from "../page/authen/RegisterUserPage";
 import ChangePasswordPage from "../page/authen/changePass";
 import EmployeeManagerPage from "../page/authen/EmployeeManager";
+import LeaveManagementPage from "../page/leave/LeaveManagementPage";
 
 interface User {
   id: string;
@@ -127,8 +129,17 @@ export default function App() {
           deptId: "4",
           accessRoles: ["CHAIRMAN", "BOD", "ADMIN"],
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
+            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
           ],
         },
         {
@@ -137,8 +148,17 @@ export default function App() {
           deptId: "5",
           icon: Wrench,
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
+            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
             { id: "equipment", label: "Quản lý Xuất - Nhập", icon: Package },
             { id: "inventory", label: "Kho vật tư", icon: Warehouse },
             { id: "specifications", label: "Quản lý thiết bị", icon: Wrench },
@@ -151,8 +171,17 @@ export default function App() {
           deptId: "3",
           icon: Users,
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
+            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
             { id: "customers", label: "Quản lý khách hàng", icon: Users },
             { id: "electricity", label: "Mua bán điện", icon: Package },
           ],
@@ -171,8 +200,17 @@ export default function App() {
           deptId: "4",
           accessRoles: ["CHAIRMAN", "BOD", "ADMIN"],
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
+            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
           ],
         },
         {
@@ -181,8 +219,17 @@ export default function App() {
           icon: Wallet,
           deptId: "6",
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
+            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
           ],
         },
         {
@@ -191,8 +238,17 @@ export default function App() {
           icon: Users,
           deptId: "7",
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
+            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
             { id: "employee-manager", label: "Quản lý nhân sự", icon: Users },
           ],
         },
@@ -202,8 +258,17 @@ export default function App() {
           icon: Calendar,
           deptId: "2",
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
+            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
           ],
         },
         {
@@ -212,8 +277,17 @@ export default function App() {
           icon: Wrench,
           deptId: "8",
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
+            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
           ],
         },
         {
@@ -222,8 +296,17 @@ export default function App() {
           icon: Briefcase,
           deptId: "9",
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
+            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
           ],
         },
         {
@@ -232,8 +315,17 @@ export default function App() {
           icon: Users,
           deptId: "10",
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
+            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
           ],
         },
         {
@@ -242,15 +334,28 @@ export default function App() {
           icon: Truck,
           deptId: "11",
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
+            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
           ],
         },
       ],
     },
   ];
 
-  const getFilteredMenu = (items: any[], parentDeptId: string | null = null, parentId: string | null = null): any[] => {
+  const getFilteredMenu = (
+    items: any[],
+    parentDeptId: string | null = null,
+    parentId: string | null = null,
+  ): any[] => {
     if (!user) return [];
     const role = user.role.toUpperCase();
     const userCompany = user.company.toUpperCase();
@@ -259,26 +364,43 @@ export default function App() {
       .filter((item) => {
         if (item.id === "admin-section") return role === "ADMIN";
         if (item.id === "VNEB" || item.id === "VHS")
-          return (role === "ADMIN" || role === "CHAIRMAN" || userCompany === item.id);
+          return (
+            role === "ADMIN" || role === "CHAIRMAN" || userCompany === item.id
+          );
         if (item.accessRoles) return item.accessRoles.includes(role);
 
         const currentId = item.deptId || parentDeptId;
-        if (role !== "ADMIN" && role !== "CHAIRMAN" && role !== "BOD" && currentId) {
+        if (
+          role !== "ADMIN" &&
+          role !== "CHAIRMAN" &&
+          role !== "BOD" &&
+          currentId
+        ) {
           return currentId === user.deptId;
         }
         return true;
       })
       .map((item) => {
         const currentDeptId = item.deptId || parentDeptId;
-        const currentParentId = parentId || (item.id === "VNEB" || item.id === "VHS" ? item.id : null);
+        const currentParentId =
+          parentId ||
+          (item.id === "VNEB" || item.id === "VHS" ? item.id : null);
         if (item.children)
           return {
             ...item,
             deptId: currentDeptId,
             parentCompanyId: currentParentId,
-            children: getFilteredMenu(item.children, currentDeptId, currentParentId),
+            children: getFilteredMenu(
+              item.children,
+              currentDeptId,
+              currentParentId,
+            ),
           };
-        return { ...item, deptId: currentDeptId, parentCompanyId: currentParentId };
+        return {
+          ...item,
+          deptId: currentDeptId,
+          parentCompanyId: currentParentId,
+        };
       });
   };
 
@@ -286,7 +408,8 @@ export default function App() {
     const hasChildren = item.children && item.children.length > 0;
     const isOpen = openMenus.includes(item.id);
     const isSameDept = !item.deptId || activeDept?.id === item.deptId;
-    const isSameCompany = !item.parentCompanyId || activeDept?.companyId === item.parentCompanyId;
+    const isSameCompany =
+      !item.parentCompanyId || activeDept?.companyId === item.parentCompanyId;
     const isActive = currentPage === item.id && isSameDept && isSameCompany;
 
     return (
@@ -295,7 +418,9 @@ export default function App() {
           onClick={() => {
             if (hasChildren) {
               setOpenMenus((prev) =>
-                prev.includes(item.id) ? prev.filter((i) => i !== item.id) : [...prev, item.id]
+                prev.includes(item.id)
+                  ? prev.filter((i) => i !== item.id)
+                  : [...prev, item.id],
               );
             } else {
               setCurrentPage(item.id);
@@ -309,11 +434,19 @@ export default function App() {
             }
           }}
           className={`w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors ${isActive ? "bg-blue-600 text-white font-medium shadow-lg" : "text-slate-300 hover:bg-slate-800"}`}
-          style={{ paddingLeft: sidebarOpen ? `${(level + 1) * 12}px` : "16px" }}
+          style={{
+            paddingLeft: sidebarOpen ? `${(level + 1) * 12}px` : "16px",
+          }}
         >
-          <item.icon className={`w-4 h-4 flex-shrink-0 ${isActive ? "text-white" : "text-slate-400"}`} />
-          {sidebarOpen && <span className="flex-1 text-left truncate">{item.label}</span>}
-          {sidebarOpen && hasChildren && (isOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />)}
+          <item.icon
+            className={`w-4 h-4 flex-shrink-0 ${isActive ? "text-white" : "text-slate-400"}`}
+          />
+          {sidebarOpen && (
+            <span className="flex-1 text-left truncate">{item.label}</span>
+          )}
+          {sidebarOpen &&
+            hasChildren &&
+            (isOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />)}
         </button>
         {hasChildren && isOpen && sidebarOpen && (
           <div className="bg-slate-950/20">
@@ -329,7 +462,12 @@ export default function App() {
   const renderPage = () => {
     switch (currentPage) {
       case "dept-dashboard":
-        return <DashboardPage targetDeptId={activeDept?.id} title={`Báo cáo ${activeDept?.name}`} />;
+        return (
+          <DashboardPage
+            targetDeptId={activeDept?.id}
+            title={`Báo cáo ${activeDept?.name}`}
+          />
+        );
       case "user-registration":
         return <RegisterUserPage />;
       case "equipment":
@@ -348,19 +486,27 @@ export default function App() {
         return <ChangePasswordPage />;
       case "task-registration":
         return <TaskManagementPage targetDept={activeDept} />;
-        case "employee-manager":
-  return <EmployeeManagerPage />
+      case "employee-manager":
+        return <EmployeeManagerPage />;
+      case "resignation":
+        return <LeaveManagementPage />;
       default:
         return <TaskManagementPage targetDept={activeDept} />;
     }
   };
 
   if (isLoadingAuth)
-    return <div className="h-screen bg-slate-900 flex items-center justify-center text-white">Đang tải...</div>;
+    return (
+      <div className="h-screen bg-slate-900 flex items-center justify-center text-white">
+        Đang tải...
+      </div>
+    );
 
   if (!user)
     return (
-      <AppContext.Provider value={{ user, setUser, currentPage, setCurrentPage }}>
+      <AppContext.Provider
+        value={{ user, setUser, currentPage, setCurrentPage }}
+      >
         <LoginPage />
       </AppContext.Provider>
     );
@@ -368,10 +514,18 @@ export default function App() {
   return (
     <AppContext.Provider value={{ user, setUser, currentPage, setCurrentPage }}>
       <div className="flex h-screen bg-slate-100 font-sans text-slate-900">
-        <aside className={`${sidebarOpen ? "w-64" : "w-20"} bg-slate-900 text-white transition-all duration-300 flex flex-col z-30`}>
+        <aside
+          className={`${sidebarOpen ? "w-64" : "w-20"} bg-slate-900 text-white transition-all duration-300 flex flex-col z-30`}
+        >
           <div className="p-6 border-b border-slate-800 flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center font-black text-xl">V</div>
-            {sidebarOpen && <span className="text-xl font-black uppercase italic">VHS ERP</span>}
+            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center font-black text-xl">
+              V
+            </div>
+            {sidebarOpen && (
+              <span className="text-xl font-black uppercase italic">
+                VHS ERP
+              </span>
+            )}
           </div>
 
           <nav className="flex-1 overflow-y-auto py-4 scrollbar-hide">
@@ -385,13 +539,17 @@ export default function App() {
               <div className="px-3 py-3 bg-slate-800/50 rounded-xl border border-slate-700/50">
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="font-bold text-white truncate text-sm">{user.name}</p>
-                    <p className="text-blue-400 text-[10px] font-black uppercase">{user.company} • {user.role}</p>
+                    <p className="font-bold text-white truncate text-sm">
+                      {user.name}
+                    </p>
+                    <p className="text-blue-400 text-[10px] font-black uppercase">
+                      {user.company} • {user.role}
+                    </p>
                   </div>
                   {/* NÚT ĐỔI MẬT KHẨU TÍCH HỢP GỌN GÀNG */}
                   <button
                     onClick={() => setCurrentPage("change-password")}
-                    className={`p-1.5 rounded-lg transition-colors ${currentPage === 'change-password' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:bg-slate-700 hover:text-blue-400'}`}
+                    className={`p-1.5 rounded-lg transition-colors ${currentPage === "change-password" ? "bg-blue-600 text-white" : "text-slate-400 hover:bg-slate-700 hover:text-blue-400"}`}
                     title="Đổi mật khẩu"
                   >
                     <KeyRound size={14} />
@@ -399,7 +557,7 @@ export default function App() {
                 </div>
               </div>
             )}
-            
+
             <button
               onClick={() => {
                 localStorage.clear();
@@ -408,9 +566,11 @@ export default function App() {
               className="w-full flex items-center gap-3 px-4 py-2.5 text-slate-400 hover:text-white hover:bg-red-600/20 rounded-xl transition-all"
             >
               <LogOut className="w-4 h-4 text-red-500" />
-              {sidebarOpen && <span className="text-sm font-bold">Đăng xuất</span>}
+              {sidebarOpen && (
+                <span className="text-sm font-bold">Đăng xuất</span>
+              )}
             </button>
-            
+
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="w-full flex items-center justify-center p-2 text-slate-600 hover:text-white mt-2"
@@ -422,7 +582,9 @@ export default function App() {
 
         <div className="flex-1 flex flex-col overflow-hidden">
           <header className="bg-white border-b border-slate-200 px-8 py-5 flex items-center justify-between shadow-sm z-20">
-            <h1 className="text-lg font-black text-slate-900 uppercase tracking-tight">Hệ thống Quản trị Doanh nghiệp</h1>
+            <h1 className="text-lg font-black text-slate-900 uppercase tracking-tight">
+              Hệ thống Quản trị Doanh nghiệp
+            </h1>
             {activeDept && (
               <div className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-[10px] font-black uppercase border border-blue-100 flex items-center gap-2">
                 <Building2 size={12} /> {activeDept.name}

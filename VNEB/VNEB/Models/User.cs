@@ -7,33 +7,32 @@ namespace VNEB.Models
     public class User
     {
         [Key]
-        public string Id { get; set; } // Mã nhân viên (Primary Key)
+        public string Id { get; set; }
         public string Username { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty; 
-        public string FullName { get; set; } = string.Empty; // Họ và tên
+        public string FullName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public string Role { get; set; } // Vai trò hệ thống
-        public string Company { get; set; } = string.Empty; // Pháp nhân ký HĐLĐ
+        public string Role { get; set; }
+        public string Company { get; set; } = string.Empty;
 
         // --- Thông tin định danh & Liên hệ ---
-        public string? Gender { get; set; } // Giới tính
-        public DateTime? Birthday { get; set; } // Ngày tháng năm sinh
-        public string? IdCardNumber { get; set; } // Số CMTND
-        public DateTime? IdCardIssuedDate { get; set; } // Cấp ngày
-        public string? IdCardIssuedPlace { get; set; } // Nơi cấp
-        public string? PermanentAddress { get; set; } // Hộ khẩu thường trú
-        public string? Ethnic { get; set; } // Dân tộc
-        public string? PhoneNumber { get; set; } // ĐT Di động
+        public string? Gender { get; set; } 
+        public DateTime? Birthday { get; set; } 
+        public string? IdCardNumber { get; set; }
+        public DateTime? IdCardIssuedDate { get; set; }
+        public string? IdCardIssuedPlace { get; set; }
+        public string? PermanentAddress { get; set; }
+        public string? Ethnic { get; set; }
+        public string? PhoneNumber { get; set; }
 
         // --- Trình độ & Chuyên môn ---
-        public string? EducationLevel { get; set; } // Trình độ
-        public string? School { get; set; } // Trường
-        public string? Major { get; set; } // Chuyên ngành
+        public string? EducationLevel { get; set; }
+        public string? School { get; set; }
+        public string? Major { get; set; }
 
         // --- Thông tin công việc ---
-        public string? Position { get; set; } // Chức danh
-        public string? DepartmentName { get; set; } // Bộ phận (Dạng text)
-        public DateTime? JoinDate { get; set; } // Ngày vào
+        public string? Position { get; set; }
+        public DateTime? JoinDate { get; set; }
         public DateTime? ProbationStartDate { get; set; } // Thử việc từ ngày
         public DateTime? ProbationEndDate { get; set; } // Thử việc đến ngày
 
@@ -49,7 +48,7 @@ namespace VNEB.Models
         public DateTime? OfficialContractDate3 { get; set; } // Ngày ký HĐ lần 3
 
         // --- Mã số thuế & Bảo hiểm ---
-        public string? TaxCode { get; set; } // Mã số thuế
+        public string? TaxCode { get; set; }
         public string? InsuranceCode { get; set; } // Mã số BHXH
         public decimal? InsuranceSalaryStart { get; set; } // Mức lương đóng BHXH khởi điểm
         public decimal? InsuranceSalaryCurrent { get; set; } // Mức lương đóng BHXH hiện tại
@@ -65,7 +64,7 @@ namespace VNEB.Models
         public DateTime? RefreshTokenExpiryTime { get; set; }
 
         // --- Relationships ---
-        public int DepartmentId { get; set; } // ID Phòng ban
+        public int DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
         public virtual Department? Department { get; set; }
     }

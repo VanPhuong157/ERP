@@ -211,8 +211,8 @@ const { canEditGeneral, canEditResults, isApproverMode } = useMemo(() => {
   }
 
   return {
-    canEditGeneral: isOwner, // Cột CN: Chỉ chủ sở hữu được sửa
-    canEditResults: hasPermissionToEditQL, // Cột QL: Cấp trên sửa cấp dưới
+    canEditGeneral: isOwner || hasPermissionToEditQL, 
+    canEditResults: hasPermissionToEditQL,
     isApproverMode: !isOwner && hasPermissionToEditQL,
   };
 }, [user, activeUserId, targetUserRole]);

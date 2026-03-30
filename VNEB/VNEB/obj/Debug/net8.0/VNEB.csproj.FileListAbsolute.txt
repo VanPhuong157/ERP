@@ -281,5 +281,5 @@ D:\ERP\VNEB\VNEB\obj\Debug\net8.0\refint\VNEB.dll
 D:\ERP\VNEB\VNEB\obj\Debug\net8.0\VNEB.pdb
 D:\ERP\VNEB\VNEB\obj\Debug\net8.0\VNEB.genruntimeconfig.cache
 D:\ERP\VNEB\VNEB\obj\Debug\net8.0\ref\VNEB.dll
-D:\ERP\VNEB\VNEB\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 D:\ERP\VNEB\VNEB\bin\Debug\net8.0\VNEB.staticwebassets.runtime.json
+D:\ERP\VNEB\VNEB\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
