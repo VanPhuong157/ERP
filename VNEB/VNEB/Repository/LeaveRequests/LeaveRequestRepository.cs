@@ -220,35 +220,53 @@ namespace VNEB.Repository.LeaveRequests
         public async Task<Response> GetForApprover()
         {
             var currentUserId = GetCurrentUserId();
-            var currentUser = await _context.Users.FindAsync(currentUserId);
+            // Lấy user hiện tại kèm thông tin phòng ban
+            var currentUser = await _context.Users
+                .Include(u => u.Department)
+                .FirstOrDefaultAsync(u => u.Id == currentUserId);
+
             if (currentUser == null) return new Response { Code = 401 };
 
-            var query = _context.LeaveRequests.Include(r => r.User).ThenInclude(u => u.Department).AsQueryable();
-            query = query.Where(r => r.User.Company == currentUser.Company);
+            var query = _context.LeaveRequests
+                .Include(r => r.User)
+                .ThenInclude(u => u.Department)
+                .AsQueryable();
 
             string role = currentUser.Role?.ToUpper();
-            if (role == "MANAGER" || role == "TP")
-                query = query.Where(r => r.User.DepartmentId == currentUser.DepartmentId && r.CurrentApproverRole == "MANAGER");
+            string deptName = currentUser.Department?.Name?.ToUpper();
+
+            if (role == "CHAIRMAN" || deptName == "HCNS")
+            {
+                query = query.Where(r => r.Status == 0);
+            }
             else if (role == "BOD")
-                query = query.Where(r => r.CurrentApproverRole == "BOD");
-            else if (role == "CHAIRMAN")
-                query = query.Where(r => r.CurrentApproverRole == "CHAIRMAN");
+            {
+                query = query.Where(r => r.User.Company == currentUser.Company && r.CurrentApproverRole == "BOD");
+            }
+            else if (role == "MANAGER" || role == "TP")
+            {
+                query = query.Where(r => r.User.DepartmentId == currentUser.DepartmentId && r.CurrentApproverRole == "MANAGER");
+            }
+            else
+            {
+                return new Response { Code = 200, Data = new List<object>() };
+            }
 
             var data = await query.OrderByDescending(r => r.RequestDate)
                 .Select(r => new {
                     r.Id,
                     r.UserId,
                     FullName = r.User.FullName,
-                    DepartmentName = r.User.Department.Name,
+                    DepartmentId = r.User.DepartmentId,
+                    DepartmentName = r.User.Department != null ? r.User.Department.Name : "N/A",
                     r.ConfirmationType,
                     r.RequestDate,
+                    r.EndDate,
                     r.FromTime,
                     r.ToTime,
                     r.Reason,
                     r.Status,
-                    r.CurrentApproverRole,
-                    r.ApprovedBy,
-                    r.ApprovedDate
+                    r.CurrentApproverRole
                 }).ToListAsync();
 
             return new Response { Code = 200, Data = data };
