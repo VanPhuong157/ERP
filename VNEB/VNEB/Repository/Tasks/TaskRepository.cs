@@ -292,12 +292,16 @@ namespace VNEB.Repository.Tasks
                     {
                         TotalRegistered = total,
                         CompletedOnTime = filteredItems.Count(t => SafeParse(t.ManagerResult) == 100),
-                        CompletedAverage = filteredItems.Count(t => {
+
+                        CompletedEffort = filteredItems.Count(t => {
                             int score = SafeParse(t.ManagerResult);
-                            return score >= 31 && score < 100;
+                            return score >= 70 && score < 100;
                         }),
-                        CompletedWarning = filteredItems.Count(t => SafeParse(t.ManagerResult) <= 30),
-                        CompletedAbove50 = filteredItems.Count(t => SafeParse(t.ManagerResult) >= 50)
+                        CompletedWarning = filteredItems.Count(t => {
+                            int score = SafeParse(t.ManagerResult);
+                            return score >= 30 && score < 70;
+                        }),
+                        NotMet = filteredItems.Count(t => SafeParse(t.ManagerResult) < 30)
                     },
                     SectionComplexity = new
                     {
