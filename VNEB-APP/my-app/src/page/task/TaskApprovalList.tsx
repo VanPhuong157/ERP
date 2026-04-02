@@ -8,16 +8,21 @@ interface TaskApprovalListProps {
   onViewDetail: (userId: string, month: string) => void;
   targetDeptId?: string;
   targetDeptName?: string;
+  currentMonth?: string;
 }
 
 export default function TaskApprovalList({ onViewDetail, targetDeptId, targetDeptName }: TaskApprovalListProps) {
   const { user }: any = useAppContext(); 
   const [approvals, setApprovals] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const [filterMonth, setFilterMonth] = useState("2026-03");
+  const [filterMonth, setFilterMonth] = useState(() => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  });
   const [searchQuery, setSearchQuery] = useState("");
   const [filterStatus, setFilterStatus] = useState("ALL");
 
+  
   // 1. LOAD DATA TỪ API
   useEffect(() => {
     const loadData = async () => {

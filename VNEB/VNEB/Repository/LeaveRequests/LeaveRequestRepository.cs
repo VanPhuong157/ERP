@@ -9,13 +9,16 @@ namespace VNEB.Repository.LeaveRequests
     {
         private readonly VnebContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+
         public LeaveRequestRepository(VnebContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
+
         private string GetCurrentUserId() =>
-        _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+
         public async Task<Response> Create(LeaveRequest request)
         {
             try
@@ -23,9 +26,16 @@ namespace VNEB.Repository.LeaveRequests
                 var userId = GetCurrentUserId();
                 var user = await _context.Users.FindAsync(userId);
                 if (user == null) return new Response { Code = 404, Message = "User not found" };
-                request.UserId = userId;
-                string role = user.Role?.ToUpper() ?? "STAFF";
 
+                request.UserId = userId;
+
+                // Fix lỗi EndDate năm 0001 nếu người dùng không chọn ngày kết thúc (mặc định nghỉ 1 ngày)
+                if (request.EndDate < request.RequestDate || request.EndDate.Year < 2000)
+                {
+                    request.EndDate = request.RequestDate;
+                }
+
+                string role = user.Role?.ToUpper() ?? "STAFF";
                 request.Status = 0;
 
                 if (role == "STAFF")
@@ -39,10 +49,11 @@ namespace VNEB.Repository.LeaveRequests
                     request.Status = 1;
                     request.ApprovedDate = DateTime.Now;
                     request.ApprovedBy = "Hệ thống";
+                    request.CurrentApproverRole = "Done";
                 }
                 else
                 {
-                    request.CurrentApproverRole = "Manager";
+                    request.CurrentApproverRole = "MANAGER";
                 }
 
                 _context.LeaveRequests.Add(request);
@@ -60,6 +71,7 @@ namespace VNEB.Repository.LeaveRequests
         {
             try
             {
+                // 1. Lấy thông tin đơn nghỉ phép
                 var req = await _context.LeaveRequests
                     .Include(r => r.User)
                     .FirstOrDefaultAsync(x => x.Id == requestId);
@@ -70,7 +82,7 @@ namespace VNEB.Repository.LeaveRequests
                 var approver = await _context.Users.FindAsync(approverId);
                 if (approver == null) return new Response { Code = 401, Message = "Unauthorized" };
 
-
+                // 2. Kiểm tra quyền duyệt
                 if (req.CurrentApproverRole?.ToUpper() != approverRole?.ToUpper())
                 {
                     return new Response { Code = 403, Message = "Đơn này hiện không chờ cấp của bạn duyệt" };
@@ -81,37 +93,132 @@ namespace VNEB.Repository.LeaveRequests
                     return new Response { Code = 403, Message = "Trưởng phòng chỉ được duyệt đơn của phòng mình" };
                 }
 
-                string roleUp = approverRole.ToUpper();
-                if (roleUp == "MANAGER" || roleUp == "BOD" || roleUp == "CHAIRMAN" || roleUp == "ADMIN" || roleUp == "TP")
+                req.Status = 1;
+                req.CurrentApproverRole = "Done";
+                req.ApprovedBy = approver.FullName;
+                req.ApprovedDate = DateTime.Now;
+                double leaveDays = (req.EndDate.Year < 2000 || req.EndDate < req.RequestDate)
+                          ? 1.0
+                          : (req.EndDate.Date - req.RequestDate.Date).Days + 1.0;
+
+                var quota = await _context.UserLeaveQuotas.FirstOrDefaultAsync(q => q.UserId == req.UserId);
+                if (quota == null)
                 {
-                    req.Status = 1; 
-                    req.CurrentApproverRole = "Done";
-                    req.ApprovedBy = approver.FullName;
-                    req.ApprovedDate = DateTime.Now;
+                    quota = new UserLeaveQuota
+                    {
+                        UserId = req.UserId,
+                        RemainingLastYear = 0,
+                        NewQuota = 0,
+                        UsedPaidLeave = 0,
+                        UnpaidLeave = 0,
+                        SpecialLeave = 0,
+                        LateEarlyCount = 0
+                    };
+                    _context.UserLeaveQuotas.Add(quota);
+                }
+
+                string type = req.ConfirmationType ?? "";
+                if (type.Equals("Nghỉ phép", StringComparison.OrdinalIgnoreCase))
+                {
+                    quota.UsedPaidLeave = (quota.UsedPaidLeave) + leaveDays;
+                }
+                else if (type.Contains("Không lương") || type.Contains("Việc riêng"))
+                {
+                    quota.UnpaidLeave = (quota.UnpaidLeave) + leaveDays;
+                }
+                else if (type.Equals("Nghỉ chế độ", StringComparison.OrdinalIgnoreCase))
+                {
+                    quota.SpecialLeave = (quota.SpecialLeave) + leaveDays;
+                }
+                else if (type.Contains("Đi muộn") || type.Contains("Về sớm"))
+                {
+                    quota.LateEarlyCount = (quota.LateEarlyCount) + 1;
                 }
 
                 await _context.SaveChangesAsync();
 
-                return new Response
-                {
-                    Code = 200,
-                    Message = "Phê duyệt đơn nghỉ phép thành công!",
-                    Data = req
-                };
+                return new Response { Code = 200, Message = "Phê duyệt và cập nhật định mức thành công!", Data = req };
             }
-            catch (Exception ex)
-            {
-                return new Response { Code = 500, Message = ex.Message };
-            }
+            catch (Exception ex) { return new Response { Code = 500, Message = ex.Message }; }
         }
-        // 1. Cập nhật hàm cho Người duyệt (Manager/BOD/Chairman)
+
+        public async Task<Response> GetUserLeaveQuotaReport(string? companyFilter, int? deptId)
+        {
+            try
+            {
+                // Vẫn lấy bảng Users làm gốc để hiển thị đầy đủ nhân viên
+                var query = _context.Users
+                    .Include(u => u.Department)
+                    .AsQueryable();
+
+                if (!string.IsNullOrEmpty(companyFilter))
+                    query = query.Where(u => u.Company == companyFilter);
+                if (deptId.HasValue && deptId > 0)
+                    query = query.Where(u => u.DepartmentId == deptId);
+
+                var allUsers = await query.ToListAsync();
+                var allQuotas = await _context.UserLeaveQuotas.ToListAsync();
+
+                var data = allUsers.Select(u => {
+                    var q = allQuotas.FirstOrDefault(x => x.UserId == u.Id);
+
+                    double totalQuota = (q?.RemainingLastYear ?? 0) + (q?.NewQuota ?? 0);
+                    double usedPaid = q?.UsedPaidLeave ?? 0;
+
+                    return new
+                    {
+                        UserId = u.Id,
+                        FullName = u.FullName,
+                        DepartmentName = u.Department?.Name ?? "N/A",
+                        RemainingLastYear = q?.RemainingLastYear ?? 0,
+                        NewQuota = q?.NewQuota ?? 0,
+                        TotalQuota = totalQuota,
+                        UsedPaidLeave = usedPaid,
+                        UnpaidLeave = q?.UnpaidLeave ?? 0,
+                        SpecialLeave = q?.SpecialLeave ?? 0,
+                        LateEarlyCount = q?.LateEarlyCount ?? 0,
+                        // Phép còn lại = Tổng định mức - Đã nghỉ phép
+                        RemainingDays = totalQuota - usedPaid
+                    };
+                }).ToList();
+
+                return new Response { Code = 200, Data = data, Message = "Thành công" };
+            }
+            catch (Exception ex) { return new Response { Code = 500, Message = ex.Message }; }
+        }
+
+        public async Task<Response> UpdateLeaveQuota(UserLeaveQuota quota)
+        {
+            try
+            {
+                var existing = await _context.UserLeaveQuotas.FirstOrDefaultAsync(x => x.UserId == quota.UserId);
+                if (existing == null)
+                {
+                    _context.UserLeaveQuotas.Add(new UserLeaveQuota
+                    {
+                        UserId = quota.UserId,
+                        RemainingLastYear = quota.RemainingLastYear,
+                        NewQuota = quota.NewQuota
+                    });
+                }
+                else
+                {
+                    existing.RemainingLastYear = quota.RemainingLastYear;
+                    existing.NewQuota = quota.NewQuota;
+                }
+                await _context.SaveChangesAsync();
+                return new Response { Code = 200, Message = "Cập nhật thành công" };
+            }
+            catch (Exception ex) { return new Response { Code = 500, Message = ex.Message }; }
+        }
+
         public async Task<Response> GetForApprover()
         {
             var currentUserId = GetCurrentUserId();
             var currentUser = await _context.Users.FindAsync(currentUserId);
             if (currentUser == null) return new Response { Code = 401 };
 
-            var query = _context.LeaveRequests.Include(r => r.User).AsQueryable();
+            var query = _context.LeaveRequests.Include(r => r.User).ThenInclude(u => u.Department).AsQueryable();
             query = query.Where(r => r.User.Company == currentUser.Company);
 
             string role = currentUser.Role?.ToUpper();
@@ -125,7 +232,7 @@ namespace VNEB.Repository.LeaveRequests
             var data = await query.OrderByDescending(r => r.RequestDate)
                 .Select(r => new {
                     r.Id,
-                    r.UserId, // Bổ sung UserId
+                    r.UserId,
                     FullName = r.User.FullName,
                     DepartmentName = r.User.Department.Name,
                     r.ConfirmationType,
@@ -135,26 +242,22 @@ namespace VNEB.Repository.LeaveRequests
                     r.Reason,
                     r.Status,
                     r.CurrentApproverRole,
-                    r.ApprovedBy,    // Bổ sung Người duyệt
-                    r.ApprovedDate   // Bổ sung Ngày duyệt
+                    r.ApprovedBy,
+                    r.ApprovedDate
                 }).ToListAsync();
 
             return new Response { Code = 200, Data = data };
         }
+
         public async Task<Response> GetStatisticalForHR(string? companyFilter, int? deptId)
         {
             try
             {
-                var query = _context.LeaveRequests.Include(r => r.User).AsQueryable();
+                var query = _context.LeaveRequests.Include(r => r.User).ThenInclude(u => u.Department).AsQueryable();
+                if (!string.IsNullOrEmpty(companyFilter)) query = query.Where(r => r.User.Company == companyFilter);
+                if (deptId.HasValue && deptId.Value > 0) query = query.Where(r => r.User.DepartmentId == deptId);
 
-                if (!string.IsNullOrEmpty(companyFilter))
-                    query = query.Where(r => r.User.Company == companyFilter);
-
-                if (deptId.HasValue && deptId.Value > 0)
-                    query = query.Where(r => r.User.DepartmentId == deptId);
-
-                var data = await query
-                    .OrderByDescending(r => r.RequestDate)
+                var data = await query.OrderByDescending(r => r.RequestDate)
                     .Select(r => new {
                         r.Id,
                         r.UserId,
@@ -169,63 +272,21 @@ namespace VNEB.Repository.LeaveRequests
                         r.Reason,
                         r.Status,
                         r.CurrentApproverRole,
-                        r.ApprovedBy,    
-                        r.ApprovedDate 
-                    })
-                    .ToListAsync();
+                        r.ApprovedBy,
+                        r.ApprovedDate
+                    }).ToListAsync();
 
                 return new Response { Code = 200, Data = data, Message = "Thành công" };
             }
             catch (Exception ex) { return new Response { Code = 500, Message = ex.Message }; }
         }
 
-        public async Task<Response> GetUserLeaveQuotaReport(string? companyFilter, int? deptId)
-        {
-            try
-            {
-                var query = _context.UserLeaveQuotas
-                    .Include(q => q.User).ThenInclude(u => u.Department)
-                    .AsQueryable();
-
-                if (!string.IsNullOrEmpty(companyFilter))
-                    query = query.Where(q => q.User.Company == companyFilter);
-                if (deptId.HasValue && deptId > 0)
-                    query = query.Where(q => q.User.DepartmentId == deptId);
-
-                var data = await query.Select(q => new {
-                    q.UserId,
-                    FullName = q.User.FullName,
-                    DepartmentName = q.User.Department != null ? q.User.Department.Name : "N/A",
-                    q.RemainingLastYear,
-                    q.NewQuota,
-                    TotalQuota = q.RemainingLastYear + q.NewQuota,
-
-                    UsedPaidLeave = _context.LeaveRequests
-                        .Where(r => r.UserId == q.UserId && r.Status == 1 && r.ConfirmationType == "Nghỉ phép")
-                        .AsEnumerable()
-                        .Sum(r => (r.EndDate - r.RequestDate).Days + 1),
-
-                    q.LateEarlyCount,
-
-                    UnpaidLeave = _context.LeaveRequests
-                        .Where(r => r.UserId == q.UserId && r.Status == 1 && r.ConfirmationType == "Nghỉ không lương")
-                        .AsEnumerable()
-                        .Sum(r => (r.EndDate - r.RequestDate).Days + 1),
-
-                    q.SpecialLeave
-                }).ToListAsync();
-
-                return new Response { Code = 200, Data = data, Message = "Thành công" };
-            }
-            catch (Exception ex) { return new Response { Code = 500, Message = ex.Message }; }
-        }
         public async Task<Response> GetByUser()
         {
             try
             {
                 var currentUserId = GetCurrentUserId();
-                if (string.IsNullOrEmpty(currentUserId))
-                    return new Response { Code = 401, Message = "Unauthorized" };
+                if (string.IsNullOrEmpty(currentUserId)) return new Response { Code = 401 };
 
                 var data = await _context.LeaveRequests
                     .Where(r => r.UserId == currentUserId)
@@ -241,39 +302,9 @@ namespace VNEB.Repository.LeaveRequests
                         r.CurrentApproverRole,
                         r.ApprovedBy,
                         r.ApprovedDate
-                    })
-                    .ToListAsync();
+                    }).ToListAsync();
 
                 return new Response { Code = 200, Data = data, Message = "Success" };
-            }
-            catch (Exception ex)
-            {
-                return new Response { Code = 500, Message = ex.Message };
-            }
-        }
-
-        public async Task<Response> UpdateLeaveQuota(UserLeaveQuota quota)
-        {
-            try
-            {
-                var existing = await _context.UserLeaveQuotas
-                    .FirstOrDefaultAsync(x => x.UserId == quota.UserId);
-
-                if (existing == null)
-                {
-                    _context.UserLeaveQuotas.Add(quota);
-                }
-                else
-                {
-                    existing.RemainingLastYear = quota.RemainingLastYear;
-                    existing.NewQuota = quota.NewQuota;
-                    existing.LateEarlyCount = quota.LateEarlyCount;
-                    existing.SpecialLeave = quota.SpecialLeave;
-                    // Không update UsedPaidLeave và UnpaidLeave vì cái này tính từ đơn nghỉ
-                }
-
-                await _context.SaveChangesAsync();
-                return new Response { Code = 200, Message = "Cập nhật định mức thành công" };
             }
             catch (Exception ex) { return new Response { Code = 500, Message = ex.Message }; }
         }
@@ -285,15 +316,34 @@ namespace VNEB.Repository.LeaveRequests
                 var item = await _context.LeaveRequests.FindAsync(id);
                 if (item == null) return new Response { Code = 404, Message = "Không tìm thấy đơn" };
 
+                // Nếu đơn đã Approve (Status = 1) mới cần trừ lại Quota
+                if (item.Status == 1)
+                {
+                    var quota = await _context.UserLeaveQuotas.FirstOrDefaultAsync(q => q.UserId == item.UserId);
+                    if (quota != null)
+                    {
+                        double leaveDays = (item.EndDate.Year < 2000 || item.EndDate < item.RequestDate)
+                                          ? 1.0
+                                          : (double)(item.EndDate.Date - item.RequestDate.Date).Days + 1.0;
+
+                        string type = item.ConfirmationType ?? "";
+
+                        if (type.Equals("Nghỉ phép", StringComparison.OrdinalIgnoreCase))
+                            quota.UsedPaidLeave = Math.Max(0, (quota.UsedPaidLeave) - leaveDays);
+                        else if (type.Contains("Không lương") || type.Contains("Việc riêng"))
+                            quota.UnpaidLeave = Math.Max(0, (quota.UnpaidLeave) - leaveDays);
+                        else if (type.Equals("Nghỉ chế độ", StringComparison.OrdinalIgnoreCase))
+                            quota.SpecialLeave = Math.Max(0, (quota.SpecialLeave) - leaveDays);
+                        else if (type.Contains("Đi muộn") || type.Contains("Về sớm"))
+                            quota.LateEarlyCount = Math.Max(0, (quota.LateEarlyCount) - 1);
+                    }
+                }
+
                 _context.LeaveRequests.Remove(item);
                 await _context.SaveChangesAsync();
-
                 return new Response { Code = 200, Message = "Xóa đơn thành công" };
             }
-            catch (Exception ex)
-            {
-                return new Response { Code = 500, Message = ex.Message };
-            }
+            catch (Exception ex) { return new Response { Code = 500, Message = ex.Message }; }
         }
     }
 }

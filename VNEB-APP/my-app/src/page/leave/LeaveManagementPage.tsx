@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useAppContext } from "../../app/page";
 import LeaveRegistrationForm from "./LeaveRegistrationForm";
 import LeaveApprovalList from "./LeaveApprovalList";
-import LeaveQuotaTable from "./LeaveApprovalList";
+import LeaveQuotaTable from "./LeaveQuotaTable";
 
 import { 
   ClipboardList, 

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useAppContext } from '../../app/page'; 
 import TaskApprovalList from './TaskApprovalList';
 import MonthlyTaskRegistration from './MonthlyTaskRegistration';
@@ -13,11 +13,20 @@ export default function TaskManagementPage({ targetDept }: TaskManagementPagePro
   const { user }: any = useAppContext();
   const [viewingUser, setViewingUser] = useState<{userId: string, month: string} | null>(null);
 
+  // 1. Tự động lấy tháng hiện tại theo thời gian thực (YYYY-MM)
+  const currentMonth = useMemo(() => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    return `${year}-${month}`;
+  }, []);
+
   // Kiểm tra quyền xem danh sách duyệt (Boss mới được xem)
   const isBoss = ["ADMIN", "BOD", "CHAIRMAN", "MANAGER", "TP"].includes(user?.role?.toUpperCase() || "");
 
+  // Nếu không phải sếp, mặc định xem trang đăng ký của mình ở tháng hiện tại
   if (!isBoss) {
-    return <MonthlyTaskRegistration />;
+    return <MonthlyTaskRegistration targetMonth={currentMonth} />;
   }
 
   return (
@@ -25,16 +34,18 @@ export default function TaskManagementPage({ targetDept }: TaskManagementPagePro
       {!viewingUser ? (
         <div className="space-y-4">
           <div className="flex gap-4 mb-4">
-             <button 
-                onClick={() => setViewingUser({userId: user?.id || "", month: "2026-03"})}
-                className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition font-bold text-sm"
-             >
-                <ClipboardCheck size={18}/> Nhiệm vụ của tôi
-             </button>
+            <button 
+              onClick={() => setViewingUser({userId: user?.id || "", month: currentMonth})}
+              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition font-bold text-sm"
+            >
+              <ClipboardCheck size={18}/> Nhiệm vụ của tôi ({currentMonth})
+            </button>
           </div>
           <TaskApprovalList 
             targetDeptId={targetDept?.id} 
             targetDeptName={targetDept?.name} 
+            // Truyền currentMonth vào List để mặc định lọc theo tháng hiện tại khi load
+            currentMonth={currentMonth}
             onViewDetail={(userId: string, month: string) => setViewingUser({userId, month})} 
           />
         </div>

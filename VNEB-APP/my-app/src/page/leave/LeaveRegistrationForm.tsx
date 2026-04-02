@@ -1,16 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { 
-  Save, 
-  Send, 
-  Clock, 
-  Calendar, 
-  FileText, 
-  AlertCircle,
-  CheckCircle2,
-  Trash2,
-  ShieldCheck,
-  UserCheck
+  Save, Send, Clock, Calendar, FileText, AlertCircle,
+  CheckCircle2, Trash2, ShieldCheck, UserCheck, ArrowRight,Plus
 } from "lucide-react";
 import { leaveApi } from "./LeaveApi";
 import SuccessModal from "../../component/SuccessModal";
@@ -22,6 +14,7 @@ export default function LeaveRegistrationForm({ user, onSuccess }: any) {
   const [modalMessage, setModalMessage] = useState("");
 
   const formatDate = (dateStr: string) => {
+    if (!dateStr) return "";
     const d = new Date(dateStr);
     return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
   };
@@ -30,9 +23,11 @@ export default function LeaveRegistrationForm({ user, onSuccess }: any) {
   const isHCNSDept = user?.departmentName?.toUpperCase().includes("HCNS") || 
                      user?.departmentName?.toUpperCase().includes("HÀNH CHÍNH");
 
+  // Cập nhật State: Thay requestDate bằng requestDate (Từ ngày) và endDate (Đến ngày)
   const [formData, setFormData] = useState({
     confirmationType: "Nghỉ phép",
     requestDate: new Date().toISOString().split('T')[0],
+    endDate: new Date().toISOString().split('T')[0],
     fromTime: "08:00",
     toTime: "17:30",
     reason: ""
@@ -47,9 +42,14 @@ export default function LeaveRegistrationForm({ user, onSuccess }: any) {
 
   useEffect(() => { if (user?.id) loadHistory(); }, [user]);
 
-const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.reason) return alert("Vui lòng nhập lý do");
+    
+    // Kiểm tra logic ngày
+    if (new Date(formData.requestDate) > new Date(formData.endDate)) {
+      return alert("Ngày bắt đầu không được lớn hơn ngày kết thúc");
+    }
 
     setLoading(true);
     try {
@@ -57,10 +57,8 @@ const handleSubmit = async (e: React.FormEvent) => {
       const res: any = await leaveApi.create(payload);
       
       if (res.data.code === 200) {
-        // Mở Modal thay vì alert
         setModalMessage("Đơn đăng ký của bạn đã được gửi thành công đến quản lý.");
         setIsSuccessModalOpen(true);
-        
         setFormData({ ...formData, reason: "" });
         loadHistory();
         if (onSuccess) onSuccess();
@@ -79,37 +77,21 @@ const handleSubmit = async (e: React.FormEvent) => {
 
   return (
     <div className="space-y-6">
-        <SuccessModal 
+      <SuccessModal 
         isOpen={isSuccessModalOpen} 
         onClose={() => setIsSuccessModalOpen(false)}
         message={modalMessage}
       />
-      {(isApprover || isHCNSDept) && (
-        <div className="bg-blue-50 border border-blue-100 p-3 rounded-lg flex items-center gap-3">
-          <div className="bg-blue-600 p-2 rounded-full text-white">
-            {isHCNSDept ? <ShieldCheck size={16}/> : <UserCheck size={16}/>}
-          </div>
-          <div>
-            <p className="text-[10px] font-black uppercase text-blue-800 tracking-wider">Thông tin hệ thống</p>
-            <p className="text-xs text-blue-600 font-bold">
-              {isHCNSDept 
-                ? "Bạn đang truy cập với quyền Phòng HCNS - Có thể xem thống kê toàn hệ thống." 
-                : ``}
-            </p>
-          </div>
-        </div>
-      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-            <div className="p-4 bg-[#1F3864] text-white">
-              <h3 className="text-xs font-black uppercase tracking-widest flex items-center gap-2">
-                <FileText size={16} /> Tạo Đăng Ký Mới
-              </h3>
+            <div className="p-4 bg-[#1F3864] text-white font-black text-xs uppercase tracking-widest flex items-center gap-2">
+              <PlusCircle size={16} /> Tạo Đăng Ký Mới
             </div>
             
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
+              {/* Loại xác nhận */}
               <div>
                 <label className="block text-[10px] font-black text-slate-400 uppercase mb-1">Loại xác nhận (*)</label>
                 <select 
@@ -119,22 +101,45 @@ const handleSubmit = async (e: React.FormEvent) => {
                 >
                   <option value="Nghỉ phép">Nghỉ phép</option>
                   <option value="Nghỉ bù">Nghỉ bù</option>
-                  <option value="Việc riêng (Không lương)">Việc riêng (Không lương)</option>
-                  <option value="Làm thêm giờ">Làm thêm giờ</option>
+                  <option value="Nghỉ không lương">Nghỉ không lương</option>
+                  <option value="Nghỉ chế độ">Nghỉ chế độ</option>
                   <option value="Đi muộn/Về sớm">Đi muộn/Về sớm</option>
                 </select>
               </div>
 
-              <div>
-                <label className="block text-[10px] font-black text-slate-400 uppercase mb-1">Ngày thực hiện</label>
-                <input 
-                  type="date"
-                  value={formData.requestDate}
-                  onChange={(e) => setFormData({...formData, requestDate: e.target.value})}
-                  className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold"
-                />
+              {/* Chọn Ngày - Tách thành Từ ngày / Đến ngày */}
+              <div className="space-y-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                <div className="grid grid-cols-1 gap-3">
+                  <div>
+                    <label className="block text-[10px] font-black text-slate-500 uppercase mb-1">
+                      {formData.confirmationType === "Đi muộn/Về sớm" ? "Ngày thực hiện" : "Từ ngày"}
+                    </label>
+                    <input 
+                      type="date"
+                      value={formData.requestDate}
+                      onChange={(e) => {
+                        const newDate = e.target.value;
+                        setFormData({...formData, requestDate: newDate, endDate: formData.confirmationType === "Đi muộn/Về sớm" ? newDate : formData.endDate});
+                      }}
+                      className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold shadow-sm"
+                    />
+                  </div>
+
+                  {formData.confirmationType !== "Đi muộn/Về sớm" && (
+                    <div>
+                      <label className="block text-[10px] font-black text-slate-500 uppercase mb-1">Đến ngày</label>
+                      <input 
+                        type="date"
+                        value={formData.endDate}
+                        onChange={(e) => setFormData({...formData, endDate: e.target.value})}
+                        className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold shadow-sm"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
 
+              {/* Giờ giấc */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[10px] font-black text-slate-400 uppercase mb-1">Từ giờ</label>
@@ -170,7 +175,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               <button 
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#1F3864] text-white py-3 rounded-lg font-black text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-blue-800 transition-all active:scale-95 disabled:opacity-50"
+                className="w-full bg-[#1F3864] text-white py-3 rounded-lg font-black text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-blue-800 transition-all active:scale-95 disabled:opacity-50 shadow-lg shadow-blue-900/20"
               >
                 {loading ? "Đang gửi..." : <><Send size={16} /> Gửi Đơn Đăng Ký</>}
               </button>
@@ -178,11 +183,12 @@ const handleSubmit = async (e: React.FormEvent) => {
           </div>
         </div>
 
+        {/* Lịch sử bên phải */}
         <div className="lg:col-span-2">
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-            <div className="p-4 border-b border-slate-100 bg-slate-50">
+            <div className="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
               <h3 className="text-xs font-black text-slate-600 uppercase tracking-widest flex items-center gap-2">
-                <Clock size={16} /> Lịch sử đăng ký của bạn
+                <Clock size={16} /> Lịch sử đăng ký
               </h3>
             </div>
             
@@ -193,27 +199,37 @@ const handleSubmit = async (e: React.FormEvent) => {
               {myRequests.map((req) => (
                 <div key={req.id} className="p-4 hover:bg-slate-50 transition flex justify-between items-center border-l-4 border-transparent hover:border-blue-500">
                   <div className="flex gap-4 items-start">
-                    <div className="bg-blue-100 text-blue-700 p-2 rounded-lg">
+                    <div className="bg-blue-50 text-blue-600 p-2 rounded-lg">
                       <Calendar size={20} />
                     </div>
                     <div>
                       <div className="text-sm font-black text-[#1F3864] uppercase">{req.confirmationType}</div>
-                      <div className="text-[10px] text-slate-500 font-bold">
-                        Ngày: {formatDate(req.requestDate)} | Giờ: {req.fromTime} - {req.toTime}
+                      <div className="text-[10px] text-slate-500 font-bold flex items-center gap-1 mt-0.5">
+                        <span className="text-blue-600">{formatDate(req.requestDate)}</span>
+                        {req.endDate && req.endDate !== req.requestDate && (
+                          <>
+                            <ArrowRight size={10} />
+                            <span className="text-blue-600">{formatDate(req.endDate)}</span>
+                          </>
+                        )}
+                        <span className="mx-1">|</span>
+                        <span className="text-slate-700">{req.fromTime} - {req.toTime}</span>
                       </div>
-                      <div className="text-xs text-slate-600 mt-1 italic">"{req.reason}"</div>
+                      <div className="text-xs text-slate-600 mt-2 p-2 bg-slate-50 rounded border border-slate-100 italic">
+                        "{req.reason}"
+                      </div>
                     </div>
                   </div>
 
                   <div className="flex flex-col items-end gap-2">
                     {req.status === 1 ? (
                       <span className="flex items-center gap-1 text-[9px] font-black text-green-600 bg-green-50 px-2 py-1 rounded border border-green-100 uppercase shadow-sm">
-                        <CheckCircle2 size={12}/> Đã duyệt: {req.approvedBy}
+                        <CheckCircle2 size={12}/> Đã duyệt
                       </span>
                     ) : (
                       <div className="flex items-center gap-2">
                          <span className="flex items-center gap-1 text-[9px] font-black text-orange-600 bg-orange-50 px-2 py-1 rounded border border-orange-100 uppercase">
-                          <AlertCircle size={12}/> Chờ {req.currentApproverRole}
+                          <AlertCircle size={12}/> Chờ duyệt
                         </span>
                         <button onClick={() => handleDelete(req.id)} className="text-red-400 hover:text-red-600 transition p-1 hover:bg-red-50 rounded">
                           <Trash2 size={14} />
@@ -229,4 +245,8 @@ const handleSubmit = async (e: React.FormEvent) => {
       </div>
     </div>
   );
+}
+
+function PlusCircle({ size }: { size: number }) {
+  return <Plus size={size} />;
 }

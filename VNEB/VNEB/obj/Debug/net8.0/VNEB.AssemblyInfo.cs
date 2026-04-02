@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VNEB")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+063a245ea7144ff8f78f63641ac5238fec45c978")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5db01c39a5ecedc970dcae76d051a30b9e746b1a")]
 [assembly: System.Reflection.AssemblyProductAttribute("VNEB")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VNEB")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

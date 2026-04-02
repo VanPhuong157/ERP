@@ -268,6 +268,7 @@ export default function MonthlyTaskRegistration({
     (newSections[sIdx] as any)[field] = value;
     setTaskSections(newSections);
   };
+
   const updateTask = (
     sIdx: number,
     tIdx: number,
@@ -275,8 +276,11 @@ export default function MonthlyTaskRegistration({
     value: any,
   ) => {
     const newSections = [...taskSections];
-    let finalValue = value;
 
+    const targetSection = { ...newSections[sIdx] };
+    const newItems = [...targetSection.taskItems];
+
+    let finalValue = value;
     const percentFields = [
       "personalTarget",
       "managerTarget",
@@ -290,10 +294,12 @@ export default function MonthlyTaskRegistration({
       }
     }
 
-    (newSections[sIdx].taskItems[tIdx] as any)[field] = finalValue;
+    newItems[tIdx] = { ...newItems[tIdx], [field]: finalValue };
+    targetSection.taskItems = newItems;
+    newSections[sIdx] = targetSection;
+
     setTaskSections(newSections);
   };
-
 
   return (
     <div className="bg-white shadow-2xl rounded-xl border border-slate-200 overflow-hidden font-sans text-slate-900">
@@ -411,7 +417,7 @@ export default function MonthlyTaskRegistration({
         </div>
       </div>
 
-      <div className="p-4 overflow-x-auto">
+      <div className="p-4 overflow-x-auto max-h-[calc(100vh-250px)] sticky bottom-0">
         <table className="w-[1800px] border-collapse text-[11px] border border-slate-200">
           <thead>
             <tr className="bg-[#2F5597] text-white uppercase">
@@ -439,9 +445,7 @@ export default function MonthlyTaskRegistration({
               <th colSpan={2} className="border p-2 bg-[#375623]">
                 Phức tạp
               </th>
-              <th className="border p-2 bg-[orange]">
-                Ghi chú / Lưu ý
-              </th>
+              <th className="border p-2 bg-[orange]">Ghi chú / Lưu ý</th>
               <th rowSpan={2} className="p-3 w-12 text-center">
                 #
               </th>
@@ -716,7 +720,7 @@ export default function MonthlyTaskRegistration({
                           <textarea
                             value={task.note || ""}
                             onChange={(e) =>
-                              updateTask(sIdx, tIdx, "note", e.target.value)
+                              updateTask(gIdx, tIdx, "note", e.target.value)
                             }
                             className="w-full bg-transparent outline-none text-[11px] text-slate-500 italic resize-none"
                             placeholder="Ghi chú nhiệm vụ..."
