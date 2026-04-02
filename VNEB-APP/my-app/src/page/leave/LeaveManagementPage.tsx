@@ -3,16 +3,19 @@ import React, { useState } from "react";
 import { useAppContext } from "../../app/page";
 import LeaveRegistrationForm from "./LeaveRegistrationForm";
 import LeaveApprovalList from "./LeaveApprovalList";
+import LeaveQuotaTable from "./LeaveApprovalList";
+
 import { 
   ClipboardList, 
   ShieldCheck,
   LayoutDashboard,
-  FileText
+  FileText,
+  FileSpreadsheet
 } from "lucide-react";
 
 export default function LeaveManagementPage() {
   const { user }: any = useAppContext();
-  const [activeTab, setActiveTab] = useState<"register" | "approval" | "report">("register");
+  const [activeTab, setActiveTab] = useState<"register" | "approval" | "report" | "quota">("register");
 
   const userRole = user?.role?.toUpperCase() || "";
   const userDept = user?.deptName?.toUpperCase() || "";
@@ -66,6 +69,20 @@ export default function LeaveManagementPage() {
               <LayoutDashboard size={14} /> Tổng hợp hệ thống
             </button>
           )}
+
+          {canViewReport && (
+  <>
+
+    <button
+      onClick={() => setActiveTab("quota")}
+      className={`px-6 py-2.5 rounded-lg font-black text-[10px] uppercase transition-all ${
+        activeTab === "quota" ? "bg-white text-orange-600 shadow-sm" : "text-slate-500"
+      }`}
+    >
+      <FileSpreadsheet size={14} /> Định mức phép
+    </button>
+  </>
+)}
         </div>
       </div>
 
@@ -76,6 +93,8 @@ export default function LeaveManagementPage() {
   {activeTab === 'approval' && <LeaveApprovalList user={user} isReportMode={false} />}
   
   {activeTab === 'report' && <LeaveApprovalList user={user} isReportMode={true} />}
+
+  {activeTab === 'quota' && <LeaveQuotaTable user={user} />}
 </div>
     </div>
   );

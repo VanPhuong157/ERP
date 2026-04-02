@@ -22,6 +22,7 @@ namespace VNEB.Models
             public DbSet<TaskItem> TaskItems { get; set; }
             public DbSet<TaskSection> TaskSections { get; set; }
             public DbSet<LeaveRequest> LeaveRequests { get; set; }
+            public DbSet<UserLeaveQuota>UserLeaveQuotas{ get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

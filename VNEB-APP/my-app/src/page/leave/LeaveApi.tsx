@@ -14,4 +14,11 @@ getStatistical: (company?: string, deptId?: number) =>
   delete: (id: number) => rootApi.delete(`/LeaveRequests/${id}`),
   approveAction: (requestId: number, approverRole: string) => 
   rootApi.post(`/LeaveRequests/approve?requestId=${requestId}&approverRole=${approverRole}`),
+
+  getQuotaReport: (company?: string, deptId?: number) => 
+    rootApi.get(`/LeaveRequests/quota-report`, { 
+        params: { company, deptId } 
+    }),
+
+  updateQuota: (data: any) => rootApi.post('/LeaveRequests/update-quota', data),
 };

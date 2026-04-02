@@ -156,8 +156,7 @@ namespace VNEB.Repository.Tasks
                             RegistrationId = existingReg.Id,
                             Category = secDto.Category,
                             SectionName = secDto.SectionName,
-                            PersonalWeight = secDto.PersonalWeight,
-                            ManagerWeight = secDto.ManagerWeight,
+ 
                             TaskItems = (secDto.TaskItems ?? new List<TaskItemDTO>()).Select(t => new TaskItem
                             {
                                 TaskDescription = t.TaskDescription,
@@ -170,7 +169,8 @@ namespace VNEB.Repository.Tasks
                                 PersonalPriority = t.PersonalPriority,
                                 ManagerPriority = t.ManagerPriority,
                                 PersonalComplexity = t.PersonalComplexity,
-                                ManagerComplexity = t.ManagerComplexity
+                                ManagerComplexity = t.ManagerComplexity,
+                                Note = t.Note,
                             }).ToList()
                         };
                         _context.TaskSections.Add(newSection);

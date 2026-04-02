@@ -12,5 +12,8 @@ namespace VNEB.Repository.LeaveRequests
         Task<Response> GetStatisticalForHR(string? companyFilter, int? deptId);
         Task<Response> Approve(int requestId, string approverRole);
         Task<Response> Delete(int id);
+        Task<Response> UpdateLeaveQuota(UserLeaveQuota quota);
+
+        Task<Response> GetUserLeaveQuotaReport(string? companyFilter, int? deptId);
     }
 }

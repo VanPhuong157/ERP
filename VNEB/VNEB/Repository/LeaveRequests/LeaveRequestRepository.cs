@@ -178,6 +178,47 @@ namespace VNEB.Repository.LeaveRequests
             }
             catch (Exception ex) { return new Response { Code = 500, Message = ex.Message }; }
         }
+
+        public async Task<Response> GetUserLeaveQuotaReport(string? companyFilter, int? deptId)
+        {
+            try
+            {
+                var query = _context.UserLeaveQuotas
+                    .Include(q => q.User).ThenInclude(u => u.Department)
+                    .AsQueryable();
+
+                if (!string.IsNullOrEmpty(companyFilter))
+                    query = query.Where(q => q.User.Company == companyFilter);
+                if (deptId.HasValue && deptId > 0)
+                    query = query.Where(q => q.User.DepartmentId == deptId);
+
+                var data = await query.Select(q => new {
+                    q.UserId,
+                    FullName = q.User.FullName,
+                    DepartmentName = q.User.Department != null ? q.User.Department.Name : "N/A",
+                    q.RemainingLastYear,
+                    q.NewQuota,
+                    TotalQuota = q.RemainingLastYear + q.NewQuota,
+
+                    UsedPaidLeave = _context.LeaveRequests
+                        .Where(r => r.UserId == q.UserId && r.Status == 1 && r.ConfirmationType == "Nghỉ phép")
+                        .AsEnumerable()
+                        .Sum(r => (r.EndDate - r.RequestDate).Days + 1),
+
+                    q.LateEarlyCount,
+
+                    UnpaidLeave = _context.LeaveRequests
+                        .Where(r => r.UserId == q.UserId && r.Status == 1 && r.ConfirmationType == "Nghỉ không lương")
+                        .AsEnumerable()
+                        .Sum(r => (r.EndDate - r.RequestDate).Days + 1),
+
+                    q.SpecialLeave
+                }).ToListAsync();
+
+                return new Response { Code = 200, Data = data, Message = "Thành công" };
+            }
+            catch (Exception ex) { return new Response { Code = 500, Message = ex.Message }; }
+        }
         public async Task<Response> GetByUser()
         {
             try
@@ -209,6 +250,32 @@ namespace VNEB.Repository.LeaveRequests
             {
                 return new Response { Code = 500, Message = ex.Message };
             }
+        }
+
+        public async Task<Response> UpdateLeaveQuota(UserLeaveQuota quota)
+        {
+            try
+            {
+                var existing = await _context.UserLeaveQuotas
+                    .FirstOrDefaultAsync(x => x.UserId == quota.UserId);
+
+                if (existing == null)
+                {
+                    _context.UserLeaveQuotas.Add(quota);
+                }
+                else
+                {
+                    existing.RemainingLastYear = quota.RemainingLastYear;
+                    existing.NewQuota = quota.NewQuota;
+                    existing.LateEarlyCount = quota.LateEarlyCount;
+                    existing.SpecialLeave = quota.SpecialLeave;
+                    // Không update UsedPaidLeave và UnpaidLeave vì cái này tính từ đơn nghỉ
+                }
+
+                await _context.SaveChangesAsync();
+                return new Response { Code = 200, Message = "Cập nhật định mức thành công" };
+            }
+            catch (Exception ex) { return new Response { Code = 500, Message = ex.Message }; }
         }
 
         public async Task<Response> Delete(int id)

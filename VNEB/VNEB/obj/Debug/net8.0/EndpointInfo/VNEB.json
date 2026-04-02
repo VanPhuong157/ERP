@@ -130,6 +130,66 @@
         }
       }
     },
+    "/api/LeaveRequests/quota-report": {
+      "get": {
+        "tags": [
+          "LeaveRequests"
+        ],
+        "parameters": [
+          {
+            "name": "company",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deptId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/LeaveRequests/update-quota": {
+      "post": {
+        "tags": [
+          "LeaveRequests"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLeaveQuota"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLeaveQuota"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLeaveQuota"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/LeaveRequests/{id}": {
       "delete": {
         "tags": [
@@ -773,6 +833,10 @@
             "type": "string",
             "format": "date-time"
           },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
           "fromTime": {
             "type": "string",
             "nullable": true
@@ -993,6 +1057,10 @@
           "managerComplexity": {
             "type": "string",
             "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1208,6 +1276,47 @@
           },
           "department": {
             "$ref": "#/components/schemas/Department"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserLeaveQuota": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "remainingLastYear": {
+            "type": "number",
+            "format": "double"
+          },
+          "newQuota": {
+            "type": "number",
+            "format": "double"
+          },
+          "usedPaidLeave": {
+            "type": "number",
+            "format": "double"
+          },
+          "lateEarlyCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unpaidLeave": {
+            "type": "number",
+            "format": "double"
+          },
+          "specialLeave": {
+            "type": "number",
+            "format": "double"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
           }
         },
         "additionalProperties": false

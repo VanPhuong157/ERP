@@ -27,14 +27,13 @@ interface TaskItem {
   managerPriority: string;
   personalComplexity: string;
   managerComplexity: string;
+  note: string;
 }
 
 interface TaskSection {
   id?: string;
   category: "A" | "B" | "C";
   sectionName: string;
-  personalWeight: number;
-  managerWeight: number;
   taskItems: TaskItem[];
 }
 
@@ -134,7 +133,7 @@ export default function MonthlyTaskRegistration({
   const activeUserId =
     targetUserId || user?.id || localStorage.getItem("userId");
   const activeMonth = targetMonth || "2026-03";
-const [targetUserRole, setTargetUserRole] = useState("");
+  const [targetUserRole, setTargetUserRole] = useState("");
   const [registrationId, setRegistrationId] = useState<string | null>(null);
   const [taskSections, setTaskSections] = useState<TaskSection[]>([]);
   const [month, setMonth] = useState(activeMonth);
@@ -191,31 +190,31 @@ const [targetUserRole, setTargetUserRole] = useState("");
     fetchData();
   }, [month, activeUserId]);
 
-const { canEditGeneral, canEditResults, isApproverMode } = useMemo(() => {
-  const myRole = (user?.role || "").toUpperCase();
-  const targetRole = (targetUserRole || "").toUpperCase();
-  const isOwner = String(user?.id) === String(activeUserId);
+  const { canEditGeneral, canEditResults, isApproverMode } = useMemo(() => {
+    const myRole = (user?.role || "").toUpperCase();
+    const targetRole = (targetUserRole || "").toUpperCase();
+    const isOwner = String(user?.id) === String(activeUserId);
 
-  let hasPermissionToEditQL = false;
+    let hasPermissionToEditQL = false;
 
-  if (isOwner) {
-    hasPermissionToEditQL = false;
-  } else {
-    if (myRole === "ADMIN" || myRole === "CHAIRMAN") {
-      hasPermissionToEditQL = true;
-    } else if (myRole === "BOD" && targetRole === "MANAGER") {
-      hasPermissionToEditQL = true;
-    } else if (myRole === "MANAGER" && targetRole === "STAFF") {
-      hasPermissionToEditQL = true;
+    if (isOwner) {
+      hasPermissionToEditQL = false;
+    } else {
+      if (myRole === "ADMIN" || myRole === "CHAIRMAN") {
+        hasPermissionToEditQL = true;
+      } else if (myRole === "BOD" && targetRole === "MANAGER") {
+        hasPermissionToEditQL = true;
+      } else if (myRole === "MANAGER" && targetRole === "STAFF") {
+        hasPermissionToEditQL = true;
+      }
     }
-  }
 
-  return {
-    canEditGeneral: isOwner || hasPermissionToEditQL, 
-    canEditResults: hasPermissionToEditQL,
-    isApproverMode: !isOwner && hasPermissionToEditQL,
-  };
-}, [user, activeUserId, targetUserRole]);
+    return {
+      canEditGeneral: isOwner || hasPermissionToEditQL,
+      canEditResults: hasPermissionToEditQL,
+      isApproverMode: !isOwner && hasPermissionToEditQL,
+    };
+  }, [user, activeUserId, targetUserRole]);
 
   const handleSave = async (newStatus?: string, silent = false) => {
     const payload = {
@@ -269,7 +268,7 @@ const { canEditGeneral, canEditResults, isApproverMode } = useMemo(() => {
     (newSections[sIdx] as any)[field] = value;
     setTaskSections(newSections);
   };
-const updateTask = (
+  const updateTask = (
     sIdx: number,
     tIdx: number,
     field: string,
@@ -278,7 +277,12 @@ const updateTask = (
     const newSections = [...taskSections];
     let finalValue = value;
 
-    const percentFields = ["personalTarget", "managerTarget", "personalResult", "managerResult"];
+    const percentFields = [
+      "personalTarget",
+      "managerTarget",
+      "personalResult",
+      "managerResult",
+    ];
     if (percentFields.includes(field)) {
       const numericValue = value.replace(/%/g, "").trim();
       if (numericValue !== "" && !isNaN(numericValue)) {
@@ -290,14 +294,6 @@ const updateTask = (
     setTaskSections(newSections);
   };
 
-  const totalP = taskSections.reduce(
-    (sum, s) => sum + Number(s.personalWeight || 0),
-    0,
-  );
-  const totalM = taskSections.reduce(
-    (sum, s) => sum + Number(s.managerWeight || 0),
-    0,
-  );
 
   return (
     <div className="bg-white shadow-2xl rounded-xl border border-slate-200 overflow-hidden font-sans text-slate-900">
@@ -443,8 +439,8 @@ const updateTask = (
               <th colSpan={2} className="border p-2 bg-[#375623]">
                 Phức tạp
               </th>
-              <th colSpan={2} className="border p-2 bg-[#833C0C]">
-                Trọng số (%)
+              <th className="border p-2 bg-[orange]">
+                Ghi chú / Lưu ý
               </th>
               <th rowSpan={2} className="p-3 w-12 text-center">
                 #
@@ -525,6 +521,7 @@ const updateTask = (
                                       managerPriority: "Medium",
                                       personalComplexity: "Normal",
                                       managerComplexity: "Normal",
+                                      note: "",
                                     });
                                     setTaskSections(ns);
                                   }}
@@ -715,46 +712,17 @@ const updateTask = (
                             <option value="Simple">D.Giản</option>
                           </select>
                         </td>
-                        {tIdx === 0 && (
-                          <>
-                            <td
-                              rowSpan={section.taskItems.length}
-                              className="border bg-blue-50/30"
-                            >
-                              <input
-                                type="number"
-                                className="w-14 text-center font-bold text-blue-800 bg-transparent outline-none"
-                                value={section.personalWeight ?? 0}
-                                disabled={!canEditGeneral}
-                                onChange={(e) =>
-                                  updateSection(
-                                    gIdx,
-                                    "personalWeight",
-                                    Number(e.target.value),
-                                  )
-                                }
-                              />
-                            </td>
-                            <td
-                              rowSpan={section.taskItems.length}
-                              className="border bg-orange-100/20"
-                            >
-                              <input
-                                type="number"
-                                className="w-14 text-center font-bold text-orange-800 bg-transparent outline-none"
-                                value={section.managerWeight ?? 0}
-                                disabled={!canEditResults}
-                                onChange={(e) =>
-                                  updateSection(
-                                    gIdx,
-                                    "managerWeight",
-                                    Number(e.target.value),
-                                  )
-                                }
-                              />
-                            </td>
-                          </>
-                        )}
+                        <td className="border p-1 bg-orange-50/30 text-orange-700 font-bold">
+                          <textarea
+                            value={task.note || ""}
+                            onChange={(e) =>
+                              updateTask(sIdx, tIdx, "note", e.target.value)
+                            }
+                            className="w-full bg-transparent outline-none text-[11px] text-slate-500 italic resize-none"
+                            placeholder="Ghi chú nhiệm vụ..."
+                            rows={2}
+                          />
+                        </td>
                         <td className="text-center border p-1">
                           {status === "APPROVED"
                             ? (user?.role || "").toUpperCase() ===
@@ -800,8 +768,6 @@ const updateTask = (
                             {
                               category: cat as any,
                               sectionName: "",
-                              personalWeight: 0,
-                              managerWeight: 0,
                               taskItems: [
                                 {
                                   taskDescription: "",
@@ -815,6 +781,7 @@ const updateTask = (
                                   managerPriority: "Medium",
                                   personalComplexity: "Normal",
                                   managerComplexity: "Normal",
+                                  note: "",
                                 },
                               ],
                             },
@@ -830,19 +797,6 @@ const updateTask = (
               </React.Fragment>
             ))}
             <tr className="bg-slate-900 text-white font-bold text-sm shadow-inner">
-              <td colSpan={13} className="p-4 text-right">
-                TỔNG TRỌNG SỐ (%)
-              </td>
-              <td
-                className={`p-4 text-center ${totalP !== 100 ? "text-red-400" : ""}`}
-              >
-                {totalP}%
-              </td>
-              <td
-                className={`p-4 text-center ${totalM !== 100 ? "text-orange-400" : ""}`}
-              >
-                {totalM}%
-              </td>
               <td></td>
             </tr>
           </tbody>

@@ -54,7 +54,19 @@ namespace VNEB.Controllers
             var res = await _leaveRepo.GetStatisticalForHR(company, deptId);
             return Ok(res);
         }
+        [HttpGet("quota-report")]
+        public async Task<IActionResult> GetQuotaReport(string? company, int? deptId)
+        {
+            var response = await _leaveRepo.GetUserLeaveQuotaReport(company, deptId);
+            return Ok(response);
+        }
 
+        [HttpPost("update-quota")]
+        public async Task<IActionResult> UpdateQuota([FromBody] UserLeaveQuota quota)
+        {
+            var response = await _leaveRepo.UpdateLeaveQuota(quota);
+            return Ok(response);
+        }
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

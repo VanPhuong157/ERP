@@ -9,7 +9,8 @@ namespace VNEB.Models
         public string UserId { get; set; } = string.Empty; 
 
         public string ConfirmationType { get; set; } = string.Empty; 
-        public DateTime RequestDate { get; set; } 
+        public DateTime RequestDate { get; set; }
+        public DateTime EndDate {get; set; }
         public string FromTime { get; set; } = string.Empty;
         public string ToTime { get; set; } = string.Empty;
         public string Reason { get; set; } = string.Empty;

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VNEB.Models;
 
@@ -11,9 +12,11 @@ using VNEB.Models;
 namespace VNEB.Migrations
 {
     [DbContext(typeof(VnebContext))]
-    partial class VnebContextModelSnapshot : ModelSnapshot
+    [Migration("20260402035459_updateTasksectionTable")]
+    partial class updateTasksectionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

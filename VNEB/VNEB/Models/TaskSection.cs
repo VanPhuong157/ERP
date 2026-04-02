@@ -15,9 +15,6 @@ namespace VNEB.Models
         public string Category { get; set; } = string.Empty;
         public string SectionName { get; set; } = string.Empty;
 
-        public int PersonalWeight { get; set; } = 0;
-        public int ManagerWeight { get; set; } = 0;
-
         // Quan hệ 1 hạng mục có nhiều nhiệm vụ con
         public virtual ICollection<TaskItem> TaskItems { get; set; } = new List<TaskItem>();
     }
