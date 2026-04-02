@@ -5,7 +5,7 @@ import { departmentApi } from '../department/departmentApi';
 import ConfirmModal from '../../component/ConfirmModal'; 
 import { 
   FileSpreadsheet, Building2, ShieldCheck, Clock, 
-  CheckCircle2, Calendar, LayoutDashboard, User 
+  CheckCircle2, Calendar, LayoutDashboard, User, ArrowRight 
 } from 'lucide-react';
 
 interface LeaveApprovalListProps {
@@ -69,7 +69,19 @@ export default function LeaveApprovalList({ user, isReportMode = false }: LeaveA
     return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
   };
 
-  // --- GIAO DIỆN 1: CARD VIEW (ĐÃ BỎ NÚT TỪ CHỐI) ---
+  // Hàm render khoảng thời gian ngày nghỉ
+  const renderDateRange = (startDate: string, endDate: string) => {
+    const start = formatDate(startDate);
+    const end = formatDate(endDate);
+    if (!endDate || startDate === endDate || endDate.startsWith("0001")) return start;
+    return (
+      <span className="flex items-center gap-1">
+        {start} <ArrowRight size={10} className="text-blue-400" /> {end}
+      </span>
+    );
+  };
+
+  // --- GIAO DIỆN 1: CARD VIEW ---
   const CardView = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
       {list.map((item, idx) => (
@@ -93,7 +105,9 @@ export default function LeaveApprovalList({ user, isReportMode = false }: LeaveA
           <div className="space-y-4 mb-8">
             <div className="flex items-center gap-3 text-slate-600">
               <Calendar size={18} className="text-slate-400" />
-              <span className="text-xs font-bold">{formatDate(item.requestDate)}</span>
+              <span className="text-xs font-bold text-blue-700">
+                {renderDateRange(item.requestDate, item.endDate)}
+              </span>
             </div>
             <div className="flex items-center gap-3 text-slate-600">
               <Clock size={18} className="text-slate-400" />
@@ -104,12 +118,11 @@ export default function LeaveApprovalList({ user, isReportMode = false }: LeaveA
             </div>
           </div>
 
-          {/* CHỈ GIỮ LẠI NÚT PHÊ DUYỆT */}
           <button 
             onClick={() => setModalConfig({ 
               isOpen: true, 
               title: "Phê duyệt", 
-              message: "Xác nhận duyệt đơn đăng ký này?", 
+              message: `Duyệt đơn nghỉ phép cho ${item.fullName}?`, 
               requestId: item.id, 
               isLoading: false 
             })}
@@ -122,7 +135,7 @@ export default function LeaveApprovalList({ user, isReportMode = false }: LeaveA
     </div>
   );
 
-  // --- GIAO DIỆN 2: TABLE VIEW (DÀNH CHO BÁO CÁO TỔNG HỢP) ---
+  // --- GIAO DIỆN 2: TABLE VIEW ---
   const TableView = () => (
     <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in duration-500">
       <div className="bg-slate-50/50 p-5 border-b border-slate-200 flex justify-between items-center">
@@ -154,7 +167,9 @@ export default function LeaveApprovalList({ user, isReportMode = false }: LeaveA
                 </td>
                 <td className="px-6 py-5 border-r border-slate-50 text-center text-xs font-bold text-slate-600">{item.confirmationType}</td>
                 <td className="px-6 py-5 border-r border-slate-50 text-center">
-                  <div className="text-sm font-bold text-slate-700">{formatDate(item.requestDate)}</div>
+                  <div className="text-sm font-bold text-slate-700">
+                    {renderDateRange(item.requestDate, item.endDate)}
+                  </div>
                   <div className="text-[10px] text-slate-400 font-bold">{item.fromTime} - {item.toTime}</div>
                 </td>
                 <td className="px-6 py-5 border-r border-slate-50 text-xs text-slate-500 italic max-w-[200px] truncate italic">"{item.reason}"</td>

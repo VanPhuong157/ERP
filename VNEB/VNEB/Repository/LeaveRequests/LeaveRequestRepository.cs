@@ -258,11 +258,28 @@ namespace VNEB.Repository.LeaveRequests
         {
             try
             {
-                var query = _context.LeaveRequests.Include(r => r.User).ThenInclude(u => u.Department).AsQueryable();
-                if (!string.IsNullOrEmpty(companyFilter)) query = query.Where(r => r.User.Company == companyFilter);
-                if (deptId.HasValue && deptId.Value > 0) query = query.Where(r => r.User.DepartmentId == deptId);
+                // 1. Khởi tạo query với đầy đủ thông tin User và Phòng ban
+                var query = _context.LeaveRequests
+                    .Include(r => r.User)
+                    .ThenInclude(u => u.Department)
+                    .AsQueryable();
 
-                var data = await query.OrderByDescending(r => r.RequestDate)
+                // 2. LOGIC LỌC THÔNG MINH CHO HCNS
+                // Nếu truyền Filter cụ thể (ví dụ chọn từ Dropdown trên Web) thì mới lọc.
+                // Còn nếu HCNS vào màn hình chung, ta nên để họ thấy HẾT.
+                if (!string.IsNullOrEmpty(companyFilter))
+                {
+                    query = query.Where(r => r.User.Company == companyFilter);
+                }
+
+                if (deptId.HasValue && deptId.Value > 0)
+                {
+                    query = query.Where(r => r.User.DepartmentId == deptId);
+                }
+
+                var data = await query
+                    .OrderBy(r => r.Status)
+                    .ThenByDescending(r => r.RequestDate)
                     .Select(r => new {
                         r.Id,
                         r.UserId,
@@ -272,6 +289,7 @@ namespace VNEB.Repository.LeaveRequests
                         DepartmentName = r.User.Department != null ? r.User.Department.Name : "N/A",
                         r.ConfirmationType,
                         r.RequestDate,
+                        EndDate = r.EndDate,
                         r.FromTime,
                         r.ToTime,
                         r.Reason,
@@ -283,7 +301,10 @@ namespace VNEB.Repository.LeaveRequests
 
                 return new Response { Code = 200, Data = data, Message = "Thành công" };
             }
-            catch (Exception ex) { return new Response { Code = 500, Message = ex.Message }; }
+            catch (Exception ex)
+            {
+                return new Response { Code = 500, Message = ex.Message };
+            }
         }
 
         public async Task<Response> GetByUser()
