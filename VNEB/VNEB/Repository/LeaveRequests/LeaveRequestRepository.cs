@@ -82,15 +82,20 @@ namespace VNEB.Repository.LeaveRequests
                 var approver = await _context.Users.FindAsync(approverId);
                 if (approver == null) return new Response { Code = 401, Message = "Unauthorized" };
 
-                // 2. Kiểm tra quyền duyệt
-                if (req.CurrentApproverRole?.ToUpper() != approverRole?.ToUpper())
-                {
-                    return new Response { Code = 403, Message = "Đơn này hiện không chờ cấp của bạn duyệt" };
-                }
+                bool isChairman = approverRole.ToUpper() == "CHAIRMAN";
 
-                if (approverRole.ToUpper() == "MANAGER" && req.User.DepartmentId != approver.DepartmentId)
+                if (!isChairman)
                 {
-                    return new Response { Code = 403, Message = "Trưởng phòng chỉ được duyệt đơn của phòng mình" };
+
+                    if (req.CurrentApproverRole?.ToUpper() != approverRole?.ToUpper())
+                    {
+                        return new Response { Code = 403, Message = "Đơn này hiện không chờ cấp của bạn duyệt" };
+                    }
+
+                    if (approverRole.ToUpper() == "MANAGER" && req.User.DepartmentId != approver.DepartmentId)
+                    {
+                        return new Response { Code = 403, Message = "Trưởng phòng chỉ được duyệt đơn của phòng mình" };
+                    }
                 }
 
                 req.Status = 1;
