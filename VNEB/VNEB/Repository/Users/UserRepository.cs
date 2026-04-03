@@ -35,7 +35,7 @@ namespace VNEB.Repository.Users
             {
                 return new Response { Code = 400, Message = "Tên đăng nhập hoặc mật khẩu không đúng." };
             }
-
+            var deptName = user.Department != null ? user.Department.Name : "KHÔNG XÁC ĐỊNH";
             // 2. Tạo Claims phong phú hơn
             var claims = new List<Claim>
     {
@@ -45,7 +45,7 @@ namespace VNEB.Repository.Users
         new Claim("FullName", user.FullName),
         new Claim("Company", user.Company), // VNEB / VHS
         new Claim("DeptId", user.DepartmentId.ToString()),
-        new Claim("DeptName", user.Department?.Name ?? "")
+        new Claim("DeptName", deptName),
     };
 
             var token = GenerateJwtToken(claims);
@@ -61,7 +61,8 @@ namespace VNEB.Repository.Users
                     FullName = user.FullName,
                     Role = user.Role,
                     Company = user.Company,
-                    DepartmentId = user.DepartmentId
+                    DepartmentId = user.DepartmentId,
+                    DeptName = user.Department?.Name ?? ""
                 }
             };
         }

@@ -16,9 +16,9 @@ import {
 export default function LeaveManagementPage() {
   const { user }: any = useAppContext();
   const [activeTab, setActiveTab] = useState<"register" | "approval" | "report" | "quota">("register");
-
+console.log("Current User Data:", user);
   const userRole = user?.role?.toUpperCase() || "";
-  const userDept = user?.deptName?.toUpperCase() || "";
+  const userDept = (user?.deptName || user?.departmentName || "").toUpperCase();
 
   // 1. Quyền phê duyệt: Các sếp và phòng HCNS
   const canApprove = ["ADMIN", "BOD", "CHAIRMAN", "MANAGER", "TP"].includes(userRole) || 
