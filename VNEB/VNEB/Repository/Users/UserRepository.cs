@@ -35,7 +35,7 @@ namespace VNEB.Repository.Users
             {
                 return new Response { Code = 400, Message = "Tên đăng nhập hoặc mật khẩu không đúng." };
             }
-            var deptName = _context.Users.FirstOrDefault(d => d.DepartmentId == user.DepartmentId).ToString();
+            var deptName = _context.Departments.FirstOrDefault(d => d.Id == user.DepartmentId).ToString();
             // 2. Tạo Claims phong phú hơn
             var claims = new List<Claim>
     {
