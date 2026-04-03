@@ -36,7 +36,7 @@ export default function LoginPage() {
         localStorage.setItem("fullName", userData.fullName);
         localStorage.setItem("company", userData.company || "VNEB");
         localStorage.setItem("departmentId", userData.departmentId?.toString() || "");
-
+localStorage.setItem("departmentName", userData.deptName);
         // 2. CẬP NHẬT CONTEXT (Để chuyển trang ngay lập tức)
         setUser({
           id: userIdFromToken,
