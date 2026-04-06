@@ -16,6 +16,7 @@ namespace VNEB.Repository.Users
         Task<Response> GetAllUsers(); 
         Task<Response> UpdateUserInfo(User model); 
         Task<string> UploadContractFile(IFormFile file, string userId, string type);
+        Task<string> UploadAvatar(IFormFile file, string userId);
         Task<(byte[] Bytes, string ContentType, string FileName)> DownloadContractFile(string filePath);
     }
 }

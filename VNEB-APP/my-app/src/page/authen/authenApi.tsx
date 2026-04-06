@@ -39,5 +39,12 @@ downloadContract: (filePath: string) => {
         },
         responseType: 'blob'
     });
-}
+},
+uploadAvatar: (file: File, userId: string) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return rootApi.post(`/Users/upload-avatar/${userId}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+    });
+},
 };

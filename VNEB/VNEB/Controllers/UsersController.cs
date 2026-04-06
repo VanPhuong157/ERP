@@ -88,6 +88,20 @@ namespace VNEB.Controllers
             return BadRequest(new Response { Code = 400, Message = "Upload file thất bại." });
         }
 
+        [HttpPost("upload-avatar/{userId}")]
+        public async Task<IActionResult> UploadAvatar(IFormFile file, string userId)
+        {
+            try
+            {
+                var path = await _userRepo.UploadAvatar(file, userId);
+                return Ok(new { code = 200, data = path, message = "Tải ảnh lên thành công" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { code = 400, message = ex.Message });
+            }
+        }
+
         [HttpGet("download-contract")]
         public async Task<IActionResult> DownloadContract(string filePath)
         {

@@ -170,6 +170,7 @@ namespace VNEB.Repository.Users
                 if (!string.IsNullOrEmpty(model.OfficialContractFile1)) user.OfficialContractFile1 = model.OfficialContractFile1;
                 if (!string.IsNullOrEmpty(model.OfficialContractFile2)) user.OfficialContractFile2 = model.OfficialContractFile2;
                 if (!string.IsNullOrEmpty(model.OfficialContractFile3)) user.OfficialContractFile3 = model.OfficialContractFile3;
+                if (!string.IsNullOrEmpty(model.AvatarPath)) user.AvatarPath = model.AvatarPath;
 
                 await _context.SaveChangesAsync();
                 return new Response { Code = 200, Message = "Cập nhật thông tin nhân sự thành công." };
@@ -178,6 +179,42 @@ namespace VNEB.Repository.Users
             {
                 return new Response { Code = 500, Message = $"Lỗi cập nhật: {ex.Message}" };
             }
+        }
+
+        public async Task<string> UploadAvatar(IFormFile file, string userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null) throw new Exception("User không tồn tại");
+
+            // Tạo thư mục riêng cho Avatar
+            string folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", "avatars");
+            if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+
+            // Xóa ảnh cũ nếu đã tồn tại
+            if (!string.IsNullOrEmpty(user.AvatarPath))
+            {
+                var oldPath = Path.Combine(_webHostEnvironment.WebRootPath, user.AvatarPath.TrimStart('/'));
+                if (System.IO.File.Exists(oldPath))
+                {
+                    try { System.IO.File.Delete(oldPath); } catch { /* ignore */ }
+                }
+            }
+
+            // Tạo tên file mới: avatar_userId_guid.jpg
+            string fileName = $"avatar_{userId}_{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            string relativePath = Path.Combine("uploads", "avatars", fileName).Replace("\\", "/");
+            string fullPath = Path.Combine(_webHostEnvironment.WebRootPath, relativePath);
+
+            using (var stream = new FileStream(fullPath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            // Cập nhật database
+            user.AvatarPath = relativePath;
+            await _context.SaveChangesAsync();
+
+            return relativePath;
         }
 
         public async Task<string> UploadContractFile(IFormFile file, string userId, string type)

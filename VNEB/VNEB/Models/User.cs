@@ -24,6 +24,7 @@ namespace VNEB.Models
         public string? PermanentAddress { get; set; }
         public string? Ethnic { get; set; }
         public string? PhoneNumber { get; set; }
+        public string? AvatarPath { get; set; }
 
         // --- Trình độ & Chuyên môn ---
         public string? EducationLevel { get; set; }
