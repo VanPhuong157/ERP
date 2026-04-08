@@ -2,13 +2,14 @@ import React, { useEffect, useState, ChangeEvent } from "react";
 import {
   User, Edit, FileText, Phone, Mail, Briefcase, CreditCard, ShieldCheck,
   Search, X, Building2, Calendar, MapPin, Fingerprint, GraduationCap,
-  Clock, Landmark, Wallet, DollarSign, Receipt, Paperclip, Download, Filter, Camera // Thêm Camera icon
+  Clock, Landmark, Wallet, DollarSign, Receipt, Paperclip, Download, Filter, Camera,
+  Trash2 // Thêm icon Xóa
 } from "lucide-react";
 import { authenApi } from "../authen/authenApi";
-import { rootApi } from "../api/rootApi"; // 1. Lấy rootApi để dùng host động
+import { rootApi } from "../api/rootApi"; 
 import Swal from "sweetalert2";
 
-// --- COMPONENT HỖ TRỢ ---
+// --- COMPONENT HỖ TRỢ (GIỮ NGUYÊN) ---
 
 const InputField = ({ label, name, type = "text", icon: Icon, value, onChange }: any) => {
   const formatDate = (dateStr: string) => (dateStr ? dateStr.split("T")[0] : "");
@@ -47,8 +48,7 @@ const FormSection = ({ title, icon: Icon, children, id }: any) => (
 // --- COMPONENT CHÍNH ---
 
 const EmployeeManagerPage = () => {
-  // 2. LẤY HOST ĐỘNG TỪ ROOT API
-  const host = rootApi.defaults.baseURL;
+  const host = rootApi.defaults.baseURL?.split('/api')[0];
 
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -56,9 +56,11 @@ const EmployeeManagerPage = () => {
   const [editingUser, setEditingUser] = useState<any>(null);
   const [searchText, setSearchText] = useState("");
   
-  // States cho lọc (Đã khôi phục)
   const [filterDept, setFilterDept] = useState("");
   const [filterCompany, setFilterCompany] = useState("");
+
+  // Lấy role từ localStorage để phân quyền nút xóa
+  const currentUserRole = localStorage.getItem("role");
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -71,7 +73,6 @@ const EmployeeManagerPage = () => {
 
   useEffect(() => { fetchUsers(); }, []);
 
-  // Trích xuất danh sách lọc (Đã khôi phục)
   const departments = Array.from(new Set(users.map((u) => u.departmentName || u.department?.name).filter(Boolean)));
   const companies = Array.from(new Set(users.map((u) => u.company).filter(Boolean)));
 
@@ -83,6 +84,32 @@ const EmployeeManagerPage = () => {
         setIsModalOpen(true);
       }
     } catch (err) { Swal.fire("Lỗi", "Không thể lấy thông tin", "error"); }
+  };
+
+  // --- HÀM XỬ LÝ XÓA (MỚI THÊM) ---
+  const handleDelete = async (id: string, name: string) => {
+    Swal.fire({
+      title: "Xác nhận xóa?",
+      text: `Dữ liệu của ${name.toUpperCase()} sẽ bị xóa vĩnh viễn khỏi hệ thống!`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#64748b",
+      confirmButtonText: "Xóa ngay",
+      cancelButtonText: "Hủy"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await (authenApi as any).deleteUser(id);
+          if (res.data.code === 200) {
+            Swal.fire("Thành công", "Đã xóa nhân sự", "success");
+            fetchUsers();
+          }
+        } catch (err) {
+          Swal.fire("Lỗi", "Không thể xóa nhân sự này", "error");
+        }
+      }
+    });
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -118,7 +145,6 @@ const EmployeeManagerPage = () => {
     } catch (err) { Swal.fire("Lỗi", "Tải lên thất bại", "error"); }
   };
 
-  // 3. HÀM XỬ LÝ UPLOAD AVATAR
   const handleAvatarUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !editingUser?.id) return;
@@ -128,7 +154,7 @@ const EmployeeManagerPage = () => {
       if (res.data.code === 200) {
         setEditingUser((prev: any) => ({ ...prev, avatarPath: res.data.data }));
         Swal.fire("Thành công", "Đã đổi ảnh đại diện", "success");
-        fetchUsers(); // Load lại danh sách để cập nhật ảnh ở bảng ngoài
+        fetchUsers();
       }
     } catch (err) { Swal.fire("Lỗi", "Tải lên thất bại", "error"); }
   };
@@ -154,15 +180,13 @@ const EmployeeManagerPage = () => {
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    if (element) element.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <div className="p-4 animate-in fade-in duration-500">
       
-      {/* --- HEADER & BỘ LỌC (GIỮ NGUYÊN) --- */}
+      {/* --- HEADER & BỘ LỌC --- */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 bg-white p-6 rounded-3xl shadow-sm border border-slate-100 gap-4">
         <div>
           <h2 className="text-2xl font-black text-slate-800 flex items-center gap-3 uppercase italic">
@@ -229,7 +253,6 @@ const EmployeeManagerPage = () => {
                 <tr key={user.id} className="hover:bg-blue-50/50 transition-all group">
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-3">
-                      {/* HIỂN THỊ AVATAR TRONG BẢNG */}
                       <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center font-black group-hover:border-blue-400 border-2 border-transparent transition-all overflow-hidden">
                         {user.avatarPath ? (
                           <img src={`${host}/${user.avatarPath}`} alt="" className="w-full h-full object-cover" onError={(e: any) => { e.target.src = `https://ui-avatars.com/api/?name=${user.fullName}`; }} />
@@ -250,10 +273,19 @@ const EmployeeManagerPage = () => {
                   <td className="px-6 py-5"><span className="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black uppercase">{user.company || "N/A"}</span></td>
                   <td className="px-6 py-5 font-bold text-blue-600 text-xs uppercase italic">{user.departmentName || user.department?.name || "Chưa gán"}</td>
                   <td className="px-6 py-5 text-slate-500 font-medium italic">{user.position || "Nhân viên"}</td>
-                  <td className="px-6 py-5 text-center">
-                    <button onClick={() => handleEdit(user.id)} className="bg-slate-100 text-slate-600 p-2.5 rounded-xl hover:bg-blue-600 hover:text-white transition-all shadow-sm active:scale-95">
-                      <Edit size={18} />
-                    </button>
+                  <td className="px-6 py-5">
+                    <div className="flex items-center justify-center gap-2">
+                      <button onClick={() => handleEdit(user.id)} className="bg-slate-100 text-slate-600 p-2.5 rounded-xl hover:bg-blue-600 hover:text-white transition-all shadow-sm active:scale-95">
+                        <Edit size={18} />
+                      </button>
+                      
+                      {/* Nút Xóa có phân quyền CHAIRMAN */}
+                      {currentUserRole === "CHAIRMAN" && (
+                        <button onClick={() => handleDelete(user.id, user.fullName)} className="bg-red-50 text-red-500 p-2.5 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-sm active:scale-95">
+                          <Trash2 size={18} />
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -265,15 +297,13 @@ const EmployeeManagerPage = () => {
         )}
       </div>
 
-      {/* --- MODAL HIỂN THỊ DỌC (GIỮ NGUYÊN TOÀN BỘ FIELD) --- */}
+      {/* --- MODAL (GIỮ NGUYÊN TOÀN BỘ) --- */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/80 backdrop-blur-md p-4">
           <div className="bg-white rounded-[3rem] w-full max-w-6xl max-h-[95vh] overflow-hidden flex flex-col shadow-2xl animate-in zoom-in duration-300">
             
-            {/* Modal Header */}
             <div className="px-10 py-6 border-b border-slate-100 flex justify-between items-center bg-white sticky top-0 z-10">
               <div className="flex items-center gap-5">
-                {/* PHẦN AVATAR TRONG MODAL CÓ NÚT UPLOAD */}
                 <div className="relative group">
                   <div className="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center font-black text-xl shadow-lg overflow-hidden border-2 border-white">
                     {editingUser?.avatarPath ? (
@@ -295,7 +325,6 @@ const EmployeeManagerPage = () => {
                 </div>
               </div>
 
-              {/* Thanh điều hướng cuộn nhanh */}
               <div className="hidden lg:flex items-center gap-2 bg-slate-50 p-1.5 rounded-2xl border border-slate-100">
                 <button onClick={() => scrollToSection('sec-personal')} className="px-4 py-2 text-[10px] font-black uppercase hover:bg-white hover:text-blue-600 hover:shadow-sm rounded-xl transition-all">1. Cá nhân</button>
                 <button onClick={() => scrollToSection('sec-work')} className="px-4 py-2 text-[10px] font-black uppercase hover:bg-white hover:text-blue-600 hover:shadow-sm rounded-xl transition-all">2. Công tác</button>
@@ -308,9 +337,7 @@ const EmployeeManagerPage = () => {
               </button>
             </div>
 
-            {/* Modal Body Scroll */}
             <div className="flex-1 overflow-y-auto p-10 bg-white custom-scrollbar space-y-4">
-              
               <FormSection id="sec-personal" title="Thông tin cá nhân cơ bản" icon={User}>
                 <div className="col-span-2">
                   <InputField label="Họ tên đầy đủ" name="fullName" icon={User} value={editingUser?.fullName} onChange={handleInputChange} />
@@ -387,10 +414,8 @@ const EmployeeManagerPage = () => {
                   <InputField label="Số tài khoản ngân hàng" name="bankAccountNumber" icon={CreditCard} value={editingUser?.bankAccountNumber} onChange={handleInputChange} />
                 </div>
               </FormSection>
-
             </div>
 
-            {/* Modal Footer */}
             <div className="px-10 py-6 border-t border-slate-100 flex justify-end gap-4 bg-white sticky bottom-0 z-10 shadow-[0_-10px_20px_rgba(0,0,0,0.02)]">
               <button onClick={() => setIsModalOpen(false)} className="px-8 py-3 rounded-2xl font-bold text-slate-400 hover:bg-slate-50 transition-all text-xs uppercase tracking-[0.2em]">Hủy bỏ</button>
               <button onClick={handleSave} className="px-12 py-3 rounded-2xl font-black bg-blue-600 text-white hover:bg-blue-700 shadow-2xl shadow-blue-200 transition-all text-xs uppercase italic tracking-[0.1em] active:scale-95">Cập nhật toàn bộ hồ sơ</button>
