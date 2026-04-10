@@ -19,6 +19,7 @@ interface TaskItem {
   taskDescription: string;
   startDate: string;
   endDate: string;
+  expectedOutcome: string;
   personalTarget: string;
   managerTarget: string;
   personalResult: string;
@@ -430,6 +431,7 @@ export default function MonthlyTaskRegistration({
               <th rowSpan={2} className="border p-3 w-80">
                 Nhiệm vụ
               </th>
+              <th rowSpan={2} className="border p-3 w-80 bg-[#3a5ba0]">Kết quả cần đạt</th>
               <th colSpan={2} className="border p-2">
                 Thời gian
               </th>
@@ -515,6 +517,7 @@ export default function MonthlyTaskRegistration({
                                     const ns = [...taskSections];
                                     ns[gIdx].taskItems.push({
                                       taskDescription: "",
+                                      expectedOutcome: "",
                                       startDate: "",
                                       endDate: "",
                                       personalTarget: "100%",
@@ -553,6 +556,16 @@ export default function MonthlyTaskRegistration({
                             }
                           />
                         </td>
+                        <td className="border p-1 bg-blue-50/30">
+  <textarea
+    className="w-full outline-none bg-transparent resize-none italic text-blue-800"
+    rows={2}
+    placeholder="Ví dụ: Đối tác đánh giá khả thi..."
+    value={task.expectedOutcome || ""}
+    disabled={!canEditGeneral}
+    onChange={(e) => updateTask(gIdx, tIdx, "expectedOutcome", e.target.value)}
+  />
+</td>
                         <td className="border p-1 text-center">
                           <input
                             type="date"
@@ -777,6 +790,7 @@ export default function MonthlyTaskRegistration({
                                   taskDescription: "",
                                   startDate: "",
                                   endDate: "",
+                                  expectedOutcome: "",
                                   personalTarget: "100%",
                                   managerTarget: "",
                                   personalResult: "",

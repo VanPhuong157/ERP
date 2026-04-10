@@ -18,6 +18,7 @@ namespace VNEB.Models
         public string EndDate { get; set; } = string.Empty;
 
         // Các thông tin chi tiết của nhiệm vụ
+        public string ExpectedOutcome { get; set; } = string.Empty;
         public string PersonalTarget { get; set; } = string.Empty;
         public string PersonalResult { get; set; } = string.Empty;
         public string PersonalPriority { get; set; } = "Medium";

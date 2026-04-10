@@ -162,6 +162,7 @@ namespace VNEB.Repository.Tasks
                                 TaskDescription = t.TaskDescription,
                                 StartDate = t.StartDate,
                                 EndDate = t.EndDate,
+                                ExpectedOutcome = t.ExpectedOutcome,
                                 PersonalTarget = t.PersonalTarget,
                                 ManagerTarget = t.ManagerTarget,
                                 PersonalResult = t.PersonalResult,

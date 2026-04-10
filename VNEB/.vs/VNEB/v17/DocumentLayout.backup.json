@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\repository\\users\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\users\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\repository\\users\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\users\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\repository\\users\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\users\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -202,8 +202,7 @@
               "RelativeToolTip": "VNEB\\Models\\User.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAgwA8AAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-31T09:49:11.04Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-31T09:49:11.04Z"
             },
             {
               "$type": "Document",
@@ -231,13 +230,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Users\\UserRepository.cs",
               "RelativeDocumentMoniker": "VNEB\\Repository\\Users\\UserRepository.cs",
               "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Repository\\Users\\UserRepository.cs",
               "RelativeToolTip": "VNEB\\Repository\\Users\\UserRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAAIwAAAAAAAAAAAAQwHMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-17T06:59:54.521Z",
               "EditorCaption": ""
@@ -250,14 +249,14 @@
               "RelativeDocumentMoniker": "VNEB\\Controllers\\UsersController.cs",
               "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Controllers\\UsersController.cs",
               "RelativeToolTip": "VNEB\\Controllers\\UsersController.cs",
-              "ViewState": "AgIAAD4AAAAAAAAAAAAmwFkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAcwGgAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-13T02:12:05.888Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Users\\IUserRepository.cs",
               "RelativeDocumentMoniker": "VNEB\\Repository\\Users\\IUserRepository.cs",
@@ -265,8 +264,7 @@
               "RelativeToolTip": "VNEB\\Repository\\Users\\IUserRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-17T07:04:22.255Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-17T07:04:22.255Z"
             },
             {
               "$type": "Document",

@@ -7,6 +7,7 @@
         public string StartDate { get; set; } = string.Empty;
         public string EndDate { get; set; } = string.Empty;
 
+        public string ExpectedOutcome { get; set; } = string.Empty;
         public string PersonalTarget { get; set; } = string.Empty;
         public string ManagerTarget { get; set; } = string.Empty;
         public string PersonalResult { get; set; } = string.Empty;
