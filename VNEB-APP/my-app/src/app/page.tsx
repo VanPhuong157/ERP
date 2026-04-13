@@ -107,7 +107,6 @@ export default function App() {
     loadSavedAuth();
   }, []);
 
-  // --- Cấu trúc Menu Đầy Đủ ---
   const menuStructure = [
     {
       id: "admin-section",
@@ -117,6 +116,7 @@ export default function App() {
         { id: "user-registration", label: "Cấp tài khoản", icon: UserPlus },
       ],
     },
+
     {
       id: "VNEB",
       label: "Công ty VNEB",
@@ -129,36 +129,25 @@ export default function App() {
           deptId: "4",
           accessRoles: ["CHAIRMAN", "BOD", "ADMIN"],
           children: [
-            {
-              id: "dept-dashboard",
-              label: "Báo cáo Dashboard",
-              icon: BarChart3,
-            },
-            {
-              id: "task-registration",
-              label: "Đăng ký nhiệm vụ",
-              icon: FileSpreadsheet,
-            },
-            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
+            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
+            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            // Đã xóa resignation ở đây
           ],
         },
+            // ĐƯA NGHỈ PHÉP RA NGOÀI ĐÂY
+    {
+      id: "resignation", 
+      label: "Quản lý nghỉ phép", 
+      icon: Calendar,
+    },
         {
           id: "vneb-kythuat",
           label: "Phòng Kĩ thuật- Vận hành",
           deptId: "5",
           icon: Wrench,
           children: [
-            {
-              id: "dept-dashboard",
-              label: "Báo cáo Dashboard",
-              icon: BarChart3,
-            },
-            {
-              id: "task-registration",
-              label: "Đăng ký nhiệm vụ",
-              icon: FileSpreadsheet,
-            },
-            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
+            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
+            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
             { id: "equipment", label: "Quản lý Xuất - Nhập", icon: Package },
             { id: "inventory", label: "Kho vật tư", icon: Warehouse },
             { id: "specifications", label: "Quản lý thiết bị", icon: Wrench },
@@ -171,17 +160,8 @@ export default function App() {
           deptId: "3",
           icon: Users,
           children: [
-            {
-              id: "dept-dashboard",
-              label: "Báo cáo Dashboard",
-              icon: BarChart3,
-            },
-            {
-              id: "task-registration",
-              label: "Đăng ký nhiệm vụ",
-              icon: FileSpreadsheet,
-            },
-            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
+            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
+            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
             { id: "customers", label: "Quản lý khách hàng", icon: Users },
             { id: "electricity", label: "Mua bán điện", icon: Package },
           ],
@@ -200,36 +180,23 @@ export default function App() {
           deptId: "4",
           accessRoles: ["CHAIRMAN", "BOD", "ADMIN"],
           children: [
-            {
-              id: "dept-dashboard",
-              label: "Báo cáo Dashboard",
-              icon: BarChart3,
-            },
-            {
-              id: "task-registration",
-              label: "Đăng ký nhiệm vụ",
-              icon: FileSpreadsheet,
-            },
-            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
+            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
+            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
           ],
         },
+    {
+      id: "resignation", 
+      label: "Quản lý nghỉ phép", 
+      icon: Calendar,
+    },
         {
           id: "vhs-ketoan",
           label: "Phòng Tài chính-Kế toán",
           icon: Wallet,
           deptId: "6",
           children: [
-            {
-              id: "dept-dashboard",
-              label: "Báo cáo Dashboard",
-              icon: BarChart3,
-            },
-            {
-              id: "task-registration",
-              label: "Đăng ký nhiệm vụ",
-              icon: FileSpreadsheet,
-            },
-            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
+            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
+            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
           ],
         },
         {
@@ -238,17 +205,8 @@ export default function App() {
           icon: Users,
           deptId: "7",
           children: [
-            {
-              id: "dept-dashboard",
-              label: "Báo cáo Dashboard",
-              icon: BarChart3,
-            },
-            {
-              id: "task-registration",
-              label: "Đăng ký nhiệm vụ",
-              icon: FileSpreadsheet,
-            },
-            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
+            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
+            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
             { id: "employee-manager", label: "Quản lý nhân sự", icon: Users },
           ],
         },
@@ -258,17 +216,8 @@ export default function App() {
           icon: Calendar,
           deptId: "2",
           children: [
-            {
-              id: "dept-dashboard",
-              label: "Báo cáo Dashboard",
-              icon: BarChart3,
-            },
-            {
-              id: "task-registration",
-              label: "Đăng ký nhiệm vụ",
-              icon: FileSpreadsheet,
-            },
-            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
+            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
+            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
           ],
         },
         {
@@ -277,17 +226,8 @@ export default function App() {
           icon: Wrench,
           deptId: "8",
           children: [
-            {
-              id: "dept-dashboard",
-              label: "Báo cáo Dashboard",
-              icon: BarChart3,
-            },
-            {
-              id: "task-registration",
-              label: "Đăng ký nhiệm vụ",
-              icon: FileSpreadsheet,
-            },
-            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
+            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
+            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
           ],
         },
         {
@@ -296,17 +236,8 @@ export default function App() {
           icon: Briefcase,
           deptId: "9",
           children: [
-            {
-              id: "dept-dashboard",
-              label: "Báo cáo Dashboard",
-              icon: BarChart3,
-            },
-            {
-              id: "task-registration",
-              label: "Đăng ký nhiệm vụ",
-              icon: FileSpreadsheet,
-            },
-            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
+            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
+            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
           ],
         },
         {
@@ -315,17 +246,8 @@ export default function App() {
           icon: Users,
           deptId: "10",
           children: [
-            {
-              id: "dept-dashboard",
-              label: "Báo cáo Dashboard",
-              icon: BarChart3,
-            },
-            {
-              id: "task-registration",
-              label: "Đăng ký nhiệm vụ",
-              icon: FileSpreadsheet,
-            },
-            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
+            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
+            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
           ],
         },
         {
@@ -334,17 +256,8 @@ export default function App() {
           icon: Truck,
           deptId: "11",
           children: [
-            {
-              id: "dept-dashboard",
-              label: "Báo cáo Dashboard",
-              icon: BarChart3,
-            },
-            {
-              id: "task-registration",
-              label: "Đăng ký nhiệm vụ",
-              icon: FileSpreadsheet,
-            },
-            { id: "resignation", label: "Đăng ký nghỉ phép", icon: Calendar },
+            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
+            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
           ],
         },
       ],
