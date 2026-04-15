@@ -7,22 +7,18 @@ import {
   Zap,
   ShieldAlert,
   Building2,
-  PersonStandingIcon,
-  Briefcase,
   Loader2,
   LayoutDashboard,
   Calendar,
-  Search,
   User,
   Users,
-  ArrowRight,
 } from "lucide-react";
 import { useAppContext } from "../../app/page";
 import { dashboardApi } from "./dashboardApi";
 
 interface DashboardProps {
   targetDeptId?: string;
-  title?: string;
+  title?: string; // Đây là tên phòng ban nhận từ Menu khi click
 }
 
 export default function PersonalEmployeeDashboard({
@@ -36,7 +32,12 @@ export default function PersonalEmployeeDashboard({
     { id: string; fullName: string }[]
   >([]);
 
-  // --- LOGIC 1: CẬP NHẬT FILTER VỚI FORMAT DATE ĐỊA PHƯƠNG ---
+  const displayDeptName = useMemo(() => {
+    if (title && title !== "Báo cáo tổng hợp") return title; // Nếu title truyền vào hợp lệ
+    if (user?.deptName) return user.deptName;
+    return "Báo cáo tổng hợp";
+  }, [title, user?.deptName]);
+
   const [filter, setFilter] = useState(() => {
     const now = new Date();
     const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -108,27 +109,26 @@ export default function PersonalEmployeeDashboard({
     return ((value / total) * 100).toFixed(1);
   };
 
-  // --- PHẦN MỚI: 4 MỨC ĐỘ ĐÁNH GIÁ ---
   const kpiChartData = [
     {
       name: "Hoàn thành (≥100%)",
       value: data?.sectionKPI?.completedOnTime || 0,
-      color: "#10b981", // Emerald-500
+      color: "#10b981",
     },
     {
       name: "Cần cố gắng (70-99%)",
       value: data?.sectionKPI?.completedEffort || 0,
-      color: "#3b82f6", // Blue-500
+      color: "#3b82f6",
     },
     {
       name: "Cảnh báo (30-69%)",
       value: data?.sectionKPI?.completedWarning || 0,
-      color: "#f59e0b", // Orange-500
+      color: "#f59e0b",
     },
     {
       name: "Không đáp ứng (<30%)",
       value: data?.sectionKPI?.notMet || 0,
-      color: "#ef4444", // Red-500
+      color: "#ef4444",
     },
   ];
 
@@ -162,7 +162,9 @@ export default function PersonalEmployeeDashboard({
           <div className="flex items-center gap-3">
             <div className="flex-1 bg-slate-100 rounded-full h-1.5 overflow-hidden">
               <div
-                className={`h-full transition-all duration-500 ${percent === 100 ? "bg-emerald-500" : "bg-blue-500"}`}
+                className={`h-full transition-all duration-500 ${
+                  percent === 100 ? "bg-emerald-500" : "bg-blue-500"
+                }`}
                 style={{ width: `${percent}%` }}
               ></div>
             </div>
@@ -177,6 +179,21 @@ export default function PersonalEmployeeDashboard({
 
   return (
     <div className="space-y-6">
+      <div className="flex flex-col gap-1 pb-4 border-b border-slate-100">
+    <div className="flex items-center gap-2">
+          <LayoutDashboard className="text-blue-600" size={20} />
+          <h2 className="text-[20px] font-black text-slate-500 uppercase ">
+            Báo cáo Dashboard
+          </h2>
+        </div>
+        <div className="flex items-center gap-2">
+          <Building2 className="text-slate-700" size={24} />
+          <h1 className="text-xl font-black text-slate-800 uppercase tracking-tight">
+            {displayDeptName}
+          </h1>
+        </div>
+      </div>
+
       {/* --- BỘ LỌC DỮ LIỆU --- */}
       <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-wrap items-end gap-4">
         <div className="flex flex-col gap-1.5">
@@ -200,7 +217,7 @@ export default function PersonalEmployeeDashboard({
           ) : (
             <div className="border border-slate-100 bg-slate-50 rounded-lg px-3 py-2 text-sm w-52 text-slate-600 font-bold flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-green-500"></div>{" "}
-              {user?.name}
+              {user?.name || "Người dùng"}
             </div>
           )}
         </div>
@@ -246,7 +263,7 @@ export default function PersonalEmployeeDashboard({
         </div>
       ) : (
         <>
-          {/* --- DASHBOARD CARDS (Phần mới 4 mức) --- */}
+          {/* DASHBOARD CARDS */}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
               <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">
@@ -365,55 +382,56 @@ export default function PersonalEmployeeDashboard({
               <h3 className="font-bold text-slate-700 mb-4 uppercase text-[10px] tracking-widest">
                 Phân bổ kết quả thực hiện
               </h3>
-<div className="h-[220px] w-full relative"> {/* Thêm relative để hỗ trợ căn chỉnh nếu cần */}
-  <ResponsiveContainer width="100%" height="100%">
-    <PieChart>
-      <Pie
-        data={kpiChartData.filter((i) => i.value > 0)}
-        innerRadius={60}
-        outerRadius={85}
-        paddingAngle={5}
-        dataKey="value"
-        stroke="none"
-      >
-        {kpiChartData.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={entry.color} />
-        ))}
-      </Pie>
-      
-      <text
-        x="50%"
-        y="50%"
-        textAnchor="middle"
-        dominantBaseline="middle"
-      >
-        <tspan
-          x="50%"
-          dy="-0.5em"
-          className="fill-slate-400 font-bold text-[10px] uppercase"
-        >
-          Hoàn thành
-        </tspan>
-        <tspan
-          x="50%"
-          dy="1.5em"
-          className="fill-red-600 font-black text-xl "
-        >
-          {calculatePercent(data?.sectionKPI?.completedOnTime, totalKPI)}%
-        </tspan>
-      </text>
-      {/* --------------------------------------- */}
-
-      <Tooltip 
-        contentStyle={{ 
-          borderRadius: "12px", 
-          border: "none", 
-          boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)" 
-        }} 
-      />
-    </PieChart>
-  </ResponsiveContainer>
-</div>
+              <div className="h-[220px] w-full relative">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={kpiChartData.filter((i) => i.value > 0)}
+                      innerRadius={60}
+                      outerRadius={85}
+                      paddingAngle={5}
+                      dataKey="value"
+                      stroke="none"
+                    >
+                      {kpiChartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <text
+                      x="50%"
+                      y="50%"
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                    >
+                      <tspan
+                        x="50%"
+                        dy="-0.5em"
+                        className="fill-slate-400 font-bold text-[10px] uppercase"
+                      >
+                        Hoàn thành
+                      </tspan>
+                      <tspan
+                        x="50%"
+                        dy="1.5em"
+                        className="fill-red-600 font-black text-xl "
+                      >
+                        {calculatePercent(
+                          data?.sectionKPI?.completedOnTime,
+                          totalKPI,
+                        )}
+                        %
+                      </tspan>
+                    </text>
+                    <Tooltip
+                      contentStyle={{
+                        borderRadius: "12px",
+                        border: "none",
+                        boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+                      }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
               <div className="mt-4 space-y-2.5 w-full">
                 {kpiChartData.map((item) => (
                   <div
@@ -437,7 +455,6 @@ export default function PersonalEmployeeDashboard({
             </div>
           </div>
 
-          {/* --- THEO DÕI TIẾN ĐỘ --- */}
           <div className="mt-8 space-y-4">
             <div className="flex items-center gap-2 border-l-4 border-red-600 pl-4">
               <Users className="text-red-600" size={20} />
@@ -482,7 +499,6 @@ export default function PersonalEmployeeDashboard({
             </div>
           </div>
 
-          {/* --- COMPLEXITY & PRIORITY --- */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div className="flex items-center gap-2 border-l-4 border-blue-600 pl-4">

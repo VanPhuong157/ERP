@@ -129,25 +129,39 @@ export default function App() {
           deptId: "4",
           accessRoles: ["CHAIRMAN", "BOD", "ADMIN"],
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
-            // Đã xóa resignation ở đây
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
           ],
         },
-            // ĐƯA NGHỈ PHÉP RA NGOÀI ĐÂY
-    {
-      id: "resignation", 
-      label: "Quản lý nghỉ phép", 
-      icon: Calendar,
-    },
+        {
+          id: "resignation",
+          label: "Quản lý nghỉ phép",
+          icon: Calendar,
+        },
         {
           id: "vneb-kythuat",
           label: "Phòng Kĩ thuật- Vận hành",
           deptId: "5",
           icon: Wrench,
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
             { id: "equipment", label: "Quản lý Xuất - Nhập", icon: Package },
             { id: "inventory", label: "Kho vật tư", icon: Warehouse },
             { id: "specifications", label: "Quản lý thiết bị", icon: Wrench },
@@ -160,8 +174,16 @@ export default function App() {
           deptId: "3",
           icon: Users,
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
             { id: "customers", label: "Quản lý khách hàng", icon: Users },
             { id: "electricity", label: "Mua bán điện", icon: Package },
           ],
@@ -180,23 +202,39 @@ export default function App() {
           deptId: "4",
           accessRoles: ["CHAIRMAN", "BOD", "ADMIN"],
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
           ],
         },
-    {
-      id: "resignation", 
-      label: "Quản lý nghỉ phép", 
-      icon: Calendar,
-    },
+        {
+          id: "resignation",
+          label: "Quản lý nghỉ phép",
+          icon: Calendar,
+        },
         {
           id: "vhs-ketoan",
           label: "Phòng Tài chính-Kế toán",
           icon: Wallet,
           deptId: "6",
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
           ],
         },
         {
@@ -205,8 +243,16 @@ export default function App() {
           icon: Users,
           deptId: "7",
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
             { id: "employee-manager", label: "Quản lý nhân sự", icon: Users },
           ],
         },
@@ -216,8 +262,16 @@ export default function App() {
           icon: Calendar,
           deptId: "2",
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
           ],
         },
         {
@@ -226,8 +280,16 @@ export default function App() {
           icon: Wrench,
           deptId: "8",
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
           ],
         },
         {
@@ -236,8 +298,16 @@ export default function App() {
           icon: Briefcase,
           deptId: "9",
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
           ],
         },
         {
@@ -246,8 +316,16 @@ export default function App() {
           icon: Users,
           deptId: "10",
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
           ],
         },
         {
@@ -256,8 +334,16 @@ export default function App() {
           icon: Truck,
           deptId: "11",
           children: [
-            { id: "dept-dashboard", label: "Báo cáo Dashboard", icon: BarChart3 },
-            { id: "task-registration", label: "Đăng ký nhiệm vụ", icon: FileSpreadsheet },
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
           ],
         },
       ],
@@ -267,6 +353,7 @@ export default function App() {
   const getFilteredMenu = (
     items: any[],
     parentDeptId: string | null = null,
+    parentDeptName: string | null = null, // Thêm tham số này
     parentId: string | null = null,
   ): any[] => {
     if (!user) return [];
@@ -295,6 +382,7 @@ export default function App() {
       })
       .map((item) => {
         const currentDeptId = item.deptId || parentDeptId;
+        const currentDeptName = item.deptId ? item.label : parentDeptName; // Kế thừa tên phòng ban
         const currentParentId =
           parentId ||
           (item.id === "VNEB" || item.id === "VHS" ? item.id : null);
@@ -302,16 +390,19 @@ export default function App() {
           return {
             ...item,
             deptId: currentDeptId,
+            deptName: currentDeptName, // Gán vào item
             parentCompanyId: currentParentId,
             children: getFilteredMenu(
               item.children,
               currentDeptId,
+              currentDeptName, // Truyền xuống cấp con
               currentParentId,
             ),
           };
         return {
           ...item,
           deptId: currentDeptId,
+          deptName: currentDeptName, // Gán vào item
           parentCompanyId: currentParentId,
         };
       });
@@ -337,10 +428,11 @@ export default function App() {
               );
             } else {
               setCurrentPage(item.id);
+              // Sửa logic truyền activeDept ở đây
               if (item.deptId) {
                 setActiveDept({
                   id: item.deptId,
-                  name: item.label || "Phòng ban",
+                  name: item.deptName || "Phòng ban", // Lấy tên phòng ban đã map ở getFilteredMenu
                   companyId: item.parentCompanyId,
                 });
               }
@@ -377,8 +469,8 @@ export default function App() {
       case "dept-dashboard":
         return (
           <DashboardPage
-            targetDeptId={activeDept?.id}
-            title={`Báo cáo ${activeDept?.name}`}
+            targetDeptId={activeDept?.id || user?.deptId}
+            title={activeDept?.name || user?.deptName || "Báo cáo tổng hợp"}
           />
         );
       case "user-registration":
@@ -459,7 +551,6 @@ export default function App() {
                       {user.company} • {user.role}
                     </p>
                   </div>
-                  {/* NÚT ĐỔI MẬT KHẨU TÍCH HỢP GỌN GÀNG */}
                   <button
                     onClick={() => setCurrentPage("change-password")}
                     className={`p-1.5 rounded-lg transition-colors ${currentPage === "change-password" ? "bg-blue-600 text-white" : "text-slate-400 hover:bg-slate-700 hover:text-blue-400"}`}

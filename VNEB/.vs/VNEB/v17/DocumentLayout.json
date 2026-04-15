@@ -166,8 +166,7 @@
               "RelativeToolTip": "VNEB\\Models\\TaskItem.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-02T03:34:11.497Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-02T03:34:11.497Z"
             },
             {
               "$type": "Document",
@@ -179,8 +178,7 @@
               "RelativeToolTip": "VNEB\\Models\\TaskSection.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-02T03:34:18.519Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-02T03:34:18.519Z"
             },
             {
               "$type": "Document",
@@ -192,8 +190,7 @@
               "RelativeToolTip": "VNEB\\Models\\User.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAA1wA8AAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-31T09:49:11.04Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-31T09:49:11.04Z"
             },
             {
               "$type": "Document",
@@ -217,8 +214,7 @@
               "RelativeToolTip": "VNEB\\DTO\\TaskDTO\\TaskItemDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-12T02:56:48.439Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-12T02:56:48.439Z"
             },
             {
               "$type": "Document",
@@ -228,7 +224,7 @@
               "RelativeDocumentMoniker": "VNEB\\Repository\\Tasks\\TaskRepository.cs",
               "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Repository\\Tasks\\TaskRepository.cs",
               "RelativeToolTip": "VNEB\\Repository\\Tasks\\TaskRepository.cs",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAgwGEAAABOAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGEAAABOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-10T04:06:23.125Z",
               "EditorCaption": ""

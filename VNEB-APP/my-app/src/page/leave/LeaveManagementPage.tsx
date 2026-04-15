@@ -16,17 +16,17 @@ import {
 export default function LeaveManagementPage() {
   const { user }: any = useAppContext();
   const [activeTab, setActiveTab] = useState<"register" | "approval" | "report" | "quota">("register");
-console.log("Current User Data:", user);
+
   const userRole = user?.role?.toUpperCase() || "";
   const userDept = (user?.deptName || user?.departmentName || "").toUpperCase();
 
-  // 1. Quyền phê duyệt: Các sếp và phòng HCNS
+  // 1. Quyền phê duyệt: Giữ nguyên (Chỉ sếp và HCNS mới được duyệt đơn)
   const canApprove = ["ADMIN", "BOD", "CHAIRMAN", "MANAGER", "TP"].includes(userRole) || 
                      userDept.includes("HCNS") || userDept.includes("HÀNH CHÍNH");
 
-  // 2. Quyền xem báo cáo TỔNG HỢP: Chỉ Admin, Chairman và phòng HCNS
-  const canViewReport = ["ADMIN", "CHAIRMAN"].includes(userRole) || 
-                        userDept.includes("HCNS") || userDept.includes("HÀNH CHÍNH");
+  // 2. Quyền xem báo cáo TỔNG HỢP & ĐỊNH MỨC: 
+  // Sửa thành true để tất cả mọi người trong công ty đều xem được
+  const canViewEveryone = true; 
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
@@ -39,19 +39,21 @@ console.log("Current User Data:", user);
         </div>
 
         <div className="flex bg-slate-100 p-1 rounded-xl border border-slate-200 overflow-x-auto">
+          {/* Tab mặc định: Ai cũng có */}
           <button
             onClick={() => setActiveTab("register")}
-            className={`px-6 py-2.5 rounded-lg font-black text-[10px] uppercase transition-all ${
+            className={`flex items-center gap-2 px-6 py-2.5 rounded-lg font-black text-[10px] uppercase transition-all ${
               activeTab === "register" ? "bg-white text-blue-600 shadow-sm" : "text-slate-500"
             }`}
           >
             <ClipboardList size={14} /> Đăng ký cá nhân
           </button>
 
+          {/* Tab Phê duyệt: Giữ nguyên logic cũ (Chỉ người có quyền mới thấy) */}
           {canApprove && (
             <button
               onClick={() => setActiveTab("approval")}
-              className={`px-6 py-2.5 rounded-lg font-black text-[10px] uppercase transition-all ${
+              className={`flex items-center gap-2 px-6 py-2.5 rounded-lg font-black text-[10px] uppercase transition-all ${
                 activeTab === "approval" ? "bg-white text-blue-600 shadow-sm" : "text-slate-500"
               }`}
             >
@@ -59,10 +61,11 @@ console.log("Current User Data:", user);
             </button>
           )}
 
-          {canViewReport && (
+          {/* Tab Tổng hợp: Đã mở cho toàn công ty */}
+          {canViewEveryone && (
             <button
               onClick={() => setActiveTab("report")}
-              className={`px-6 py-2.5 rounded-lg font-black text-[10px] uppercase transition-all ${
+              className={`flex items-center gap-2 px-6 py-2.5 rounded-lg font-black text-[10px] uppercase transition-all ${
                 activeTab === "report" ? "bg-white text-green-600 shadow-sm" : "text-slate-500"
               }`}
             >
@@ -70,32 +73,30 @@ console.log("Current User Data:", user);
             </button>
           )}
 
-          {canViewReport && (
-  <>
-
-    <button
-      onClick={() => setActiveTab("quota")}
-      className={`px-6 py-2.5 rounded-lg font-black text-[10px] uppercase transition-all ${
-        activeTab === "quota" ? "bg-white text-orange-600 shadow-sm" : "text-slate-500"
-      }`}
-    >
-      <FileSpreadsheet size={14} /> Định mức phép
-    </button>
-  </>
-)}
+          {/* Tab Định mức phép: Đã mở cho toàn công ty */}
+          {canViewEveryone && (
+            <button
+              onClick={() => setActiveTab("quota")}
+              className={`flex items-center gap-2 px-6 py-2.5 rounded-lg font-black text-[10px] uppercase transition-all ${
+                activeTab === "quota" ? "bg-white text-orange-600 shadow-sm" : "text-slate-500"
+              }`}
+            >
+              <FileSpreadsheet size={14} /> Định mức phép
+            </button>
+          )}
         </div>
       </div>
 
-{/* Trong phần render của LeaveManagementPage */}
-<div className="relative min-h-[500px]">
-  {activeTab === 'register' && <LeaveRegistrationForm user={user} />}
-  
-  {activeTab === 'approval' && <LeaveApprovalList user={user} isReportMode={false} />}
-  
-  {activeTab === 'report' && <LeaveApprovalList user={user} isReportMode={true} />}
+      {/* Phần hiển thị nội dung các Tab */}
+      <div className="relative min-h-[500px]">
+        {activeTab === 'register' && <LeaveRegistrationForm user={user} />}
+        
+        {activeTab === 'approval' && <LeaveApprovalList user={user} isReportMode={false} />}
+        
+        {activeTab === 'report' && <LeaveApprovalList user={user} isReportMode={true} />}
 
-  {activeTab === 'quota' && <LeaveQuotaTable user={user} />}
-</div>
+        {activeTab === 'quota' && <LeaveQuotaTable user={user} />}
+      </div>
     </div>
   );
 }
