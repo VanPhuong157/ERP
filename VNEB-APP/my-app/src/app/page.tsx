@@ -147,6 +147,24 @@ export default function App() {
           icon: Calendar,
         },
         {
+          id: "vneb-ketoan",
+          label: "Phòng Tài chính-Kế toán",
+          icon: Wallet,
+          deptId: "12",
+          children: [
+            {
+              id: "dept-dashboard",
+              label: "Báo cáo Dashboard",
+              icon: BarChart3,
+            },
+            {
+              id: "task-registration",
+              label: "Đăng ký nhiệm vụ",
+              icon: FileSpreadsheet,
+            },
+          ],
+        },
+        {
           id: "vneb-kythuat",
           label: "Phòng Kĩ thuật- Vận hành",
           deptId: "5",
