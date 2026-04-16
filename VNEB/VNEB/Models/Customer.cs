@@ -5,7 +5,7 @@ namespace VNEB.Models
     public class Customer
     {
         [Key]
-        public string Id { get; set; } = string.Empty; // ĐÂY LÀ MÃ KHÁCH HÀNG (Ví dụ: KH001)
+        public string Id { get; set; } = string.Empty;
         public string? Province { get; set; }
         public string? IndustrialZone { get; set; }
         public string CustomerName { get; set; } = string.Empty;

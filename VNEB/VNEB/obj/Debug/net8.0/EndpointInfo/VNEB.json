@@ -5,10 +5,287 @@
     "version": "v1"
   },
   "paths": {
+    "/api/Customers": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Customers"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Customers/{id}": {
+      "put": {
+        "tags": [
+          "Customers"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Customers"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Departments": {
       "get": {
         "tags": [
           "Departments"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Electrics": {
+      "get": {
+        "tags": [
+          "Electrics"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Electrics"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ElectricityUsage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ElectricityUsage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ElectricityUsage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Electrics/by-month": {
+      "get": {
+        "tags": [
+          "Electrics"
+        ],
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "month",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Electrics/{id}": {
+      "put": {
+        "tags": [
+          "Electrics"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ElectricityUsage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ElectricityUsage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ElectricityUsage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Electrics"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -827,6 +1104,99 @@
         },
         "additionalProperties": false
       },
+      "Customer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "province": {
+            "type": "string",
+            "nullable": true
+          },
+          "industrialZone": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "contractSigningDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "contractExpiryDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "taxCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankAccountNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "usageLocation": {
+            "type": "string",
+            "nullable": true
+          },
+          "connectionPoint": {
+            "type": "string",
+            "nullable": true
+          },
+          "usagePurpose": {
+            "type": "string",
+            "nullable": true
+          },
+          "voltageLevel": {
+            "type": "string",
+            "nullable": true
+          },
+          "maxPower": {
+            "type": "string",
+            "nullable": true
+          },
+          "avgDailyPower": {
+            "type": "string",
+            "nullable": true
+          },
+          "minPower": {
+            "type": "string",
+            "nullable": true
+          },
+          "registeredVolume": {
+            "type": "string",
+            "nullable": true
+          },
+          "legalDocuments": {
+            "type": "string",
+            "nullable": true
+          },
+          "electricityUsages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ElectricityUsage"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Department": {
         "type": "object",
         "properties": {
@@ -852,6 +1222,87 @@
               "$ref": "#/components/schemas/User"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ElectricityUsage": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "month": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "price_FlatRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "price_Normal": {
+            "type": "number",
+            "format": "double"
+          },
+          "price_Peak": {
+            "type": "number",
+            "format": "double"
+          },
+          "price_OffPeak": {
+            "type": "number",
+            "format": "double"
+          },
+          "p_FlatRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "p_Normal": {
+            "type": "number",
+            "format": "double"
+          },
+          "p_Peak": {
+            "type": "number",
+            "format": "double"
+          },
+          "p_OffPeak": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalConsumption": {
+            "type": "number",
+            "format": "double"
+          },
+          "amount_FlatRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "amount_Normal": {
+            "type": "number",
+            "format": "double"
+          },
+          "amount_Peak": {
+            "type": "number",
+            "format": "double"
+          },
+          "amount_OffPeak": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalBillAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Customer"
           }
         },
         "additionalProperties": false
@@ -1065,6 +1516,10 @@
             "nullable": true
           },
           "endDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "expectedOutcome": {
             "type": "string",
             "nullable": true
           },

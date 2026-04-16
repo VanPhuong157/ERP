@@ -7,6 +7,7 @@ using System.Text;
 using VNEB.Models;
 using VNEB.Repository.Customers;
 using VNEB.Repository.Departments;
+using VNEB.Repository.Electrics;
 using VNEB.Repository.LeaveRequests;
 using VNEB.Repository.Specifications;
 using VNEB.Repository.Tasks;
@@ -92,6 +93,7 @@ builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IElectricRepository, ElectricRepository>();
 
 var app = builder.Build();
 
