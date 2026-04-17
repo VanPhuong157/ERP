@@ -251,7 +251,7 @@ namespace VNEB.Repository.Tasks
                 bool IsMedium(string? val) => val == "Medium" || val == "Normal" || val == "T.Bình" || val == "Trung bình";
                 bool IsLow(string? val) => val == "Low" || val == "Thấp";
 
-                var employeeList = Enumerable.Empty<dynamic>().ToList();
+                var employeeList = new List<object>();
 
                 if (string.IsNullOrWhiteSpace(userId) && targetUsers.Any())
                 {
@@ -260,7 +260,7 @@ namespace VNEB.Repository.Tasks
                         int totalCount = userTasks.Count;
                         int completedCount = userTasks.Count(t => SafeParse(t.ManagerResult) == 100);
 
-                        return (dynamic)new
+                        return (object)new
                         {
                             u.Id,
                             u.FullName,
@@ -272,17 +272,10 @@ namespace VNEB.Repository.Tasks
 
                 if (!filteredItems.Any())
                 {
-                    var emptyStats = CreateEmptyStats();
                     return new Response
                     {
                         Code = 200,
-                        Data = new
-                        {
-                            SectionKPI = ((dynamic)emptyStats).SectionKPI,
-                            SectionComplexity = ((dynamic)emptyStats).SectionComplexity,
-                            SectionPriority = ((dynamic)emptyStats).SectionPriority,
-                            EmployeeList = employeeList
-                        }
+                        Data = CreateEmptyStats() 
                     };
                 }
 

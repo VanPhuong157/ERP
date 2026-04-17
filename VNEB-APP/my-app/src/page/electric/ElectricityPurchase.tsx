@@ -16,14 +16,14 @@ interface ElectricityUsage {
   kcnCcn?: string;        
   year: number;
   month: number;
-  price_FlatRate: number;
-  price_Normal: number;
-  price_Peak: number;
-  price_OffPeak: number;
-  p_FlatRate: number;
-  p_Normal: number;
-  p_Peak: number;
-  p_OffPeak: number;
+  price_FlatRate: number | string;
+  price_Normal: number | string;
+  price_Peak: number | string;
+  price_OffPeak: number | string;
+  p_FlatRate: number | string;
+  p_Normal: number | string;
+  p_Peak: number | string;
+  p_OffPeak: number | string;
   totalConsumption: number;
   amount_FlatRate: number;
   amount_Normal: number;
@@ -40,7 +40,6 @@ interface Customer {
 }
 
 export default function ElectricityUsagePage() {
-  // --- PHẦN QUẢN LÝ THEO THÁNG (GIỐNG MONTHLYTASK) ---
   const [activeMonth, setActiveMonth] = useState(`${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`);
   
   const [data, setData] = useState<ElectricityUsage[]>([]);
@@ -57,19 +56,17 @@ export default function ElectricityUsagePage() {
 
   const [formData, setFormData] = useState<ElectricityUsage>({
     id: '', customerId: '', year: new Date().getFullYear(), month: new Date().getMonth() + 1,
-    price_FlatRate: 0, price_Normal: 0, price_Peak: 0, price_OffPeak: 0,
-    p_FlatRate: 0, p_Normal: 0, p_Peak: 0, p_OffPeak: 0, totalConsumption: 0,
+    price_FlatRate: '', price_Normal: '', price_Peak: '', price_OffPeak: '',
+    p_FlatRate: '', p_Normal: '', p_Peak: '', p_OffPeak: '', totalConsumption: 0,
     amount_FlatRate: 0, amount_Normal: 0, amount_Peak: 0, amount_OffPeak: 0, totalBillAmount: 0
   });
 
-  // Load dữ liệu theo tháng được chọn
   const loadDataByMonth = async () => {
     try {
       setIsLoading(true);
       const [year, month] = activeMonth.split('-').map(Number);
-      
       const [usageRes, customerRes] = await Promise.all([
-        electricApi.getByMonth(year, month), // Gọi API mới của bạn
+        electricApi.getByMonth(year, month),
         customerApi.getAll() 
       ]);
       setData(usageRes.data || []);
@@ -102,19 +99,27 @@ export default function ElectricityUsagePage() {
   const getGrowth = (current: ElectricityUsage) => {
     const prevMonth = current.month === 1 ? 12 : current.month - 1;
     const prevYear = current.month === 1 ? current.year - 1 : current.year;
-    // Tìm trong dữ liệu hiện tại (nếu có load nhiều tháng) hoặc có thể để mặc định là null nếu chỉ load 1 tháng
     const prevData = data.find(d => d.customerId === current.customerId && d.month === prevMonth && d.year === prevYear);
     if (!prevData || prevData.totalConsumption === 0) return null;
     return ((current.totalConsumption - prevData.totalConsumption) / prevData.totalConsumption) * 100;
   };
 
-  // Logic tự động tính toán (Giữ nguyên)
   useEffect(() => {
-    const p_tong = Number(formData.p_FlatRate) + Number(formData.p_Normal) + Number(formData.p_Peak) + Number(formData.p_OffPeak);
-    const t_flat = Number(formData.p_FlatRate) * Number(formData.price_FlatRate);
-    const t_norm = Number(formData.p_Normal) * Number(formData.price_Normal);
-    const t_peak = Number(formData.p_Peak) * Number(formData.price_Peak);
-    const t_off = Number(formData.p_OffPeak) * Number(formData.price_OffPeak);
+    const p_norm = Number(formData.p_Normal || 0);
+    const p_peak = Number(formData.p_Peak || 0);
+    const p_off = Number(formData.p_OffPeak || 0);
+    const p_flat = Number(formData.p_FlatRate || 0);
+
+    const pr_norm = Number(formData.price_Normal || 0);
+    const pr_peak = Number(formData.price_Peak || 0);
+    const pr_off = Number(formData.price_OffPeak || 0);
+    const pr_flat = Number(formData.price_FlatRate || 0);
+
+    const p_tong = p_norm + p_peak + p_off + p_flat;
+    const t_norm = p_norm * pr_norm;
+    const t_peak = p_peak * pr_peak;
+    const t_off = p_off * pr_off;
+    const t_flat = p_flat * pr_flat;
 
     setFormData(prev => ({
       ...prev,
@@ -130,14 +135,24 @@ export default function ElectricityUsagePage() {
 
   const openModal = (item?: ElectricityUsage) => {
     if (item) {
-      setFormData(item);
+      setFormData({
+        ...item,
+        price_FlatRate: item.price_FlatRate === 0 ? '' : item.price_FlatRate,
+        price_Normal: item.price_Normal === 0 ? '' : item.price_Normal,
+        price_Peak: item.price_Peak === 0 ? '' : item.price_Peak,
+        price_OffPeak: item.price_OffPeak === 0 ? '' : item.price_OffPeak,
+        p_FlatRate: item.p_FlatRate === 0 ? '' : item.p_FlatRate,
+        p_Normal: item.p_Normal === 0 ? '' : item.p_Normal,
+        p_Peak: item.p_Peak === 0 ? '' : item.p_Peak,
+        p_OffPeak: item.p_OffPeak === 0 ? '' : item.p_OffPeak,
+      });
       setEditingId(item.id);
     } else {
       const [year, month] = activeMonth.split('-').map(Number);
       setFormData({
         id: '', customerId: '', year, month,
-        price_FlatRate: 0, price_Normal: 0, price_Peak: 0, price_OffPeak: 0,
-        p_FlatRate: 0, p_Normal: 0, p_Peak: 0, p_OffPeak: 0, totalConsumption: 0,
+        price_FlatRate: '', price_Normal: '', price_Peak: '', price_OffPeak: '',
+        p_FlatRate: '', p_Normal: '', p_Peak: '', p_OffPeak: '', totalConsumption: 0,
         amount_FlatRate: 0, amount_Normal: 0, amount_Peak: 0, amount_OffPeak: 0, totalBillAmount: 0
       });
       setEditingId(null);
@@ -147,11 +162,23 @@ export default function ElectricityUsagePage() {
 
   const handleSave = async () => {
     try {
+      const payload = {
+        ...formData,
+        price_FlatRate: Number(formData.price_FlatRate || 0),
+        price_Normal: Number(formData.price_Normal || 0),
+        price_Peak: Number(formData.price_Peak || 0),
+        price_OffPeak: Number(formData.price_OffPeak || 0),
+        p_FlatRate: Number(formData.p_FlatRate || 0),
+        p_Normal: Number(formData.p_Normal || 0),
+        p_Peak: Number(formData.p_Peak || 0),
+        p_OffPeak: Number(formData.p_OffPeak || 0),
+      };
+
       if (editingId) {
-        await electricApi.updateUsage(editingId, formData);
+        await electricApi.updateUsage(editingId, payload);
         setSuccessMessage("Dữ liệu chỉ số điện đã được cập nhật.");
       } else {
-        await electricApi.createUsage(formData);
+        await electricApi.createUsage(payload);
         setSuccessMessage("Đã thêm chỉ số điện mới thành công.");
       }
       setIsModalOpen(false);
@@ -181,7 +208,6 @@ export default function ElectricityUsagePage() {
 
   return (
     <div className="space-y-4 p-4 bg-slate-50 min-h-screen font-sans text-slate-900">
-      {/* Header tích hợp chọn Tháng */}
       <div className="flex justify-between items-center bg-white p-6 rounded-xl shadow-sm border border-slate-200">
         <div>
           <h1 className="text-xl font-black text-[#1e3a5f] uppercase tracking-tight flex items-center gap-2">
@@ -218,7 +244,6 @@ export default function ElectricityUsagePage() {
         </div>
       </div>
 
-      {/* Table Area (100% Giao diện cũ) */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden min-h-[400px]">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center h-64 gap-2">
@@ -259,14 +284,14 @@ export default function ElectricityUsagePage() {
                       <td className="p-2 border text-center">{item.kcnCcn}</td>
                       <td className="p-2 border font-bold text-slate-900 uppercase leading-tight">{item.tenKhachHang}</td>
                       <td className="p-2 border text-center font-bold text-blue-700">{item.month}/{item.year}</td>
-                      <td className="p-2 border text-right">{item.price_FlatRate.toLocaleString()}</td>
-                      <td className="p-2 border text-right">{item.price_Normal.toLocaleString()}</td>
-                      <td className="p-2 border text-right">{item.price_Peak.toLocaleString()}</td>
-                      <td className="p-2 border text-right">{item.price_OffPeak.toLocaleString()}</td>
-                      <td className="p-2 border text-right">{item.p_FlatRate.toLocaleString()}</td>
-                      <td className="p-2 border text-right">{item.p_Normal.toLocaleString()}</td>
-                      <td className="p-2 border text-right">{item.p_Peak.toLocaleString()}</td>
-                      <td className="p-2 border text-right">{item.p_OffPeak.toLocaleString()}</td>
+                      <td className="p-2 border text-right">{Number(item.price_FlatRate).toLocaleString()}</td>
+                      <td className="p-2 border text-right">{Number(item.price_Normal).toLocaleString()}</td>
+                      <td className="p-2 border text-right">{Number(item.price_Peak).toLocaleString()}</td>
+                      <td className="p-2 border text-right">{Number(item.price_OffPeak).toLocaleString()}</td>
+                      <td className="p-2 border text-right">{Number(item.p_FlatRate).toLocaleString()}</td>
+                      <td className="p-2 border text-right">{Number(item.p_Normal).toLocaleString()}</td>
+                      <td className="p-2 border text-right">{Number(item.p_Peak).toLocaleString()}</td>
+                      <td className="p-2 border text-right">{Number(item.p_OffPeak).toLocaleString()}</td>
                       <td className="p-2 border text-right font-black text-orange-700 bg-orange-50/50">{item.totalConsumption.toLocaleString()}</td>
                       <td className={`p-2 border text-center font-bold bg-amber-50/30 ${growth !== null ? (growth >= 0 ? 'text-emerald-600' : 'text-rose-600') : 'text-slate-400'}`}>
                         {growth !== null ? (
@@ -296,7 +321,6 @@ export default function ElectricityUsagePage() {
         )}
       </div>
 
-      {/* --- PHẦN POPUP NHẬP LIỆU (GIỮ NGUYÊN LOGIC CỦA BẠN) --- */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col animate-in fade-in zoom-in duration-200">
@@ -348,10 +372,21 @@ export default function ElectricityUsagePage() {
               <div className="md:col-span-2 space-y-3 bg-orange-50/30 p-4 rounded-xl border border-orange-100">
                 <h3 className="text-xs font-black text-orange-700 uppercase flex items-center gap-2"><TrendingUp size={16} /> 1. Sản lượng tiêu thụ (kWh)</h3>
                 <div className="grid grid-cols-2 gap-3">
-                  {['p_Normal', 'p_Peak', 'p_OffPeak', 'p_FlatRate'].map((field) => (
-                    <div key={field} className="space-y-1">
-                      <label className="text-[9px] font-bold text-slate-400 uppercase">{field.replace('p_', '').replace('FlatRate', 'Ko TG')}</label>
-                      <input type="number" value={(formData as any)[field]} onChange={(e) => setFormData({ ...formData, [field]: Number(e.target.value) })} className="w-full px-3 py-2 border rounded-lg" />
+                  {[
+                    { field: 'p_Normal', label: 'Bình thường' },
+                    { field: 'p_Peak', label: 'Cao điểm' },
+                    { field: 'p_OffPeak', label: 'Thấp điểm' },
+                    { field: 'p_FlatRate', label: 'Ko theo TG' }
+                  ].map((item) => (
+                    <div key={item.field} className="space-y-1">
+                      <label className="text-[9px] font-bold text-slate-400 uppercase">{item.label}</label>
+                      <input 
+                        type="number" 
+                        value={(formData as any)[item.field]} 
+                        onChange={(e) => setFormData({ ...formData, [item.field]: e.target.value === "" ? "" : Number(e.target.value) })} 
+                        className="w-full px-3 py-2 border rounded-lg outline-none focus:ring-2 ring-orange-200" 
+                        placeholder="0"
+                      />
                     </div>
                   ))}
                 </div>
@@ -360,10 +395,21 @@ export default function ElectricityUsagePage() {
               <div className="md:col-span-2 space-y-3 bg-blue-50/30 p-4 rounded-xl border border-blue-100">
                 <h3 className="text-xs font-black text-blue-700 uppercase flex items-center gap-2"><Zap size={16} /> 2. Giá bán điện (VNĐ)</h3>
                 <div className="grid grid-cols-2 gap-3">
-                  {['price_Normal', 'price_Peak', 'price_OffPeak', 'price_FlatRate'].map((field) => (
-                    <div key={field} className="space-y-1">
-                      <label className="text-[9px] font-bold text-slate-400 uppercase">{field.replace('price_', '').replace('FlatRate', 'Ko TG')}</label>
-                      <input type="number" value={(formData as any)[field]} onChange={(e) => setFormData({ ...formData, [field]: Number(e.target.value) })} className="w-full px-3 py-2 border rounded-lg" />
+                  {[
+                    { field: 'price_Normal', label: 'Bình thường' },
+                    { field: 'price_Peak', label: 'Cao điểm' },
+                    { field: 'price_OffPeak', label: 'Thấp điểm' },
+                    { field: 'price_FlatRate', label: 'Ko theo TG' }
+                  ].map((item) => (
+                    <div key={item.field} className="space-y-1">
+                      <label className="text-[9px] font-bold text-slate-400 uppercase">{item.label}</label>
+                      <input 
+                        type="number" 
+                        value={(formData as any)[item.field]} 
+                        onChange={(e) => setFormData({ ...formData, [item.field]: e.target.value === "" ? "" : Number(e.target.value) })} 
+                        className="w-full px-3 py-2 border rounded-lg outline-none focus:ring-2 ring-blue-200" 
+                        placeholder="0"
+                      />
                     </div>
                   ))}
                 </div>
@@ -391,7 +437,6 @@ export default function ElectricityUsagePage() {
         </div>
       )}
 
-      {/* Modals hỗ trợ */}
       <ConfirmModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}

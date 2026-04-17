@@ -40,6 +40,9 @@ export default function CustomerManagementPage() {
   const [itemToDelete, setItemToDelete] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState("");
 
+  // State quản lý lỗi validation
+  const [errors, setErrors] = useState<{ id?: string }>({});
+
   const [formData, setFormData] = useState<Customer>({
     id: "",
     province: "",
@@ -67,7 +70,6 @@ export default function CustomerManagementPage() {
     setLoading(true);
     try {
       const res = await customerApi.getAll();
-      // Không cần map từng trường nữa vì BE đã trả về chuẩn tiếng Anh
       setCustomers(res.data);
     } catch (error) {
       console.error("Lỗi khi tải danh sách khách hàng:", error);
@@ -81,6 +83,12 @@ export default function CustomerManagementPage() {
   }, []);
 
   const handleSave = async () => {
+    // Logic Require Mã khách hàng
+    if (!formData.id || formData.id.trim() === "") {
+      setErrors({ id: "Mã khách hàng không được để trống" });
+      return;
+    }
+
     try {
       if (editingId) {
         await customerApi.update(editingId, formData);
@@ -92,12 +100,14 @@ export default function CustomerManagementPage() {
       await fetchCustomers();
       setIsModalOpen(false);
       setIsSuccessModalOpen(true);
+      setErrors({});
     } catch (error) {
       console.error(error);
     }
   };
 
   const openModal = (customer?: Customer) => {
+    setErrors({});
     if (customer) {
       setFormData(customer);
       setEditingId(customer.id);
@@ -136,19 +146,12 @@ export default function CustomerManagementPage() {
 
   const handleDelete = async () => {
     if (itemToDelete) {
-      setLoading(true); // Bắt đầu gọi API thì bật loading
+      setLoading(true);
       try {
-        // 1. Gọi API xóa
         await customerApi.delete(itemToDelete);
-
-        // 2. Cập nhật thông báo và đóng Modal xóa ngay lập tức
         setSuccessMessage("Khách hàng đã được xóa khỏi hệ thống.");
         setIsDeleteModalOpen(false);
-
-        // 3. Load lại danh sách mới
         await fetchCustomers();
-
-        // 4. Hiển thị modal thành công sau khi dữ liệu đã mới
         setIsSuccessModalOpen(true);
       } catch (error) {
         console.error("Lỗi khi xóa:", error);
@@ -361,29 +364,38 @@ export default function CustomerManagementPage() {
             </div>
 
             <div className="p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-4 gap-4">
+              {/* Mã khách hàng (Require) */}
               <div className="md:col-span-1 space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase">
-                  Mã khách hàng{" "}
+                  Mã khách hàng <span className="text-rose-500">*</span>
                   {editingId && (
-                    <span className="text-slate-400">(Không thể sửa)</span>
+                    <span className="text-slate-400"> (Không thể sửa)</span>
                   )}
                 </label>
                 <input
                   type="text"
                   value={formData.id}
-                  onChange={(e) =>
-                    setFormData({ ...formData, id: e.target.value })
-                  }
-                  // KHÓA ô nhập nếu đang ở trạng thái chỉnh sửa
+                  onChange={(e) => {
+                    setFormData({ ...formData, id: e.target.value });
+                    if (e.target.value) setErrors({});
+                  }}
                   disabled={!!editingId}
                   placeholder="VD: KH001"
                   className={`w-full px-3 py-2 border rounded-lg font-bold transition-all ${
                     editingId
                       ? "bg-slate-100 text-slate-500 cursor-not-allowed border-slate-200"
-                      : "text-rose-600 border-slate-300 focus:border-rose-500 outline-none"
+                      : errors.id
+                        ? "border-rose-500 bg-rose-50 text-rose-600 outline-none"
+                        : "text-rose-600 border-slate-300 focus:border-rose-500 outline-none"
                   }`}
                 />
+                {errors.id && !editingId && (
+                  <p className="text-[9px] text-rose-500 font-bold uppercase mt-1">
+                    {errors.id}
+                  </p>
+                )}
               </div>
+
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase">
                   Tỉnh
@@ -397,6 +409,7 @@ export default function CustomerManagementPage() {
                   className="w-full px-3 py-2 border rounded-lg"
                 />
               </div>
+
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase">
                   KCN/CCN
@@ -410,6 +423,7 @@ export default function CustomerManagementPage() {
                   className="w-full px-3 py-2 border rounded-lg"
                 />
               </div>
+
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase">
                   Mã số thuế
@@ -421,6 +435,24 @@ export default function CustomerManagementPage() {
                     setFormData({ ...formData, taxCode: e.target.value })
                   }
                   className="w-full px-3 py-2 border rounded-lg font-mono"
+                />
+              </div>
+
+              {/* BỔ SUNG: Số tài khoản */}
+              <div className="md:col-span-2 space-y-1">
+                <label className="text-[10px] font-bold text-slate-500 uppercase">
+                  Số tài khoản
+                </label>
+                <input
+                  type="text"
+                  value={formData.bankAccountNumber}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      bankAccountNumber: e.target.value,
+                    })
+                  }
+                  className="w-full px-3 py-2 border rounded-lg"
                 />
               </div>
 
@@ -437,7 +469,8 @@ export default function CustomerManagementPage() {
                   className="w-full px-3 py-2 border rounded-lg font-bold"
                 />
               </div>
-              <div className="md:col-span-2 space-y-1">
+
+              <div className="md:col-span-4 space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase">
                   Địa chỉ
                 </label>
@@ -467,6 +500,7 @@ export default function CustomerManagementPage() {
                   className="w-full px-3 py-2 border rounded-lg"
                 />
               </div>
+
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase">
                   Thời hạn HĐ
@@ -483,6 +517,7 @@ export default function CustomerManagementPage() {
                   className="w-full px-3 py-2 border rounded-lg"
                 />
               </div>
+
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase">
                   Điện thoại
@@ -496,6 +531,7 @@ export default function CustomerManagementPage() {
                   className="w-full px-3 py-2 border rounded-lg font-bold"
                 />
               </div>
+
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase">
                   Email
@@ -601,6 +637,22 @@ export default function CustomerManagementPage() {
                     className="w-full px-3 py-2 border rounded-lg"
                   />
                 </div>
+
+                {/* BỔ SUNG: Công suất nhỏ nhất */}
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-500 uppercase">
+                    P Nhỏ nhất (kW)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.minPower}
+                    onChange={(e) =>
+                      setFormData({ ...formData, minPower: e.target.value })
+                    }
+                    className="w-full px-3 py-2 border rounded-lg"
+                  />
+                </div>
+
                 <div className="space-y-1">
                   <label className="text-[10px] font-bold text-slate-500 uppercase">
                     Sản lượng TB (kWh)
@@ -617,23 +669,21 @@ export default function CustomerManagementPage() {
                     className="w-full px-3 py-2 border rounded-lg"
                   />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-slate-500 uppercase">
-                    Hồ sơ pháp lý
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.legalDocuments}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        legalDocuments: e.target.value,
-                      })
-                    }
-                    className="w-full px-3 py-2 border rounded-lg italic"
-                    placeholder="Tên file..."
-                  />
-                </div>
+              </div>
+
+              <div className="md:col-span-4 space-y-1">
+                <label className="text-[10px] font-bold text-slate-500 uppercase">
+                  Hồ sơ pháp lý
+                </label>
+                <input
+                  type="text"
+                  value={formData.legalDocuments}
+                  onChange={(e) =>
+                    setFormData({ ...formData, legalDocuments: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border rounded-lg italic"
+                  placeholder="Tên file..."
+                />
               </div>
             </div>
 
@@ -655,19 +705,16 @@ export default function CustomerManagementPage() {
         </div>
       )}
 
-      {/* Modal xác nhận xóa */}
       <ConfirmModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleDelete}
-        title="Xác nhận xóa khách hàng"
-        message="Bạn có chắc chắn muốn xóa khách hàng này không? Mọi dữ liệu liên quan sẽ bị loại bỏ khỏi hệ thống."
+        title="Xác nhận xóa"
+        message="Bạn có chắc chắn muốn xóa khách hàng này không?"
         type="danger"
         confirmText="Xóa dữ liệu"
-        isLoading={loading} // Quan trọng: Thêm dòng này để Modal nhận trạng thái xử lý
+        isLoading={loading}
       />
-
-      {/* Modal thông báo thành công */}
       <SuccessModal
         isOpen={isSuccessModalOpen}
         onClose={() => setIsSuccessModalOpen(false)}

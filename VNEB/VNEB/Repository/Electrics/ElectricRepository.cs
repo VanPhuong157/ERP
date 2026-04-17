@@ -72,7 +72,16 @@ namespace VNEB.Repository.Electrics
                 })
                 .ToListAsync();
         }
+        private void CalculateTotals(ElectricityUsage usage)
+        {
+            usage.Amount_FlatRate = usage.Price_FlatRate * usage.P_FlatRate;
+            usage.Amount_Normal = usage.Price_Normal * usage.P_Normal;
+            usage.Amount_Peak = usage.Price_Peak * usage.P_Peak;
+            usage.Amount_OffPeak = usage.Price_OffPeak * usage.P_OffPeak;
 
+            usage.TotalConsumption = usage.P_FlatRate + usage.P_Normal + usage.P_Peak + usage.P_OffPeak;
+            usage.TotalBillAmount = usage.Amount_FlatRate + usage.Amount_Normal + usage.Amount_Peak + usage.Amount_OffPeak;
+        }
         public async Task<ElectricityUsage?> GetByIdAsync(string id)
         {
             return await _context.ElectricityUsages.FindAsync(id);
@@ -80,12 +89,15 @@ namespace VNEB.Repository.Electrics
 
         public async Task<bool> CreateAsync(ElectricityUsage usage)
         {
+            usage.Id = Guid.NewGuid().ToString();
+            CalculateTotals(usage);
             _context.ElectricityUsages.Add(usage);
             return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> UpdateAsync(ElectricityUsage usage)
         {
+            CalculateTotals(usage);
             _context.Entry(usage).State = EntityState.Modified;
             return await _context.SaveChangesAsync() > 0;
         }
