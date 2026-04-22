@@ -24,7 +24,7 @@ builder.Services.AddCors(options =>
     {
         policy.AllowAnyOrigin() // Cách nhanh nhất để chạy trong mạng nội bộ
               .AllowAnyMethod()
-              .AllowAnyHeader()
+              .AllowAnyHeader();
     });
 });
 builder.Services.AddDbContext<VnebContext>(options =>
