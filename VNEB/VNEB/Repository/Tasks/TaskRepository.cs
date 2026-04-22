@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VNEB.DTO.TaskDTO;
 using VNEB.Models;
+using VNEB.Repository.Notifications;
 using VNEB.Responses;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -9,10 +10,11 @@ namespace VNEB.Repository.Tasks
     public class TaskRepository : ITaskRepository
     {
         private readonly VnebContext _context;
-
-        public TaskRepository(VnebContext context)
+        private readonly INotificationRepository _notificationRepository;
+        public TaskRepository(VnebContext context, INotificationRepository notificationRepository)
         {
             _context = context;
+            _notificationRepository = notificationRepository;
         }
 
         public async Task<Response> GetSubordinatesTasksAsync(string bossId, string month)
@@ -180,6 +182,7 @@ namespace VNEB.Repository.Tasks
 
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
+                await _notificationRepository.SendAndSave(dto.UserId, "Sếp vừa cập nhật công việc cho bạn!", "/tasks/my-task");
 
                 return new Response { Code = 200, Message = "Lưu thành công", Data = existingReg.Id };
             }

@@ -4,11 +4,13 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using VNEB.Hubs;
 using VNEB.Models;
 using VNEB.Repository.Customers;
 using VNEB.Repository.Departments;
 using VNEB.Repository.Electrics;
 using VNEB.Repository.LeaveRequests;
+using VNEB.Repository.Notifications;
 using VNEB.Repository.Specifications;
 using VNEB.Repository.Tasks;
 using VNEB.Repository.Users;
@@ -22,12 +24,13 @@ builder.Services.AddCors(options =>
     {
         policy.AllowAnyOrigin() // Cách nhanh nhất để chạy trong mạng nội bộ
               .AllowAnyMethod()
-              .AllowAnyHeader();
+              .AllowAnyHeader()
+        .AllowCredentials();
     });
 });
 builder.Services.AddDbContext<VnebContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SEP490_G49")));
-
+builder.Services.AddSignalR();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
@@ -94,6 +97,7 @@ builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IElectricRepository, ElectricRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
 var app = builder.Build();
 
@@ -104,8 +108,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseCors("AllowAll");
-app.UseStaticFiles(); 
-
+app.UseStaticFiles();
+app.MapHub<NotificationHub>("/notificationHub");
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(

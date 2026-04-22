@@ -3,6 +3,42 @@
   "WorkspaceRootPath": "D:\\ERP\\VNEB\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\hubs\\notificationhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\hubs\\notificationhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\controllers\\notificationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\controllers\\notificationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\controllers\\customerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\controllers\\customerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\repository\\notifications\\notificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\notifications\\notificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\repository\\notifications\\inotificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\notifications\\inotificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\repository\\tasks\\taskrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\tasks\\taskrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\models\\vnebcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\models\\vnebcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\models\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\models\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\repository\\electrics\\electricrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\electrics\\electricrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -23,20 +59,8 @@
       "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\electrics\\ielectricrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\repository\\tasks\\taskrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\tasks\\taskrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\repository\\customers\\customerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\customers\\customerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\repository\\customers\\icustomerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\customers\\icustomerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,36 +70,128 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CustomersController.cs",
+              "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Controllers\\CustomersController.cs",
+              "RelativeDocumentMoniker": "VNEB\\Controllers\\CustomersController.cs",
+              "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Controllers\\CustomersController.cs",
+              "RelativeToolTip": "VNEB\\Controllers\\CustomersController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T10:24:22.172Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NotificationsController.cs",
+              "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Controllers\\NotificationsController.cs",
+              "RelativeDocumentMoniker": "VNEB\\Controllers\\NotificationsController.cs",
+              "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Controllers\\NotificationsController.cs",
+              "RelativeToolTip": "VNEB\\Controllers\\NotificationsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T10:24:10.833Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "NotificationHub.cs",
+              "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Hubs\\NotificationHub.cs",
+              "RelativeDocumentMoniker": "VNEB\\Hubs\\NotificationHub.cs",
+              "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Hubs\\NotificationHub.cs",
+              "RelativeToolTip": "VNEB\\Hubs\\NotificationHub.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T10:12:17.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "INotificationRepository.cs",
+              "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Notifications\\INotificationRepository.cs",
+              "RelativeDocumentMoniker": "VNEB\\Repository\\Notifications\\INotificationRepository.cs",
+              "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Repository\\Notifications\\INotificationRepository.cs",
+              "RelativeToolTip": "VNEB\\Repository\\Notifications\\INotificationRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAABYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T10:10:44.401Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "NotificationRepository.cs",
+              "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Notifications\\NotificationRepository.cs",
+              "RelativeDocumentMoniker": "VNEB\\Repository\\Notifications\\NotificationRepository.cs",
+              "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Repository\\Notifications\\NotificationRepository.cs",
+              "RelativeToolTip": "VNEB\\Repository\\Notifications\\NotificationRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAABlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T10:10:23.026Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "VnebContext.cs",
+              "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Models\\VnebContext.cs",
+              "RelativeDocumentMoniker": "VNEB\\Models\\VnebContext.cs",
+              "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Models\\VnebContext.cs",
+              "RelativeToolTip": "VNEB\\Models\\VnebContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T10:08:12.408Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Notification.cs",
+              "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Models\\Notification.cs",
+              "RelativeDocumentMoniker": "VNEB\\Models\\Notification.cs",
+              "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Models\\Notification.cs",
+              "RelativeToolTip": "VNEB\\Models\\Notification.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T10:07:38.85Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "TaskRepository.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Tasks\\TaskRepository.cs",
               "RelativeDocumentMoniker": "VNEB\\Repository\\Tasks\\TaskRepository.cs",
               "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Repository\\Tasks\\TaskRepository.cs",
               "RelativeToolTip": "VNEB\\Repository\\Tasks\\TaskRepository.cs",
-              "ViewState": "AgIAAPMAAAAAAAAAAAAmwBUBAAAyAAAAAAAAAA==",
+              "ViewState": "AgIAAK0AAAAAAAAAAAAAALcAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-17T12:37:41.268Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ICustomerRepository.cs",
-              "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Customers\\ICustomerRepository.cs",
-              "RelativeDocumentMoniker": "VNEB\\Repository\\Customers\\ICustomerRepository.cs",
-              "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Repository\\Customers\\ICustomerRepository.cs",
-              "RelativeToolTip": "VNEB\\Repository\\Customers\\ICustomerRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Program.cs",
+              "RelativeDocumentMoniker": "VNEB\\Program.cs",
+              "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Program.cs",
+              "RelativeToolTip": "VNEB\\Program.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAB8AAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T09:45:39.594Z"
+              "WhenOpened": "2026-04-16T09:21:54.847Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 14,
               "Title": "CustomerRepository.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Customers\\CustomerRepository.cs",
               "RelativeDocumentMoniker": "VNEB\\Repository\\Customers\\CustomerRepository.cs",
@@ -87,7 +203,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 12,
               "Title": "Customer.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Models\\Customer.cs",
               "RelativeDocumentMoniker": "VNEB\\Models\\Customer.cs",
@@ -95,24 +211,11 @@
               "RelativeToolTip": "VNEB\\Models\\Customer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T09:25:35.703Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-16T09:25:35.703Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Program.cs",
-              "RelativeDocumentMoniker": "VNEB\\Program.cs",
-              "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Program.cs",
-              "RelativeToolTip": "VNEB\\Program.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAAAF8AAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T09:21:54.847Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 11,
               "Title": "ElectricityUsage.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Models\\ElectricityUsage.cs",
               "RelativeDocumentMoniker": "VNEB\\Models\\ElectricityUsage.cs",
@@ -120,12 +223,11 @@
               "RelativeToolTip": "VNEB\\Models\\ElectricityUsage.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAmwCcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T09:20:05.8Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-16T09:20:05.8Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 10,
               "Title": "ElectricsController.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Controllers\\ElectricsController.cs",
               "RelativeDocumentMoniker": "VNEB\\Controllers\\ElectricsController.cs",
@@ -133,12 +235,11 @@
               "RelativeToolTip": "VNEB\\Controllers\\ElectricsController.cs",
               "ViewState": "AgIAABQAAAAAAAAAAAAswD4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T09:11:06.513Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-16T09:11:06.513Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 13,
               "Title": "IElectricRepository.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Electrics\\IElectricRepository.cs",
               "RelativeDocumentMoniker": "VNEB\\Repository\\Electrics\\IElectricRepository.cs",
@@ -146,12 +247,11 @@
               "RelativeToolTip": "VNEB\\Repository\\Electrics\\IElectricRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T09:09:38.936Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-16T09:09:38.936Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 9,
               "Title": "ElectricRepository.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Electrics\\ElectricRepository.cs",
               "RelativeDocumentMoniker": "VNEB\\Repository\\Electrics\\ElectricRepository.cs",
