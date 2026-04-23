@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useAppContext } from "../../app/page"; 
+import { useAppContext } from "../../app/context/AppProvider";
 import { jwtDecode } from "jwt-decode";
 import { authenApi } from "./authenApi";
 

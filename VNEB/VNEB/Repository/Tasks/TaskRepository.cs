@@ -158,7 +158,7 @@ namespace VNEB.Repository.Tasks
                             RegistrationId = existingReg.Id,
                             Category = secDto.Category,
                             SectionName = secDto.SectionName,
- 
+
                             TaskItems = (secDto.TaskItems ?? new List<TaskItemDTO>()).Select(t => new TaskItem
                             {
                                 TaskDescription = t.TaskDescription,
@@ -182,7 +182,12 @@ namespace VNEB.Repository.Tasks
 
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
-                await _notificationRepository.SendAndSave(dto.UserId, "Sếp vừa cập nhật công việc cho bạn!", "/tasks/my-task");
+                await _notificationRepository.SendAndSave(
+    dto.UserId,
+    "Sếp vừa cập nhật công việc cho bạn!",
+    "TASK_UPDATE",         // Type: để phân loại
+    "/tasks/my-task"       // Link: đường dẫn để click vào
+);
 
                 return new Response { Code = 200, Message = "Lưu thành công", Data = existingReg.Id };
             }
@@ -237,7 +242,8 @@ namespace VNEB.Repository.Tasks
                         .ThenInclude(ts => ts.TaskRegistration)
                     .ToListAsync();
 
-                var filteredItems = allItems.Where(t => {
+                var filteredItems = allItems.Where(t =>
+                {
                     if (string.IsNullOrWhiteSpace(t.TaskDescription)) return false;
                     bool hasStart = DateTime.TryParse(t.StartDate, out DateTime taskStart);
                     bool hasEnd = DateTime.TryParse(t.EndDate, out DateTime taskEnd);
@@ -258,7 +264,8 @@ namespace VNEB.Repository.Tasks
 
                 if (string.IsNullOrWhiteSpace(userId) && targetUsers.Any())
                 {
-                    employeeList = targetUsers.Select(u => {
+                    employeeList = targetUsers.Select(u =>
+                    {
                         var userTasks = filteredItems.Where(ti => ti.TaskSection.TaskRegistration.UserId == u.Id).ToList();
                         int totalCount = userTasks.Count;
                         int completedCount = userTasks.Count(t => SafeParse(t.ManagerResult) == 100);
@@ -278,7 +285,7 @@ namespace VNEB.Repository.Tasks
                     return new Response
                     {
                         Code = 200,
-                        Data = CreateEmptyStats() 
+                        Data = CreateEmptyStats()
                     };
                 }
 
@@ -290,11 +297,13 @@ namespace VNEB.Repository.Tasks
                         TotalRegistered = total,
                         CompletedOnTime = filteredItems.Count(t => SafeParse(t.ManagerResult) == 100),
 
-                        CompletedEffort = filteredItems.Count(t => {
+                        CompletedEffort = filteredItems.Count(t =>
+                        {
                             int score = SafeParse(t.ManagerResult);
                             return score >= 70 && score < 100;
                         }),
-                        CompletedWarning = filteredItems.Count(t => {
+                        CompletedWarning = filteredItems.Count(t =>
+                        {
                             int score = SafeParse(t.ManagerResult);
                             return score >= 30 && score < 70;
                         }),

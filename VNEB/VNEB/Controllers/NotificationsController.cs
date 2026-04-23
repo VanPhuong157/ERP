@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using VNEB.Models;
 using VNEB.Repository.Notifications;
 
 namespace VNEB.Controllers
@@ -19,8 +21,7 @@ namespace VNEB.Controllers
         [Authorize]
         public async Task<IActionResult> GetMyNotifications()
         {
-            // Lấy UserId từ Claims (giả sử bạn đã lưu UserId vào Token/Claims)
-            var userId = User.FindFirst("UserId")?.Value;
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
             if (string.IsNullOrEmpty(userId))
             {
@@ -35,8 +36,16 @@ namespace VNEB.Controllers
         [HttpPost("read/{id}")]
         public async Task<IActionResult> MarkAsRead(string id)
         {
-            // Logic cập nhật IsRead = true trong DB
-            return Ok();
+            // Lấy userId từ Token (giả định bạn đang dùng JWT)
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value.ToString();
+
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
+            var success = await _notiRepo.MarkAsReadAsync(id, userId);
+
+            if (!success) return NotFound("Thông báo không tồn tại hoặc bạn không có quyền.");
+
+            return Ok(new { message = "Đã đánh dấu là đã đọc" });
         }
     }
 }

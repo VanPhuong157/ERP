@@ -13,7 +13,7 @@ import {
   User,
   Users,
 } from "lucide-react";
-import { useAppContext } from "../../app/page";
+import { useAppContext } from "../../app/context/AppProvider";
 import { dashboardApi } from "./dashboardApi";
 
 interface DashboardProps {

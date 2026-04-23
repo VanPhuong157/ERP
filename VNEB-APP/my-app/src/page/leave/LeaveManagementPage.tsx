@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useAppContext } from "../../app/page";
+import { useAppContext } from "../../app/context/AppProvider";
 import LeaveRegistrationForm from "./LeaveRegistrationForm";
 import LeaveApprovalList from "./LeaveApprovalList";
 import LeaveQuotaTable from "./LeaveQuotaTable";

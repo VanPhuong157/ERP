@@ -11,7 +11,7 @@ import {
   AlertTriangle,
   X,
 } from "lucide-react";
-import { useAppContext } from "../../app/page";
+import { useAppContext } from "../../app/context/AppProvider";
 import { taskApi } from "../task/TaskApi";
 
 interface TaskItem {

@@ -1,24 +1,47 @@
 "use client";
+"use client";
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import * as signalR from "@microsoft/signalr";
-import { useAppContext } from "../../app/page";
+import { useAppContext } from "./AppProvider";
 
-// 1. Định nghĩa kiểu dữ liệu cho Notification
 interface NotificationItem {
   id: string;
-  message: string;
+  content: string; // Đổi 'message' thành 'content' cho khớp với API
   type: string;
-  time: string;
+  createdAt: string; // Đổi 'time' thành 'createdAt' cho khớp với API
   isRead: boolean;
   link?: string;
 }
 
 const baseUrl = 'http://103.176.179.125:5244';
+//const baseUrl = 'http://localhost:5244';
+
 const NotificationContext = createContext<any>(null);
 
+export const useNotification = () => useContext(NotificationContext);
+
 export const NotificationProvider = ({ children }: any) => {
-  const [notifications, setNotifications] = useState<NotificationItem[]>([]); // Sử dụng kiểu dữ liệu đã định nghĩa
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const { user } = useAppContext();
+
+const markAsRead = async (id: string) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      await fetch(`${baseUrl}/api/Notifications/read/${id}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      // Cập nhật state cục bộ để UI thay đổi ngay lập tức
+      setNotifications(prev => 
+        prev.map(n => n.id === id ? { ...n, isRead: true } : n)
+      );
+    } catch (err) {
+      console.error("MarkAsRead Error:", err);
+    }
+  };
 
   useEffect(() => {
     if (!user?.id) return;
@@ -43,7 +66,6 @@ export const NotificationProvider = ({ children }: any) => {
 
     startConnection();
 
-    // 2. Chỉ định kiểu NotificationItem cho tham số newNoti
     connection.on("ReceiveNotification", (newNoti: NotificationItem) => {
       setNotifications(prev => [newNoti, ...prev]);
     });
@@ -56,7 +78,7 @@ export const NotificationProvider = ({ children }: any) => {
       }
     })
       .then(res => res.json())
-      .then((data: NotificationItem[]) => setNotifications(data)) // Ép kiểu cho data trả về
+      .then((data: NotificationItem[]) => setNotifications(data))
       .catch(err => console.error("Fetch Error:", err));
 
     return () => { 
@@ -65,7 +87,7 @@ export const NotificationProvider = ({ children }: any) => {
   }, [user?.id]);
 
   return (
-    <NotificationContext.Provider value={{ notifications }}>
+    <NotificationContext.Provider value={{ notifications, markAsRead }}>
       {children}
     </NotificationContext.Provider>
   );

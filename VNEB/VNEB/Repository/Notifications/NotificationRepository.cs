@@ -42,7 +42,18 @@ namespace VNEB.Repository.Notifications
                 link = noti.Link
             });
         }
+        public async Task<bool> MarkAsReadAsync(string notificationId, string userId)
+        {
+            // Tìm thông báo theo ID và phải thuộc về đúng User đó
+            var noti = await _context.Notifications
+                .FirstOrDefaultAsync(n => n.Id == notificationId && n.UserId == userId);
 
+            if (noti == null) return false; // Không tìm thấy hoặc không có quyền
+
+            noti.IsRead = true;
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
         public async Task<List<Notification>> GetNotificationsAsync(string userId)
         {
