@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using VNEB.Models;
+using VNEB.Repository.Notifications;
 using VNEB.Responses;
 
 namespace VNEB.Repository.LeaveRequests
@@ -9,11 +10,12 @@ namespace VNEB.Repository.LeaveRequests
     {
         private readonly VnebContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public LeaveRequestRepository(VnebContext context, IHttpContextAccessor httpContextAccessor)
+        private readonly INotificationRepository _notificationRepo;
+        public LeaveRequestRepository(VnebContext context, IHttpContextAccessor httpContextAccessor, INotificationRepository notificationRepo)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
+            _notificationRepo = notificationRepo;
         }
 
         private string GetCurrentUserId() =>
@@ -388,6 +390,46 @@ namespace VNEB.Repository.LeaveRequests
                 return new Response { Code = 200, Message = "Xóa đơn thành công" };
             }
             catch (Exception ex) { return new Response { Code = 500, Message = ex.Message }; }
+        }
+        public async Task<Response> Reject(int requestId, string reason)
+        {
+            try
+            {
+                // 1. Tìm đơn nghỉ phép kèm thông tin User để lấy ID gửi thông báo
+                var req = await _context.LeaveRequests
+                    .Include(r => r.User)
+                    .FirstOrDefaultAsync(x => x.Id == requestId);
+
+                if (req == null) return new Response { Code = 404, Message = "Đơn không tồn tại" };
+
+                var approverId = GetCurrentUserId();
+                var approver = await _context.Users.FindAsync(approverId);
+
+                string applicantId = req.UserId;
+                string leaveType = req.ConfirmationType ?? "nghỉ phép";
+                string dateStr = req.RequestDate.ToString("dd/MM/yyyy");
+
+                // 2. Gửi thông báo cho người lập đơn trước khi xóa đơn
+                string msg = $"Đơn {leaveType} ngày {dateStr} của bạn đã bị từ chối bởi {approver?.FullName}. Lý do: {reason}";
+
+                await _notificationRepo.SendAndSave(
+                    applicantId,
+                    msg,
+                    "REJECT_LEAVE",
+                    "/leave-management"
+                );
+
+
+                _context.LeaveRequests.Remove(req);
+
+                await _context.SaveChangesAsync();
+
+                return new Response { Code = 200, Message = "Đã từ chối và xóa đơn thành công!" };
+            }
+            catch (Exception ex)
+            {
+                return new Response { Code = 500, Message = "Lỗi khi từ chối đơn: " + ex.Message };
+            }
         }
     }
 }

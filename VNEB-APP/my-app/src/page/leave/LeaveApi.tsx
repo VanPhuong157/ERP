@@ -21,4 +21,9 @@ getStatistical: (company?: string, deptId?: number) =>
     }),
 
   updateQuota: (data: any) => rootApi.post('/LeaveRequests/update-quota', data),
+
+  rejectAction: (requestId: number, reason: string) => 
+    rootApi.post(`/LeaveRequests/reject/${requestId}`, reason, {
+        headers: { 'Content-Type': 'application/json' }
+    }),
 };

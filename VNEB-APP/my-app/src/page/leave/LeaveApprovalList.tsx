@@ -5,7 +5,7 @@ import { departmentApi } from '../department/departmentApi';
 import ConfirmModal from '../../component/ConfirmModal'; 
 import { 
   FileSpreadsheet, Building2, ShieldCheck, Clock, 
-  CheckCircle2, Calendar, LayoutDashboard, User, ArrowRight 
+  CheckCircle2, Calendar, LayoutDashboard, User, ArrowRight,XCircle 
 } from 'lucide-react';
 
 interface LeaveApprovalListProps {
@@ -33,9 +33,9 @@ export default function LeaveApprovalList({ user, isReportMode = false }: LeaveA
   const [filterDept, setFilterDept] = useState<string>(""); 
 
   const [modalConfig, setModalConfig] = useState<{
-    isOpen: boolean; title: string; message: string; requestId: number | null; isLoading: boolean;
+    isOpen: boolean; title: string; message: string; requestId: number | null; isLoading: boolean; actionType: 'APPROVE' | 'REJECT'
   }>({
-    isOpen: false, title: '', message: '', requestId: null, isLoading: false
+    isOpen: false, title: '', message: '', requestId: null, isLoading: false,actionType: 'APPROVE'
   });
 
   // Lấy danh sách phòng ban cho bộ lọc
@@ -75,16 +75,31 @@ export default function LeaveApprovalList({ user, isReportMode = false }: LeaveA
     });
   }, [list, filterMonth]);
 
-  const handleConfirmAction = async () => {
+const handleConfirmAction = async () => {
     if (!modalConfig.requestId) return;
     setModalConfig(prev => ({ ...prev, isLoading: true }));
+    
     try {
-      const res: any = await leaveApi.approveAction(modalConfig.requestId, user.role);
+      let res: any;
+      if (modalConfig.actionType === 'APPROVE') {
+        res = await leaveApi.approveAction(modalConfig.requestId, user.role);
+      } else {
+  
+        const reason = prompt("Nhập lý do từ chối:", "Không phù hợp với lịch trình làm việc");
+        if (reason === null) { 
+           setModalConfig(prev => ({ ...prev, isOpen: false, isLoading: false }));
+           return;
+        }
+        res = await leaveApi.rejectAction(modalConfig.requestId, reason);
+      }
+
       if (res.data?.code === 200) {
         setModalConfig(prev => ({ ...prev, isOpen: false }));
         loadData();
       }
     } catch (error) {
+      console.error(error);
+    } finally {
       setModalConfig(prev => ({ ...prev, isLoading: false }));
     }
   };
@@ -146,22 +161,47 @@ export default function LeaveApprovalList({ user, isReportMode = false }: LeaveA
                 <Clock size={18} className="text-slate-400" />
                 <span className="text-xs font-bold uppercase">{item.fromTime} - {item.toTime}</span>
               </div>
+                            <div className="flex items-center gap-3 text-slate-600">
+                Loại đơn: 
+                <span className="text-xs font-bold uppercase">{item.confirmationType}</span>
+              </div>
               <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 min-h-[60px]">
                 <p className="text-[11px] text-slate-500 font-medium italic">"{item.reason || 'Không có lý do'}"</p>
               </div>
             </div>
 
-            {canApprove ? (
-              <button 
-                onClick={() => setModalConfig({ 
-                  isOpen: true, title: "Phê duyệt", 
-                  message: `Duyệt đơn nghỉ phép cho ${item.fullName}?`, 
-                  requestId: item.id, isLoading: false 
-                })}
-                className="w-full py-4 rounded-2xl bg-[#1F3864] text-white text-[11px] font-black uppercase hover:bg-blue-800 shadow-lg shadow-blue-900/20 transition-all active:scale-95"
-              >
-                Phê duyệt ngay
-              </button>
+           {canApprove ? (
+              <div className="flex gap-3">
+                {/* Nút Từ chối mới */}
+                <button 
+                  onClick={() => setModalConfig({ 
+                    isOpen: true, 
+                    title: "Từ chối đơn", 
+                    message: `Bạn chắc chắn muốn từ chối và XÓA đơn của ${item.fullName}?`, 
+                    requestId: item.id, 
+                    isLoading: false,
+                    actionType: 'REJECT'
+                  })}
+                  className="flex-1 py-4 rounded-2xl bg-red-50 text-red-600 text-[11px] font-black uppercase hover:bg-red-100 transition-all active:scale-95 flex items-center justify-center gap-2"
+                >
+                  <XCircle size={14} /> Từ chối
+                </button>
+
+                {/* Nút Phê duyệt */}
+                <button 
+                  onClick={() => setModalConfig({ 
+                    isOpen: true, 
+                    title: "Phê duyệt", 
+                    message: `Duyệt đơn nghỉ phép cho ${item.fullName}?`, 
+                    requestId: item.id, 
+                    isLoading: false,
+                    actionType: 'APPROVE'
+                  })}
+                  className="flex-[2] py-4 rounded-2xl bg-[#1F3864] text-white text-[11px] font-black uppercase hover:bg-blue-800 shadow-lg shadow-blue-900/20 transition-all active:scale-95"
+                >
+                  Phê duyệt ngay
+                </button>
+              </div>
             ) : (
               <div className="w-full py-4 rounded-2xl bg-slate-50 text-slate-400 text-[10px] font-black uppercase text-center border border-dashed border-slate-200 cursor-not-allowed">
                 Chỉ xem (Quyền HCNS)
@@ -298,8 +338,8 @@ export default function LeaveApprovalList({ user, isReportMode = false }: LeaveA
         title={modalConfig.title}
         message={modalConfig.message}
         isLoading={modalConfig.isLoading}
-        type="success"
-        confirmText="Xác nhận duyệt"
+        type={modalConfig.actionType === 'REJECT' ? "danger" : "success"}
+        confirmText={modalConfig.actionType === 'REJECT' ? "Xác nhận từ chối" : "Xác nhận duyệt"}
       />
     </div>
   );

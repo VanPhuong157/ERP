@@ -15,5 +15,6 @@ namespace VNEB.Repository.LeaveRequests
         Task<Response> UpdateLeaveQuota(UserLeaveQuota quota);
 
         Task<Response> GetUserLeaveQuotaReport(string? companyFilter, int? deptId);
+        Task<Response> Reject(int requestId, string reason);
     }
 }

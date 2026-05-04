@@ -73,5 +73,13 @@ namespace VNEB.Controllers
             var res = await _leaveRepo.Delete(id);
             return Ok(res);
         }
+
+        [HttpPost("reject/{id}")]
+        public async Task<IActionResult> Reject(int id, [FromBody] string reason)
+        {
+            var result = await _leaveRepo.Reject(id, reason);
+            if (result.Code == 200) return Ok(result);
+            return BadRequest(result);
+        }
     }
 }
