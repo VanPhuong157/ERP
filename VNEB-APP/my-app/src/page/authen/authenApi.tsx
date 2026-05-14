@@ -12,7 +12,8 @@ export const authenApi = {
     rootApi.get(`/Users/${id}`),
 
   register: (data: any) => rootApi.post('/Users/register', data),
-
+  
+deleteUser: (id: string) => rootApi.delete(`/Users/${id}`),
 
 
   changePassword: (data: { userId: string, oldPassword: string, newPassword: string }) =>

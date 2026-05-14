@@ -100,7 +100,7 @@ const EmployeeManagerPage = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await (authenApi as any).deleteUser(id);
+          const res = await authenApi.deleteUser(id);
           if (res.data.code === 200) {
             Swal.fire("Thành công", "Đã xóa nhân sự", "success");
             fetchUsers();

@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "D:\\ERP\\VNEB\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\controllers\\leaverequestscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\controllers\\leaverequestscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\repository\\leaverequests\\leaverequestrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\leaverequests\\leaverequestrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\repository\\leaverequests\\ileaverequestrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\repository\\leaverequests\\ileaverequestrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|d:\\erp\\vneb\\vneb\\controllers\\notificationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FCFB8774-BAC7-465A-9847-C5BEEB423A2B}|VNEB\\VNEB.csproj|solutionrelative:vneb\\controllers\\notificationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -74,11 +86,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
+              "Title": "LeaveRequestsController.cs",
+              "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Controllers\\LeaveRequestsController.cs",
+              "RelativeDocumentMoniker": "VNEB\\Controllers\\LeaveRequestsController.cs",
+              "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Controllers\\LeaveRequestsController.cs",
+              "RelativeToolTip": "VNEB\\Controllers\\LeaveRequestsController.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAYwFIAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T11:55:30.536Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ILeaveRequestRepository.cs",
+              "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\LeaveRequests\\ILeaveRequestRepository.cs",
+              "RelativeDocumentMoniker": "VNEB\\Repository\\LeaveRequests\\ILeaveRequestRepository.cs",
+              "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Repository\\LeaveRequests\\ILeaveRequestRepository.cs",
+              "RelativeToolTip": "VNEB\\Repository\\LeaveRequests\\ILeaveRequestRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T11:53:15.507Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LeaveRequestRepository.cs",
+              "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\LeaveRequests\\LeaveRequestRepository.cs",
+              "RelativeDocumentMoniker": "VNEB\\Repository\\LeaveRequests\\LeaveRequestRepository.cs",
+              "ToolTip": "D:\\ERP\\VNEB\\VNEB\\Repository\\LeaveRequests\\LeaveRequestRepository.cs",
+              "RelativeToolTip": "VNEB\\Repository\\LeaveRequests\\LeaveRequestRepository.cs",
+              "ViewState": "AgIAAIABAAAAAAAAAADwv6EBAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T08:17:22.206Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Users\\UserRepository.cs",
               "RelativeDocumentMoniker": "VNEB\\Repository\\Users\\UserRepository.cs",
@@ -86,12 +137,11 @@
               "RelativeToolTip": "VNEB\\Repository\\Users\\UserRepository.cs",
               "ViewState": "AgIAAGoBAAAAAAAAAADwv5sBAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T08:56:25.734Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-23T08:56:25.734Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "CustomersController.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Controllers\\CustomersController.cs",
               "RelativeDocumentMoniker": "VNEB\\Controllers\\CustomersController.cs",
@@ -99,12 +149,11 @@
               "RelativeToolTip": "VNEB\\Controllers\\CustomersController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-22T10:24:22.172Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-22T10:24:22.172Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "NotificationsController.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Controllers\\NotificationsController.cs",
               "RelativeDocumentMoniker": "VNEB\\Controllers\\NotificationsController.cs",
@@ -117,7 +166,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "NotificationHub.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Hubs\\NotificationHub.cs",
               "RelativeDocumentMoniker": "VNEB\\Hubs\\NotificationHub.cs",
@@ -125,12 +174,11 @@
               "RelativeToolTip": "VNEB\\Hubs\\NotificationHub.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-22T10:12:17.892Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-22T10:12:17.892Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "INotificationRepository.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Notifications\\INotificationRepository.cs",
               "RelativeDocumentMoniker": "VNEB\\Repository\\Notifications\\INotificationRepository.cs",
@@ -138,12 +186,11 @@
               "RelativeToolTip": "VNEB\\Repository\\Notifications\\INotificationRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-22T10:10:44.401Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-22T10:10:44.401Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "NotificationRepository.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Notifications\\NotificationRepository.cs",
               "RelativeDocumentMoniker": "VNEB\\Repository\\Notifications\\NotificationRepository.cs",
@@ -151,12 +198,11 @@
               "RelativeToolTip": "VNEB\\Repository\\Notifications\\NotificationRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-22T10:10:23.026Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-22T10:10:23.026Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "VnebContext.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Models\\VnebContext.cs",
               "RelativeDocumentMoniker": "VNEB\\Models\\VnebContext.cs",
@@ -168,7 +214,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "Notification.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Models\\Notification.cs",
               "RelativeDocumentMoniker": "VNEB\\Models\\Notification.cs",
@@ -180,7 +226,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "TaskRepository.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Tasks\\TaskRepository.cs",
               "RelativeDocumentMoniker": "VNEB\\Repository\\Tasks\\TaskRepository.cs",
@@ -188,12 +234,11 @@
               "RelativeToolTip": "VNEB\\Repository\\Tasks\\TaskRepository.cs",
               "ViewState": "AgIAAE0BAAAAAAAAAAAkwGIBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T12:37:41.268Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-17T12:37:41.268Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Program.cs",
               "RelativeDocumentMoniker": "VNEB\\Program.cs",
@@ -201,12 +246,11 @@
               "RelativeToolTip": "VNEB\\Program.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAUwB0AAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T09:21:54.847Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-16T09:21:54.847Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 18,
               "Title": "CustomerRepository.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Customers\\CustomerRepository.cs",
               "RelativeDocumentMoniker": "VNEB\\Repository\\Customers\\CustomerRepository.cs",
@@ -218,7 +262,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "Customer.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Models\\Customer.cs",
               "RelativeDocumentMoniker": "VNEB\\Models\\Customer.cs",
@@ -230,7 +274,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "ElectricityUsage.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Models\\ElectricityUsage.cs",
               "RelativeDocumentMoniker": "VNEB\\Models\\ElectricityUsage.cs",
@@ -242,7 +286,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "ElectricsController.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Controllers\\ElectricsController.cs",
               "RelativeDocumentMoniker": "VNEB\\Controllers\\ElectricsController.cs",
@@ -254,7 +298,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "IElectricRepository.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Electrics\\IElectricRepository.cs",
               "RelativeDocumentMoniker": "VNEB\\Repository\\Electrics\\IElectricRepository.cs",
@@ -266,7 +310,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "ElectricRepository.cs",
               "DocumentMoniker": "D:\\ERP\\VNEB\\VNEB\\Repository\\Electrics\\ElectricRepository.cs",
               "RelativeDocumentMoniker": "VNEB\\Repository\\Electrics\\ElectricRepository.cs",

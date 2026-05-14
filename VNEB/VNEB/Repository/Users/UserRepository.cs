@@ -332,7 +332,7 @@ namespace VNEB.Repository.Users
 
         public async Task<Response> DeleteUser(string userId)
         {
-            // Sử dụng Transaction để đảm bảo tính toàn vẹn dữ liệu
+
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
                 try
@@ -341,52 +341,39 @@ namespace VNEB.Repository.Users
                     if (user == null)
                         return new Response { Code = 404, Message = "Không tìm thấy nhân viên." };
 
-                    // --- BƯỚC 1: Xử lý cụm Task (Xóa từ cháu -> con -> cha) ---
-
-                    // Tìm tất cả các Registration của User này
+ 
                     var registrations = await _context.TaskRegistrations
                         .Where(r => r.UserId == userId)
                         .ToListAsync();
 
                     foreach (var reg in registrations)
                     {
-                        // Tìm các Section thuộc Registration này
                         var sections = await _context.TaskSections
                             .Where(s => s.RegistrationId == reg.Id)
                             .ToListAsync();
 
                         foreach (var sec in sections)
                         {
-                            // Xóa các TaskItem thuộc Section này (Cấp cháu)
                             var items = _context.TaskItems.Where(i => i.SectionId == sec.Id);
                             _context.TaskItems.RemoveRange(items);
                         }
 
-                        // Xóa các Section (Cấp con)
                         _context.TaskSections.RemoveRange(sections);
                     }
-
-                    // Xóa các Registration (Cấp cha)
                     _context.TaskRegistrations.RemoveRange(registrations);
 
-                    // --- BƯỚC 2: Xóa các bảng liên quan trực tiếp khác ---
-
-                    // Xóa đơn xin nghỉ phép
                     var leaveRequests = _context.LeaveRequests.Where(l => l.UserId == userId);
                     _context.LeaveRequests.RemoveRange(leaveRequests);
 
-                    // Xóa chỉ tiêu nghỉ phép
+
                     var quotas = _context.UserLeaveQuotas.Where(q => q.UserId == userId);
                     _context.UserLeaveQuotas.RemoveRange(quotas);
 
-                    // --- BƯỚC 3: Xóa file vật lý (Avatar & Contracts) để tránh rác server ---
 
                     DeleteUserFiles(user);
 
-                    // --- BƯỚC 4: Xóa User chính ---
                     _context.Users.Remove(user);
 
-                    // Lưu thay đổi và Commit
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
 
@@ -394,14 +381,12 @@ namespace VNEB.Repository.Users
                 }
                 catch (Exception ex)
                 {
-                    // Nếu có bất kỳ lỗi nào, hệ thống sẽ khôi phục lại dữ liệu chưa xóa
                     await transaction.RollbackAsync();
                     return new Response { Code = 500, Message = $"Lỗi khi xóa dữ liệu liên kết: {ex.Message}" };
                 }
             }
         }
 
-        // Hàm hỗ trợ dọn dẹp file trong thư mục wwwroot/uploads
         private void DeleteUserFiles(User user)
         {
             var filesToDelete = new List<string?>
